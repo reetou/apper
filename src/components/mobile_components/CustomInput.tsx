@@ -15,6 +15,7 @@ export default function CustomInput(props: Props) {
       editable={!disabled || thumbnail}
       allowFontScaling
       style={{
+        width: 'inherit',
         fontSize: toThumbnailSize(14, 6, thumbnail),
         borderWidth: toThumbnailSize(1, 0.5, thumbnail),
         borderColor: 'black',

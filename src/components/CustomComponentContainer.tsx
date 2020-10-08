@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
-import { CustomComponent } from "../store/BuilderContext";
+import BuilderContext, { CustomComponent } from "../store/BuilderContext";
+import { DragSourceMonitor, useDrag } from "react-dnd";
 
-const Container = styled.div`
+const Container = styled.div<{isDragging: boolean}>`
   width: 95px;
   cursor: pointer;
   margin-right: 6px;
@@ -46,16 +47,29 @@ const Title = styled.div`
 interface Props {
   children: ReactNode;
   data: CustomComponent,
-  onClick: (c: CustomComponent) => void;
 }
 
 export default function CustomComponentContainer(props: Props) {
-  const { children, onClick, data } = props
+  const { children, data } = props
+  const { setDraggingItemId } = useContext(BuilderContext)
+  const [state, drag] = useDrag({
+    item: { id: data.id, type: data.item_type },
+    canDrag: true,
+    collect: (monitor: DragSourceMonitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  })
+  useEffect(() => {
+    if (state.isDragging) {
+      setDraggingItemId(data.id)
+    } else {
+      setDraggingItemId(undefined)
+    }
+  }, [state.isDragging])
   return (
     <Container
-      onClick={() => {
-        onClick(data)
-      }}
+      isDragging={state.isDragging}
+      ref={drag}
     >
       <Background>
         <ItemContainer>

@@ -3,9 +3,19 @@ import BarContainer from "./BarContainer";
 import BuilderContext, { CustomPage, PageType } from "../store/BuilderContext";
 import SettingsBlock from "./SettingsBlock";
 import SettingsSelect from "./SettingsSelect";
+import { CUSTOM_COMPONENT_TYPES } from "./mobile_components";
+import EditTextBlock from "./forms/EditTextBlock";
 
 export default function Rightbar() {
-  const { openedPage, setOpenedPage } = useContext(BuilderContext)
+  const {
+    openedPage,
+    setOpenedPage,
+    editingComponent,
+    editComponentForm,
+    setEditComponentForm,
+    setEditingComponent,
+    updateComponent,
+  } = useContext(BuilderContext)
   const editPage = (page: CustomPage) => {
     setOpenedPage((prevPage: CustomPage | null) => ({
       ...prevPage,
@@ -37,6 +47,9 @@ export default function Rightbar() {
           ]}
         />
       </SettingsBlock>
+      {
+        editingComponent?.item_type === CUSTOM_COMPONENT_TYPES.TextBlock ? <EditTextBlock/> : null
+      }
     </BarContainer>
   )
 }

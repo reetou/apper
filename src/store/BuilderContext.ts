@@ -14,11 +14,39 @@ export interface CustomPage {
   backgroundColor: string,
 }
 
+export const DEFAULT_PAGE: CustomPage = {
+  components: [],
+  name: 'Default Page',
+  padding: [0, 0, 0, 0],
+  margin: [0, 0, 0, 0],
+  pageType: 'screen',
+  backgroundColor: '#FFFFFF'
+}
+
+export type CustomComponentType = 'custom_input'
+  | 'custom_generic_button'
+  | 'custom_generic_button_rounded'
+  | 'custom_text_block'
+
 export interface CustomComponent {
+  id: string,
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>,
   props: any,
   title: string,
+  item_type: CustomComponentType;
   children: CustomComponent[],
+  data?: {
+    value?: string,
+  }
+}
+
+interface EditCustomComponentForm {
+  value: any,
+
+}
+
+export const DEFAULT_EDIT_COMPONENT_FORM = {
+  value: ''
 }
 
 interface BuilderContextProps {
@@ -28,8 +56,16 @@ interface BuilderContextProps {
   setSelectedElement: Dispatch<SetStateAction<any>>,
   pages: CustomPage[],
   setPages: Dispatch<SetStateAction<CustomPage[]>>,
-  openedPage: CustomPage | null,
-  setOpenedPage: Dispatch<SetStateAction<CustomPage | null>>,
+  openedPage: CustomPage,
+  setOpenedPage: Dispatch<SetStateAction<CustomPage>>,
+  onAddComponent: (component: CustomComponent) => void,
+  draggingItemId?: string,
+  setDraggingItemId: Dispatch<SetStateAction<string | undefined>>,
+  editingComponent?: CustomComponent,
+  setEditingComponent: Dispatch<SetStateAction<CustomComponent | undefined>>,
+  editComponentForm: EditCustomComponentForm,
+  setEditComponentForm: Dispatch<SetStateAction<EditCustomComponentForm>>,
+  updateComponent: () => void,
 }
 
 export default createContext<BuilderContextProps>({
@@ -39,6 +75,12 @@ export default createContext<BuilderContextProps>({
   setSelectedElement: () => {},
   pages: [],
   setPages: () => {},
-  openedPage: null,
+  openedPage: DEFAULT_PAGE,
   setOpenedPage: () => {},
+  onAddComponent: () => {},
+  setDraggingItemId: () => {},
+  setEditingComponent: () => {},
+  editComponentForm: { value: '' },
+  setEditComponentForm: () => {},
+  updateComponent: () => {},
 })

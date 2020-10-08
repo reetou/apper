@@ -7,6 +7,7 @@ const BarContainer = styled.div`
   min-width: 260px;
   max-width: 360px;
   border: 2px solid black;
+  position: relative;
 `
 
 export default BarContainer

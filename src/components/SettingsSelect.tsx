@@ -30,7 +30,7 @@ export default function SettingsSelect(props: Props) {
       <select value={value} onChange={e => onChange(e.target.value)}>
         {
           options.map(o => (
-            <option value={o.value}>{o.label}</option>
+            <option key={`${o.value}_${o.label}_${title}`} value={o.value}>{o.label}</option>
           ))
         }
       </select>

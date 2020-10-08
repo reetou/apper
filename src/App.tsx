@@ -5,30 +5,46 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
-import BuilderContext, { BuilderMode, CustomComponent, CustomPage } from './store/BuilderContext';
+import BuilderContext, { BuilderMode, CustomComponent, CustomPage, DEFAULT_PAGE } from './store/BuilderContext';
 import Builder from "./pages/Builder";
-
-const DEFAULT_PAGES: CustomPage[] = [
-  {
-    components: [],
-    name: 'Default page',
-    margin: [0, 0, 0, 0],
-    padding: [0, 0, 0, 0],
-    backgroundColor: '#FFFFFF',
-    pageType: 'screen',
-  }
-]
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import update from 'immutability-helper'
 
 function App() {
   const [mode, setMode] = useState<BuilderMode>('simulator')
   const [selectedElement, setSelectedElement] = useState<any>()
-  const [pages, setPages] = useState<CustomPage[]>(DEFAULT_PAGES)
-  const [openedPage, setOpenedPage] = useState<CustomPage | null>(null)
-  useEffect(() => {
-    if (!openedPage) {
-      setOpenedPage(pages[0])
+  const [pages, setPages] = useState<CustomPage[]>([DEFAULT_PAGE])
+  const [openedPage, setOpenedPage] = useState<CustomPage>(DEFAULT_PAGE)
+  const [draggingItemId, setDraggingItemId] = useState()
+  const [editingComponent, setEditingComponent] = useState()
+  const [editComponentForm, setEditComponentForm] = useState()
+  const onAddComponent = (component: CustomComponent) => {
+    console.log(`Pushing component`, component)
+    setOpenedPage((prevPage) => {
+      const newState = update(prevPage, {
+        components: { $push: [component] },
+      })
+      return newState
+    })
+  }
+  const updateComponent = () => {
+    if (!editingComponent) {
+      return
     }
-  }, [pages])
+    setOpenedPage(prevPage => {
+      const index = prevPage.components.map(x => x.id).indexOf(editingComponent.id)
+      return update(prevPage, {
+        components: {
+          [index]: {
+            data: {
+              $merge: editComponentForm
+            }
+          }
+        }
+      })
+    })
+  }
   return (
     <BuilderContext.Provider
       value={{
@@ -39,14 +55,24 @@ function App() {
         pages,
         setPages,
         openedPage,
-        setOpenedPage
+        setOpenedPage,
+        onAddComponent,
+        updateComponent,
+        draggingItemId,
+        setDraggingItemId,
+        editingComponent,
+        setEditingComponent,
+        editComponentForm,
+        setEditComponentForm,
       }}
     >
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact component={Builder} />
-        </Switch>
-      </BrowserRouter>
+      <DndProvider backend={HTML5Backend}>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact component={Builder} />
+          </Switch>
+        </BrowserRouter>
+      </DndProvider>
     </BuilderContext.Provider>
   );
 }
