@@ -13,9 +13,9 @@ interface Props {
   onMove: (id1: string, id2: string) => void;
 }
 
-const Container = styled.div<{editing: boolean}>`
+const Container = styled.div<{editing: boolean, isDragging: boolean}>`
   position: relative;
-  border: ${props => props.editing ? '2px solid red' : 'none'};
+  border: ${({ editing }) => editing ? '2px solid red' : 'none'};
 `
 
 const Overlay = styled.div`
@@ -78,21 +78,30 @@ export default function MovableContainer(props: Props) {
     setEditingComponent(component)
   }
   const element = (
-    <div ref={ref} style={{ opacity, width: '100%', position: 'relative' }}>
-      {
-        showOverlay
-          ? (
-            <Overlay>
-              <Icon
-                onClick={onEdit}
-              >
-                <img src={`${process.env.PUBLIC_URL}/icons/edit.svg`} style={{ width: 20, height: 20 }} />
-              </Icon>
-            </Overlay>
-          )
-          : null
-      }
-      {children}
+    <div ref={ref} style={{ margin: isDragging ? 20 : 0 }}>
+      <div
+        style={{
+          opacity,
+          width: 'auto',
+          position: 'relative',
+          backgroundColor: isDragging ? 'grey' : 'transparent'
+        }}
+      >
+        {
+          showOverlay
+            ? (
+              <Overlay>
+                <Icon
+                  onClick={onEdit}
+                >
+                  <img src={`${process.env.PUBLIC_URL}/icons/edit.svg`} style={{ width: 20, height: 20 }} />
+                </Icon>
+              </Overlay>
+            )
+            : null
+        }
+        {children}
+      </div>
     </div>
   )
   const [hoverable, hovered] = useHover(element);
@@ -100,7 +109,7 @@ export default function MovableContainer(props: Props) {
     setShowOverlay(hovered)
   }, [hovered])
   return (
-    <Container editing={editingComponent?.id === id}>
+    <Container editing={editingComponent?.id === id} isDragging={isDragging}>
       {hoverable}
     </Container>
   )

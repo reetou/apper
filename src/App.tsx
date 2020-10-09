@@ -28,15 +28,30 @@ function App() {
       return newState
     })
   }
-  const updateComponent = () => {
+  const updateComponent = (newProps?: object) => {
     if (!editingComponent) {
       return
     }
+    setEditingComponent((prevComponent?: CustomComponent) => {
+      if (!prevComponent) {
+        return prevComponent
+      }
+      return update(prevComponent, {
+        props: {
+          $merge: newProps
+        }
+      })
+    })
     setOpenedPage(prevPage => {
       const index = prevPage.components.map(x => x.id).indexOf(editingComponent.id)
       return update(prevPage, {
         components: {
           [index]: {
+            ...newProps ? {
+              props: {
+                $merge: newProps
+              }
+            } : {},
             data: {
               $merge: editComponentForm
             }

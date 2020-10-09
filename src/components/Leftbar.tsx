@@ -6,7 +6,7 @@ import BuilderContext, { CustomComponent, CustomComponentType, CustomPage } from
 import {
   ALL_CUSTOM_COMPONENT_TYPES,
   CustomGenericButtonData,
-  CustomGenericRoundedButtonData,
+  CustomGenericRoundedButtonData, CustomImageData,
   CustomInputData, TextBlockData,
 } from "./mobile_components";
 import CustomGenericButton from "./mobile_components/CustomGenericButton";
@@ -15,6 +15,7 @@ import { useDrop } from "react-dnd";
 import update from 'immutability-helper'
 import styled from 'styled-components'
 import TextBlock from "./mobile_components/TextBlock";
+import CustomImage from "./mobile_components/CustomImage";
 
 const Overlay = styled.div`
   position: absolute;
@@ -27,6 +28,36 @@ const Overlay = styled.div`
   justify-content: center;
   align-items: center;
 `
+
+const INTERACTION_BLOCK = {
+  title: 'Взаимодействие',
+  components: [
+    {
+      component: <CustomInput thumbnail />,
+      data: CustomInputData()
+    },
+    {
+      component: <CustomGenericButton thumbnail />,
+      data: CustomGenericButtonData()
+    },
+    {
+      component: <CustomGenericButton thumbnail rounded />,
+      data: CustomGenericRoundedButtonData()
+    },
+    {
+      component: <TextBlock thumbnail />,
+      data: TextBlockData()
+    },
+    {
+      component: <CustomImage thumbnail />,
+      data: CustomImageData()
+    },
+  ]
+}
+
+const BLOCKS = [
+  INTERACTION_BLOCK,
+]
 
 export default function Leftbar() {
   const { onAddComponent, openedPage, setOpenedPage, draggingItemId } = useContext(BuilderContext)
@@ -71,30 +102,23 @@ export default function Leftbar() {
           : null
       }
       <h3>Компоненты</h3>
-      <CustomComponentBlock
-        title="Взаимодействие"
-      >
-        <CustomComponentContainer
-          data={CustomInputData()}
-        >
-          <CustomInput thumbnail />
-        </CustomComponentContainer>
-        <CustomComponentContainer
-          data={CustomGenericButtonData()}
-        >
-          <CustomGenericButton thumbnail />
-        </CustomComponentContainer>
-        <CustomComponentContainer
-          data={CustomGenericRoundedButtonData()}
-        >
-          <CustomGenericButton thumbnail rounded />
-        </CustomComponentContainer>
-        <CustomComponentContainer
-          data={TextBlockData()}
-        >
-          <TextBlock thumbnail />
-        </CustomComponentContainer>
-      </CustomComponentBlock>
+      {
+        BLOCKS.map(b => (
+          <CustomComponentBlock
+            title={b.title}
+          >
+            {
+              b.components.map(c => (
+                <CustomComponentContainer
+                  data={c.data}
+                >
+                  {c.component}
+                </CustomComponentContainer>
+              ))
+            }
+          </CustomComponentBlock>
+        ))
+      }
     </BarContainer>
   )
 }

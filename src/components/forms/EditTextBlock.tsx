@@ -5,7 +5,7 @@ import update from 'immutability-helper'
 import { TextInput } from "react-native-web";
 
 export default function EditTextBlock() {
-  const { editComponentForm, setEditComponentForm, editingComponent } = useContext(BuilderContext)
+  const { updateComponent, setEditingComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
     if (!editingComponent) {
@@ -29,17 +29,13 @@ export default function EditTextBlock() {
           minHeight: 150,
           width: '100%',
         }}
-        value={editComponentForm.value}
+        value={editingComponent?.props?.text}
         onChange={e => {
           const val = e.target.value
-          setEditComponentForm(prevState => {
-            return update(prevState, {
-              value: {
-                $set: val
-              }
-            })
-            }
-          )
+          console.log(`New val`, val)
+          updateComponent({
+            text: val
+          })
         }}
       />
     </React.Fragment>

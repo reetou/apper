@@ -4,11 +4,11 @@ import { toThumbnailSize } from "../../utils/componentUtils";
 
 interface Props {
   thumbnail?: boolean,
-  data?: { value: any }
+  text?: string,
 }
 
 export default function TextBlock(props: Props) {
-  const { data, thumbnail } = props
+  const { text, thumbnail } = props
   return (
     <View style={{ flex: 1 }}>
       <Text
@@ -16,7 +16,7 @@ export default function TextBlock(props: Props) {
           fontSize: toThumbnailSize(14, 6, thumbnail),
         }}
       >
-        {thumbnail ? 'Lorem ipsum' : data?.value}
+        {thumbnail ? 'Lorem ipsum!' : (text || 'Lorem ipsum...')}
       </Text>
     </View>
   )

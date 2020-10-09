@@ -68,8 +68,8 @@ export default function Simulator() {
       const itemIndex = ids.indexOf(id)
       const item = prevPage.components[itemIndex]
       const afterIndex = ids.indexOf(afterId)
-      console.log(`Item replacing`, item)
-      console.log(`Gonna splice ${itemIndex} and remove it and then place it after ${afterIndex}`)
+      // console.log(`Item replacing`, item)
+      // console.log(`Gonna splice ${itemIndex} and remove it and then place it after ${afterIndex}`)
       return update(prevPage, {
         components: {
           $splice: [

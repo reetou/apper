@@ -3,6 +3,7 @@ import CustomInput from "./CustomInput";
 import CustomGenericButton from "./CustomGenericButton";
 import { v4 as uuidv4 } from 'uuid'
 import TextBlock from "./TextBlock";
+import CustomImage from "./CustomImage";
 
 interface ComponentTypesInterface {
   [key: string]: CustomComponentType,
@@ -13,6 +14,7 @@ export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
   CustomGenericButton: 'custom_generic_button',
   CustomGenericButtonRounded: 'custom_generic_button_rounded',
   TextBlock: 'custom_text_block',
+  CustomImage: 'custom_image',
 }
 
 export const ALL_CUSTOM_COMPONENT_TYPES: CustomComponentType[] = Object.keys(CUSTOM_COMPONENT_TYPES).map(k => CUSTOM_COMPONENT_TYPES[k])
@@ -25,6 +27,8 @@ export function getCustomComponentByItemType(type: CustomComponentType): CustomC
       return CustomGenericRoundedButtonData()
     case CUSTOM_COMPONENT_TYPES.TextBlock:
       return TextBlockData()
+    case CUSTOM_COMPONENT_TYPES.CustomImage:
+      return CustomImageData()
     default:
       console.error(`Returning default component because no such custom type ${type}`)
       return CustomInputData()
@@ -85,6 +89,22 @@ export function TextBlockData(): CustomComponent {
     item_type: CUSTOM_COMPONENT_TYPES.TextBlock,
     data: {
       value: 'Lorem ipsum dolorum'
+    }
+  }
+}
+
+export function CustomImageData(): CustomComponent {
+  return {
+    id: uuidv4(),
+    component: CustomImage,
+    props: {
+      image_url: ''
+    },
+    children: [],
+    title: 'Блок текста',
+    item_type: CUSTOM_COMPONENT_TYPES.CustomImage,
+    data: {
+      value: '',
     }
   }
 }

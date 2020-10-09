@@ -27,6 +27,7 @@ export type CustomComponentType = 'custom_input'
   | 'custom_generic_button'
   | 'custom_generic_button_rounded'
   | 'custom_text_block'
+  | 'custom_image'
 
 export interface CustomComponent {
   id: string,
@@ -65,7 +66,7 @@ interface BuilderContextProps {
   setEditingComponent: Dispatch<SetStateAction<CustomComponent | undefined>>,
   editComponentForm: EditCustomComponentForm,
   setEditComponentForm: Dispatch<SetStateAction<EditCustomComponentForm>>,
-  updateComponent: () => void,
+  updateComponent: (newProps?: object) => void,
 }
 
 export default createContext<BuilderContextProps>({
