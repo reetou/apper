@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import BuilderContext from "../../store/BuilderContext";
-import { Dialog, EditableText, Spinner } from "@blueprintjs/core";
-import update from 'immutability-helper'
-import { TextInput } from "react-native-web";
+import FormTitleCollapsible from "../FormTitleCollapsible";
 
 export default function EditTextBlock() {
   const { updateComponent, setEditingComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -17,10 +15,11 @@ export default function EditTextBlock() {
     setLoading(false)
   }, [])
   if (loading) {
-    return <Spinner intent="primary" size={100} />
+    return null
   }
   return (
     <React.Fragment>
+      <FormTitleCollapsible title="Настройки блока с текстом" />
       <div>
         Текст внутри блока:
       </div>
@@ -32,7 +31,6 @@ export default function EditTextBlock() {
         value={editingComponent?.props?.text}
         onChange={e => {
           const val = e.target.value
-          console.log(`New val`, val)
           updateComponent({
             text: val
           })

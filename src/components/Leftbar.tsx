@@ -49,7 +49,7 @@ const INTERACTION_BLOCK = {
       data: TextBlockData()
     },
     {
-      component: <CustomImage thumbnail />,
+      component: <CustomImage width={60} height={60} thumbnail />,
       data: CustomImageData()
     },
   ]
@@ -60,7 +60,7 @@ const BLOCKS = [
 ]
 
 export default function Leftbar() {
-  const { onAddComponent, openedPage, setOpenedPage, draggingItemId } = useContext(BuilderContext)
+  const { onAddComponent, openedPage, setOpenedPage, draggingItemId, editingComponent, setEditingComponent } = useContext(BuilderContext)
   const [componentsIds, setComponentsIds] = useState<string[]>(openedPage.components.map(c => c.id))
   useEffect(() => {
     setComponentsIds(openedPage.components.map(c => c.id))
@@ -72,6 +72,10 @@ export default function Leftbar() {
       const index = componentsIds.indexOf(item.id)
       if (index > -1) {
         setOpenedPage(prevPage => update(prevPage, { components: { $splice: [[index, 1]] } }))
+        if (editingComponent?.id === item.id) {
+          console.log(`Also removing editing component`)
+          setEditingComponent(undefined)
+        }
       }
       return undefined
     },

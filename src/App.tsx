@@ -19,7 +19,7 @@ function App() {
   const [draggingItemId, setDraggingItemId] = useState()
   const [editingComponent, setEditingComponent] = useState()
   const [editComponentForm, setEditComponentForm] = useState()
-  const onAddComponent = (component: CustomComponent) => {
+  const onAddComponent = (component: CustomComponent, setAsEditing = false) => {
     console.log(`Pushing component`, component)
     setOpenedPage((prevPage) => {
       const newState = update(prevPage, {
@@ -27,21 +27,26 @@ function App() {
       })
       return newState
     })
+    if (setAsEditing) {
+      setEditingComponent(component)
+    }
   }
   const updateComponent = (newProps?: object) => {
     if (!editingComponent) {
       return
     }
-    setEditingComponent((prevComponent?: CustomComponent) => {
-      if (!prevComponent) {
-        return prevComponent
-      }
-      return update(prevComponent, {
-        props: {
-          $merge: newProps
+    if (newProps) {
+      setEditingComponent((prevComponent?: CustomComponent) => {
+        if (!prevComponent) {
+          return prevComponent
         }
+        return update(prevComponent, {
+          props: {
+            $merge: newProps
+          }
+        })
       })
-    })
+    }
     setOpenedPage(prevPage => {
       const index = prevPage.components.map(x => x.id).indexOf(editingComponent.id)
       return update(prevPage, {

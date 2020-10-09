@@ -48,7 +48,7 @@ export default function Simulator() {
         return
       }
       const customComponent = getCustomComponentByItemType(item.type)
-      onAddComponent(customComponent)
+      onAddComponent(customComponent, true)
       return undefined
     },
     collect: (monitor) => ({

@@ -69,11 +69,11 @@ export default function MovableContainer(props: Props) {
     }
   }, [isDragging])
   const onEdit = () => {
-    console.log(`Edit`)
     const component = openedPage.components.find(c => c.id === id)
-    if (!component) {
+    if (!component || editingComponent?.id === id) {
       return
     }
+    console.log(`Edit`)
     setEditComponentForm(DEFAULT_EDIT_COMPONENT_FORM)
     setEditingComponent(component)
   }
@@ -82,7 +82,7 @@ export default function MovableContainer(props: Props) {
       <div
         style={{
           opacity,
-          width: 'auto',
+          width: '100%',
           position: 'relative',
           backgroundColor: isDragging ? 'grey' : 'transparent'
         }}

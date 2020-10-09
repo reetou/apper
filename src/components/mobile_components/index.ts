@@ -4,6 +4,7 @@ import CustomGenericButton from "./CustomGenericButton";
 import { v4 as uuidv4 } from 'uuid'
 import TextBlock from "./TextBlock";
 import CustomImage from "./CustomImage";
+import { ONCLICK_TYPES } from "../../utils/buttonUtils";
 
 interface ComponentTypesInterface {
   [key: string]: CustomComponentType,
@@ -16,6 +17,12 @@ export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
   TextBlock: 'custom_text_block',
   CustomImage: 'custom_image',
 }
+
+export const CUSTOM_INPUTS = [
+  CUSTOM_COMPONENT_TYPES.CustomInput,
+]
+
+export const DEFAULT_IMAGE_URL = 'https://i.imgur.com/t0nSc4e.png'
 
 export const ALL_CUSTOM_COMPONENT_TYPES: CustomComponentType[] = Object.keys(CUSTOM_COMPONENT_TYPES).map(k => CUSTOM_COMPONENT_TYPES[k])
 
@@ -44,8 +51,17 @@ export function CustomInputData(): CustomComponent {
     },
     children: [],
     title: 'Поле для ввода текста',
-    item_type: CUSTOM_COMPONENT_TYPES.CustomInput
+    item_type: CUSTOM_COMPONENT_TYPES.CustomInput,
+    data: {
+      value: '',
+    }
   }
+}
+
+const buttonBasicProps = {
+  newPageName: '',
+  onClickType: ONCLICK_TYPES.noop,
+  disabled: false,
 }
 
 export function CustomGenericButtonData(): CustomComponent {
@@ -53,12 +69,15 @@ export function CustomGenericButtonData(): CustomComponent {
     id: uuidv4(),
     component: CustomGenericButton,
     props: {
-      disabled: false,
-      text: 'Сохранить'
+      text: 'Сохранить',
+      ...buttonBasicProps,
     },
     children: [],
     title: 'Кнопка',
-    item_type: CUSTOM_COMPONENT_TYPES.CustomGenericButton
+    item_type: CUSTOM_COMPONENT_TYPES.CustomGenericButton,
+    data: {
+      value: '',
+    }
   }
 }
 
@@ -67,13 +86,16 @@ export function CustomGenericRoundedButtonData(): CustomComponent {
     id: uuidv4(),
     component: CustomGenericButton,
     props: {
-      disabled: false,
+      ...buttonBasicProps,
       text: 'Сохранить',
       rounded: true,
     },
     children: [],
     title: 'Закругленная кнопка',
-    item_type: CUSTOM_COMPONENT_TYPES.CustomGenericButtonRounded
+    item_type: CUSTOM_COMPONENT_TYPES.CustomGenericButtonRounded,
+    data: {
+      value: '',
+    }
   }
 }
 
@@ -98,10 +120,13 @@ export function CustomImageData(): CustomComponent {
     id: uuidv4(),
     component: CustomImage,
     props: {
-      image_url: ''
+      image_url: DEFAULT_IMAGE_URL,
+      horizontalAlign: 'flex-start',
+      width: 60,
+      height: 60,
     },
     children: [],
-    title: 'Блок текста',
+    title: 'Изображение',
     item_type: CUSTOM_COMPONENT_TYPES.CustomImage,
     data: {
       value: '',

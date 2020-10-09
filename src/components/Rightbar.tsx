@@ -1,10 +1,26 @@
 import React, { useContext } from 'react'
 import BarContainer from "./BarContainer";
-import BuilderContext, { CustomPage, PageType } from "../store/BuilderContext";
+import BuilderContext, { CustomComponent, CustomPage, PageType } from "../store/BuilderContext";
 import SettingsBlock from "./SettingsBlock";
 import SettingsSelect from "./SettingsSelect";
 import { CUSTOM_COMPONENT_TYPES } from "./mobile_components";
 import EditTextBlock from "./forms/EditTextBlock";
+import EditCustomGenericButton from "./forms/EditCustomGenericButton";
+import EditCustomImage from "./forms/EditCustomImage";
+
+function componentForm(component?: CustomComponent) {
+  switch (component?.item_type) {
+    case CUSTOM_COMPONENT_TYPES.TextBlock:
+      return <EditTextBlock />
+    case CUSTOM_COMPONENT_TYPES.CustomGenericButton:
+    case CUSTOM_COMPONENT_TYPES.CustomGenericButtonRounded:
+      return <EditCustomGenericButton />
+    case CUSTOM_COMPONENT_TYPES.CustomImage:
+      return <EditCustomImage />
+    default:
+      return null
+  }
+}
 
 export default function Rightbar() {
   const {
@@ -47,9 +63,7 @@ export default function Rightbar() {
           ]}
         />
       </SettingsBlock>
-      {
-        editingComponent?.item_type === CUSTOM_COMPONENT_TYPES.TextBlock ? <EditTextBlock/> : null
-      }
+      {componentForm(editingComponent)}
     </BarContainer>
   )
 }

@@ -1,11 +1,13 @@
 import { createContext, Dispatch, SetStateAction, ReactNode, default as React } from "react";
 import { RouteComponentProps } from "react-router";
+import { v4 as uuidv4 } from 'uuid'
 
 export type BuilderMode = 'simulator' | 'navigation'
 
 export type PageType = 'modal' | 'screen'
 
 export interface CustomPage {
+  id: string,
   components: CustomComponent[],
   name: string,
   padding: number[],
@@ -15,6 +17,7 @@ export interface CustomPage {
 }
 
 export const DEFAULT_PAGE: CustomPage = {
+  id: uuidv4(),
   components: [],
   name: 'Default Page',
   padding: [0, 0, 0, 0],
@@ -59,7 +62,7 @@ interface BuilderContextProps {
   setPages: Dispatch<SetStateAction<CustomPage[]>>,
   openedPage: CustomPage,
   setOpenedPage: Dispatch<SetStateAction<CustomPage>>,
-  onAddComponent: (component: CustomComponent) => void,
+  onAddComponent: (component: CustomComponent, setAsEditing: boolean) => void,
   draggingItemId?: string,
   setDraggingItemId: Dispatch<SetStateAction<string | undefined>>,
   editingComponent?: CustomComponent,

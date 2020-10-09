@@ -3,6 +3,7 @@ import React from 'react'
 interface SettingsOption {
   value: any;
   label: string;
+  disabled?: boolean;
 }
 
 interface Props {
@@ -30,7 +31,7 @@ export default function SettingsSelect(props: Props) {
       <select value={value} onChange={e => onChange(e.target.value)}>
         {
           options.map(o => (
-            <option key={`${o.value}_${o.label}_${title}`} value={o.value}>{o.label}</option>
+            <option disabled={o.disabled} key={`${o.value}_${o.label}_${title}`} value={o.value}>{o.label}</option>
           ))
         }
       </select>

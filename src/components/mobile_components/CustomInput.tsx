@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextInput } from 'react-native-web'
 import { toThumbnailSize } from "../../utils/componentUtils";
 
@@ -9,11 +9,13 @@ interface Props {
 
 export default function CustomInput(props: Props) {
   const { thumbnail, disabled } = props
+  const [value, setValue] = useState<string>('')
   return (
     <TextInput
-      value="Some test"
+      value={value}
       editable={!disabled || thumbnail}
       allowFontScaling
+      onChangeText={setValue}
       style={{
         width: 'inherit',
         fontSize: toThumbnailSize(14, 6, thumbnail),
