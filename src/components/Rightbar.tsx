@@ -48,11 +48,11 @@ export default function Rightbar() {
         title="Параметры страницы"
       >
         <SettingsSelect
-          value={openedPage.pageType}
+          value={openedPage.page_type}
           onChange={(value) => {
             editPage({
               ...openedPage as CustomPage,
-              pageType: value as PageType,
+              page_type: value as PageType,
             })
             console.log(`New value is`, value)
           }}

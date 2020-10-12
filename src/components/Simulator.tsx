@@ -18,7 +18,7 @@ function getPageProps(page?: CustomPage): object {
   if (!page) {
     return {}
   }
-  switch (page.pageType) {
+  switch (page.page_type) {
     case "screen":
       return {
         style: {
@@ -112,7 +112,7 @@ export default function Simulator() {
       >
         <View style={{ flex: 1, height: '100%' }}>
           {
-            openedPage?.pageType === 'screen'
+            openedPage?.page_type === 'screen'
               ? (
                 <View style={{ flex: 1, ...dropViewStyle }}>
                   {children}
@@ -121,7 +121,7 @@ export default function Simulator() {
               : null
           }
           {
-            openedPage?.pageType === 'modal'
+            openedPage?.page_type === 'modal'
               ? (
                 <View style={{ flex: 1, ...dropViewStyle }}>
                   {children}

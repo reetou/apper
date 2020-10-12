@@ -59,7 +59,7 @@ export function CustomInputData(): CustomComponent {
 }
 
 const buttonBasicProps = {
-  newPageName: '',
+  newPageId: '',
   onClickType: ONCLICK_TYPES.noop,
   disabled: false,
 }
@@ -120,7 +120,7 @@ export function CustomImageData(): CustomComponent {
     id: uuidv4(),
     component: CustomImage,
     props: {
-      image_url: DEFAULT_IMAGE_URL,
+      imageUrl: DEFAULT_IMAGE_URL,
       horizontalAlign: 'flex-start',
       width: 60,
       height: 60,

@@ -12,8 +12,8 @@ export interface CustomPage {
   name: string,
   padding: number[],
   margin: number[],
-  pageType: PageType,
-  backgroundColor: string,
+  page_type: PageType,
+  background_color: string,
 }
 
 export const DEFAULT_PAGE: CustomPage = {
@@ -22,8 +22,8 @@ export const DEFAULT_PAGE: CustomPage = {
   name: 'Default Page',
   padding: [0, 0, 0, 0],
   margin: [0, 0, 0, 0],
-  pageType: 'screen',
-  backgroundColor: '#FFFFFF'
+  page_type: 'screen',
+  background_color: '#FFFFFF'
 }
 
 export type CustomComponentType = 'custom_input'

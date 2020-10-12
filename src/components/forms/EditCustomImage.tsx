@@ -28,11 +28,11 @@ export default function EditCustomImage() {
         style={{
           width: '100%',
         }}
-        value={editingComponent?.props?.image_url}
+        value={editingComponent?.props?.imageUrl}
         onChange={e => {
           const val = e.target.value
           updateComponent({
-            image_url: val
+            imageUrl: val
           })
         }}
       />

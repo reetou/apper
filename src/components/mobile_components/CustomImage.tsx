@@ -3,7 +3,7 @@ import { View, Image } from "react-native-web";
 import { DEFAULT_IMAGE_URL } from "./index";
 
 interface Props {
-  image_url?: string;
+  imageUrl?: string;
   thumbnail?: boolean;
   rounded?: boolean;
   width: number;
@@ -12,8 +12,8 @@ interface Props {
 }
 
 export default function CustomImage(props: Props) {
-  const { image_url, thumbnail, rounded, horizontalAlign, width, height } = props
-  const uri = thumbnail ? DEFAULT_IMAGE_URL : image_url || DEFAULT_IMAGE_URL
+  const { imageUrl, thumbnail, rounded, horizontalAlign, width, height } = props
+  const uri = thumbnail ? DEFAULT_IMAGE_URL : imageUrl || DEFAULT_IMAGE_URL
   return (
     <View
       style={{
