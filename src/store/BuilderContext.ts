@@ -44,6 +44,7 @@ interface CustomComponentProps {
   horizontalAlign?: 'flex-start' | 'flex-end' | 'center',
   width: number,
   height: number,
+  newPageName?: string,
 }
 
 export interface CustomComponent {
