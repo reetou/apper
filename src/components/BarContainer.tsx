@@ -8,6 +8,7 @@ const BarContainer = styled.div`
   max-width: 360px;
   border: 2px solid black;
   position: relative;
+  overflow-y: auto;
 `
 
 export default BarContainer

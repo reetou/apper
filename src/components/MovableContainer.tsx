@@ -30,6 +30,9 @@ const Icon = styled.div`
   width: 20px;
   height: 20px;
   opacity: 0.7;
+  background-color: white;
+  padding: 2px;
+  border-radius: 4px;
   :hover {
     opacity: 1;
   }

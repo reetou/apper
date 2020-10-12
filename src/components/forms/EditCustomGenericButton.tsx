@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import BuilderContext from "../../store/BuilderContext";
 import SettingsSelect from "../SettingsSelect";
 import { NAVIGATION_MOVE_ONCLICK_TYPES, ONCLICK_TYPES } from "../../utils/buttonUtils";
-import { CUSTOM_INPUTS } from "../mobile_components";
 import FormTitleCollapsible from "../FormTitleCollapsible";
+import SettingsColorPicker from "../SettingsColorPicker";
+import SettingsInput from "../SettingsInput";
 
 export default function EditCustomGenericButton() {
   const { updateComponent, setEditingComponent, pages, openedPage, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -27,26 +28,20 @@ export default function EditCustomGenericButton() {
       { value: ONCLICK_TYPES.navigateBack, label: 'Перейти на страницу назад', disabled: isFirst },
     ]
   }
-  if (loading) {
+  if (loading || !editingComponent) {
     return null
   }
   return (
     <React.Fragment>
       <FormTitleCollapsible title="Настройки кнопки" />
-      <div>
-        Текст кнопки:
-      </div>
-      <input
-        style={{
-          width: '100%',
-        }}
-        value={editingComponent?.props?.text}
-        onChange={e => {
-          const val = e.target.value
+      <SettingsInput
+        value={editingComponent.props?.text || ''}
+        onChange={(val) => {
           updateComponent({
             text: val
           })
         }}
+        title="Текст кнопки"
       />
       <SettingsSelect
         value={editingComponent?.props?.onClickType}
@@ -68,6 +63,46 @@ export default function EditCustomGenericButton() {
         hidden={!editingComponent?.props?.onClickType || !NAVIGATION_MOVE_ONCLICK_TYPES.includes(editingComponent?.props?.onClickType)}
         title="Новая страница:"
         options={pages.filter(p => p.id !== openedPage.id).map(p => ({ value: p.id, label: p.name }))}
+      />
+      <SettingsInput
+        value={editingComponent.props?.borderWidth}
+        onChange={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            borderWidth: Number(val)
+          })
+        }}
+        title="Ширина обводки"
+      />
+      <SettingsColorPicker
+        value={editingComponent.props.backgroundColor || ''}
+        title="Цвет фона"
+        onChange={(val) => {
+          updateComponent({
+            backgroundColor: val
+          })
+        }}
+      />
+      <SettingsColorPicker
+        value={editingComponent.props.textColor || ''}
+        title="Цвет текста"
+        onChange={(val) => {
+          updateComponent({
+            textColor: val
+          })
+        }}
+      />
+      <SettingsColorPicker
+        value={editingComponent.props.borderColor || ''}
+        title="Цвет обводки"
+        onChange={(val) => {
+          updateComponent({
+            borderColor: val
+          })
+        }}
       />
     </React.Fragment>
   )

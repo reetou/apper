@@ -5,10 +5,11 @@ import { toThumbnailSize } from "../../utils/componentUtils";
 interface Props {
   thumbnail?: boolean,
   disabled?: boolean,
+  inputPlaceholder?: string,
 }
 
 export default function CustomInput(props: Props) {
-  const { thumbnail, disabled } = props
+  const { thumbnail, disabled, inputPlaceholder } = props
   const [value, setValue] = useState<string>('')
   return (
     <TextInput
@@ -24,7 +25,7 @@ export default function CustomInput(props: Props) {
         paddingVertical: toThumbnailSize(8, 4, thumbnail),
         paddingHorizontal: toThumbnailSize(4, 2, thumbnail),
       }}
-      placeholder="Text..."
+      placeholder={inputPlaceholder || 'Text...'}
     />
   )
 }

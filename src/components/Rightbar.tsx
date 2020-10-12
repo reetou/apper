@@ -7,6 +7,7 @@ import { CUSTOM_COMPONENT_TYPES } from "./mobile_components";
 import EditTextBlock from "./forms/EditTextBlock";
 import EditCustomGenericButton from "./forms/EditCustomGenericButton";
 import EditCustomImage from "./forms/EditCustomImage";
+import EditCustomInput from "./forms/EditCustomInput";
 
 function componentForm(component?: CustomComponent) {
   switch (component?.item_type) {
@@ -17,6 +18,8 @@ function componentForm(component?: CustomComponent) {
       return <EditCustomGenericButton />
     case CUSTOM_COMPONENT_TYPES.CustomImage:
       return <EditCustomImage />
+    case CUSTOM_COMPONENT_TYPES.CustomInput:
+      return <EditCustomInput />
     default:
       return null
   }
@@ -27,10 +30,6 @@ export default function Rightbar() {
     openedPage,
     setOpenedPage,
     editingComponent,
-    editComponentForm,
-    setEditComponentForm,
-    setEditingComponent,
-    updateComponent,
   } = useContext(BuilderContext)
   const editPage = (page: CustomPage) => {
     setOpenedPage((prevPage: CustomPage | null) => ({

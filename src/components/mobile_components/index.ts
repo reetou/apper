@@ -48,6 +48,7 @@ export function CustomInputData(): CustomComponent {
     component: CustomInput,
     props: {
       disabled: false,
+      inputPlaceholder: 'Text...',
     },
     children: [],
     title: 'Поле для ввода текста',
@@ -62,6 +63,10 @@ const buttonBasicProps = {
   newPageId: '',
   onClickType: ONCLICK_TYPES.noop,
   disabled: false,
+  backgroundColor: '#fafafa',
+  textColor: '#000000',
+  borderColor: '#000000',
+  borderWidth: 1,
 }
 
 export function CustomGenericButtonData(): CustomComponent {
@@ -105,6 +110,7 @@ export function TextBlockData(): CustomComponent {
     component: TextBlock,
     props: {
       text: 'Lorem ipsum',
+      horizontalAlign: 'flex-start',
     },
     children: [],
     title: 'Блок текста',

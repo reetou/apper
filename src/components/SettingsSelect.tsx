@@ -1,4 +1,5 @@
 import React from 'react'
+import SettingsTitle from "./SettingsTitle";
 
 interface SettingsOption {
   value: any;
@@ -26,8 +27,8 @@ export default function SettingsSelect(props: Props) {
     return null
   }
   return (
-    <div>
-      <div style={{ marginBottom: 4, marginTop: 4 }}>{title}</div>
+    <div style={{ marginTop: 12 }}>
+      <SettingsTitle text={title} />
       <select value={value} onChange={e => onChange(e.target.value)}>
         {
           options.map(o => (

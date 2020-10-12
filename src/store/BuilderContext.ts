@@ -45,6 +45,11 @@ interface CustomComponentProps {
   width?: number,
   height?: number,
   newPageName?: string,
+  backgroundColor?: string,
+  textColor?: string,
+  borderColor?: string,
+  inputPlaceholder?: string,
+  borderWidth?: number,
 }
 
 export interface CustomComponent {

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import BuilderContext from "../../store/BuilderContext";
 import SettingsSelect from "../SettingsSelect";
 import FormTitleCollapsible from "../FormTitleCollapsible";
+import SettingsInput from "../SettingsInput";
 
 export default function EditCustomImage() {
   const { updateComponent, setEditingComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -21,20 +22,14 @@ export default function EditCustomImage() {
   return (
     <React.Fragment>
       <FormTitleCollapsible title="Настройки изображения" />
-      <div>
-        Ссылка на картинку
-      </div>
-      <input
-        style={{
-          width: '100%',
-        }}
-        value={editingComponent?.props?.imageUrl}
-        onChange={e => {
-          const val = e.target.value
+      <SettingsInput
+        value={editingComponent?.props?.imageUrl || ''}
+        onChange={val => {
           updateComponent({
             imageUrl: val
           })
         }}
+        title="Ссылка на картинку"
       />
       <SettingsSelect
         value={editingComponent?.props?.horizontalAlign}
@@ -50,16 +45,9 @@ export default function EditCustomImage() {
           { value: 'flex-end', label: "Справа" },
         ]}
       />
-      <div>
-        Ширина
-      </div>
-      <input
-        style={{
-          width: '100%',
-        }}
-        value={editingComponent?.props?.width}
-        onChange={e => {
-          const val = e.target.value
+      <SettingsInput
+        value={editingComponent?.props?.width || ''}
+        onChange={val => {
           if (!Boolean(Number(val)) && val !== '') {
             console.error(`Not valid`)
             return
@@ -68,17 +56,11 @@ export default function EditCustomImage() {
             width: Number(val)
           })
         }}
+        title="Ширина"
       />
-      <div>
-        Высота
-      </div>
-      <input
-        style={{
-          width: '100%',
-        }}
-        value={editingComponent?.props?.height}
-        onChange={e => {
-          const val = e.target.value
+      <SettingsInput
+        value={editingComponent?.props?.height || ''}
+        onChange={val => {
           if (!Boolean(Number(val)) && val !== '') {
             console.error(`Not valid`)
             return
@@ -87,6 +69,7 @@ export default function EditCustomImage() {
             height: Number(val)
           })
         }}
+        title="Высота"
       />
     </React.Fragment>
   )
