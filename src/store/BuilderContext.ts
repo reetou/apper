@@ -1,6 +1,7 @@
 import { createContext, Dispatch, SetStateAction, ReactNode, default as React } from "react";
 import { RouteComponentProps } from "react-router";
 import { v4 as uuidv4 } from 'uuid'
+import { OnClickTypeType } from "../utils/buttonUtils";
 
 export type BuilderMode = 'simulator' | 'navigation'
 
@@ -32,10 +33,23 @@ export type CustomComponentType = 'custom_input'
   | 'custom_text_block'
   | 'custom_image'
 
+
+interface CustomComponentProps {
+  disabled?: boolean;
+  rounded?: boolean;
+  onClickType?: OnClickTypeType,
+  newPageId?: string,
+  text?: string,
+  imageUrl?: string,
+  horizontalAlign?: 'flex-start' | 'flex-end' | 'center',
+  width: number,
+  height: number,
+}
+
 export interface CustomComponent {
   id: string,
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>,
-  props: any,
+  props: CustomComponentProps,
   title: string,
   item_type: CustomComponentType;
   children: CustomComponent[],
