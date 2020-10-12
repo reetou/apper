@@ -42,14 +42,14 @@ interface CustomComponentProps {
   text?: string,
   imageUrl?: string,
   horizontalAlign?: 'flex-start' | 'flex-end' | 'center',
-  width: number,
-  height: number,
+  width?: number,
+  height?: number,
   newPageName?: string,
 }
 
 export interface CustomComponent {
   id: string,
-  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>,
+  component: React.ComponentType<any>,
   props: CustomComponentProps,
   title: string,
   item_type: CustomComponentType;

@@ -65,7 +65,7 @@ export default function EditCustomGenericButton() {
             newPageName: val,
           })
         }}
-        hidden={!NAVIGATION_MOVE_ONCLICK_TYPES.includes(editingComponent?.props?.onClickType)}
+        hidden={!editingComponent?.props?.onClickType || !NAVIGATION_MOVE_ONCLICK_TYPES.includes(editingComponent?.props?.onClickType)}
         title="Новая страница:"
         options={pages.filter(p => p.id !== openedPage.id).map(p => ({ value: p.id, label: p.name }))}
       />
