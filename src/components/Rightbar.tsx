@@ -9,6 +9,7 @@ import EditCustomGenericButton from "./forms/EditCustomGenericButton";
 import EditCustomImage from "./forms/EditCustomImage";
 import EditCustomInput from "./forms/EditCustomInput";
 import SettingsMarginPadding from "./SettingsMarginPadding";
+import { validateNumberValue } from "../utils/componentUtils";
 
 function componentForm(component?: CustomComponent) {
   switch (component?.item_type) {
@@ -66,7 +67,7 @@ export default function Rightbar() {
           marginValue={String(openedPage.margin[0])}
           paddingValue={String(openedPage.padding[0])}
           onChangeMargin={(val) => {
-            if (!Boolean(Number(val)) && val !== '') {
+            if (!validateNumberValue(val)) {
               console.error(`Not valid`, val)
               return
             }
@@ -77,7 +78,7 @@ export default function Rightbar() {
             })
           }}
           onChangePadding={(val) => {
-            if (!Boolean(Number(val)) && val !== '') {
+            if (!validateNumberValue(val)) {
               console.error(`Not valid`, val)
               return
             }

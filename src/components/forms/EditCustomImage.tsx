@@ -3,8 +3,8 @@ import BuilderContext from "../../store/BuilderContext";
 import SettingsSelect from "../SettingsSelect";
 import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsInput from "../SettingsInput";
-import SettingsColorPicker from "../SettingsColorPicker";
 import SettingsMarginPadding from "../SettingsMarginPadding";
+import { validateNumberValue } from "../../utils/componentUtils";
 
 export default function EditCustomImage() {
   const { updateComponent, setEditingComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -50,8 +50,8 @@ export default function EditCustomImage() {
       <SettingsInput
         value={editingComponent?.props?.width || ''}
         onChange={val => {
-          if (!Boolean(Number(val)) && val !== '') {
-            console.error(`Not valid`)
+          if (!validateNumberValue(val)) {
+            console.error(`Not valid`, val)
             return
           }
           updateComponent({
@@ -63,8 +63,8 @@ export default function EditCustomImage() {
       <SettingsInput
         value={editingComponent?.props?.height || ''}
         onChange={val => {
-          if (!Boolean(Number(val)) && val !== '') {
-            console.error(`Not valid`)
+          if (!validateNumberValue(val)) {
+            console.error(`Not valid`, val)
             return
           }
           updateComponent({
@@ -77,7 +77,7 @@ export default function EditCustomImage() {
         marginValue={editingComponent?.props.margin}
         paddingValue={editingComponent?.props.padding}
         onChangeMargin={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }
@@ -86,7 +86,7 @@ export default function EditCustomImage() {
           })
         }}
         onChangePadding={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }

@@ -1,5 +1,6 @@
 import React from 'react'
 import SettingsTitle from "./SettingsTitle";
+import Slider from 'rc-slider'
 
 interface Props {
   hidden?: boolean;
@@ -7,6 +8,10 @@ interface Props {
   onChange: (value: any) => void;
   title: string;
   textarea?: boolean;
+  slider?: boolean;
+  max?: number;
+  min?: number;
+  dots?: boolean;
 }
 
 export default function SettingsInput(props: Props) {
@@ -16,13 +21,25 @@ export default function SettingsInput(props: Props) {
     onChange,
     value,
     textarea,
+    slider,
+    max,
+    min,
+    dots,
   } = props
   if (hidden) {
     return null
   }
   return (
     <div style={{ marginTop: 12 }}>
-      <SettingsTitle text={title} />
+      {
+        slider
+          ? (
+            <SettingsTitle text={`${title}: ${value}`} />
+          )
+          : (
+            <SettingsTitle text={title} />
+          )
+      }
       {
         textarea
           ? (
@@ -32,11 +49,29 @@ export default function SettingsInput(props: Props) {
               onChange={(e) => onChange(e.target.value)}
             />
           ) : (
-            <input
-              style={{ minWidth: 200 }}
-              value={String(value)}
-              onChange={(e) => onChange(e.target.value)}
-            />
+            <React.Fragment>
+              {
+                slider
+                  ? (
+                    <Slider
+                      value={value}
+                      onChange={(val) => {
+                        onChange(val)
+                      }}
+                      dots={dots}
+                      max={max}
+                      min={min === undefined ? 0 : min}
+                    />
+                  )
+                  : (
+                    <input
+                      style={{ minWidth: 200 }}
+                      value={String(value)}
+                      onChange={(e) => onChange(e.target.value)}
+                    />
+                  )
+              }
+            </React.Fragment>
           )
       }
     </div>

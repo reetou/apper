@@ -3,6 +3,7 @@ import BuilderContext from "../../store/BuilderContext";
 import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsInput from "../SettingsInput";
 import SettingsMarginPadding from "../SettingsMarginPadding";
+import { validateNumberValue } from "../../utils/componentUtils";
 
 export default function EditCustomInput() {
   const { updateComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -35,7 +36,7 @@ export default function EditCustomInput() {
         marginValue={editingComponent?.props.margin}
         paddingValue={editingComponent?.props.padding}
         onChangeMargin={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }
@@ -44,7 +45,7 @@ export default function EditCustomInput() {
           })
         }}
         onChangePadding={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }

@@ -4,6 +4,7 @@ import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsInput from "../SettingsInput";
 import SettingsSelect from "../SettingsSelect";
 import SettingsMarginPadding from "../SettingsMarginPadding";
+import { validateNumberValue } from "../../utils/componentUtils";
 
 export default function EditTextBlock() {
   const { updateComponent, setEditingComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -51,7 +52,7 @@ export default function EditTextBlock() {
         marginValue={editingComponent?.props.margin}
         paddingValue={editingComponent?.props.padding}
         onChangeMargin={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }
@@ -60,7 +61,7 @@ export default function EditTextBlock() {
           })
         }}
         onChangePadding={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }

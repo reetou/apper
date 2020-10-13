@@ -10,6 +10,7 @@ import Builder from "./pages/Builder";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from 'immutability-helper'
+import 'rc-slider/assets/index.css';
 
 function App() {
   const [mode, setMode] = useState<BuilderMode>('simulator')

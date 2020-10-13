@@ -6,6 +6,7 @@ import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsColorPicker from "../SettingsColorPicker";
 import SettingsInput from "../SettingsInput";
 import SettingsMarginPadding from "../SettingsMarginPadding";
+import { validateNumberValue } from "../../utils/componentUtils";
 
 export default function EditCustomGenericButton() {
   const { updateComponent, setEditingComponent, pages, openedPage, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -67,8 +68,10 @@ export default function EditCustomGenericButton() {
       />
       <SettingsInput
         value={editingComponent.props?.borderWidth}
+        slider
+        max={20}
         onChange={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }
@@ -109,7 +112,7 @@ export default function EditCustomGenericButton() {
         marginValue={editingComponent.props.margin}
         paddingValue={editingComponent.props.padding}
         onChangeMargin={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }
@@ -118,7 +121,7 @@ export default function EditCustomGenericButton() {
           })
         }}
         onChangePadding={(val) => {
-          if (!Boolean(Number(val)) && val !== '') {
+          if (!validateNumberValue(val)) {
             console.error(`Not valid`, val)
             return
           }
