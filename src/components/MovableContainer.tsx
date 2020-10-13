@@ -1,5 +1,4 @@
 import React, { ReactNode, useContext, useEffect, useRef, useState } from 'react'
-import { CUSTOM_COMPONENT_TYPES } from "./mobile_components";
 import { useDrag, useDrop } from "react-dnd";
 import BuilderContext, { DEFAULT_EDIT_COMPONENT_FORM } from "../store/BuilderContext";
 import { useHover } from "react-use";
@@ -40,7 +39,7 @@ const Icon = styled.div`
 
 export default function MovableContainer(props: Props) {
   const { id, type, accept, children, onMove } = props
-  const { setDraggingItemId, openedPage, editingComponent, setEditingComponent, setEditComponentForm } = useContext(BuilderContext)
+  const { setDraggingItemId, openedPage, editingComponent, setEditingComponent } = useContext(BuilderContext)
   const [showOverlay, setShowOverlay] = useState<boolean>(false)
   const ref = useRef(null)
   const [{ isDragging }, connectDrag] = useDrag({
@@ -76,12 +75,10 @@ export default function MovableContainer(props: Props) {
     if (!component || editingComponent?.id === id) {
       return
     }
-    console.log(`Edit`)
-    setEditComponentForm(DEFAULT_EDIT_COMPONENT_FORM)
     setEditingComponent(component)
   }
   const element = (
-    <div ref={ref} style={{ margin: isDragging ? 20 : 0 }}>
+    <div ref={ref} style={{ margin: isDragging ? 20 : 0, position: 'relative' }}>
       <div
         style={{
           opacity,

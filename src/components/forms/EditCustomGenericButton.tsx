@@ -9,17 +9,7 @@ import SettingsMarginPadding from "../SettingsMarginPadding";
 import { validateNumberValue } from "../../utils/componentUtils";
 
 export default function EditCustomGenericButton() {
-  const { updateComponent, setEditingComponent, pages, openedPage, setEditComponentForm, editingComponent } = useContext(BuilderContext)
-  const [loading, setLoading] = useState<boolean>(true)
-  useEffect(() => {
-    if (!editingComponent) {
-      return
-    }
-    setEditComponentForm({
-      value: editingComponent.data?.value
-    })
-    setLoading(false)
-  }, [])
+  const { updateComponent, pages, openedPage, editingComponent } = useContext(BuilderContext)
   const onClickTypeOptions = () => {
     const isFirst = pages[0].id === openedPage.id
     return [
@@ -30,7 +20,7 @@ export default function EditCustomGenericButton() {
       { value: ONCLICK_TYPES.navigateBack, label: 'Перейти на страницу назад', disabled: isFirst },
     ]
   }
-  if (loading || !editingComponent) {
+  if (!editingComponent) {
     return null
   }
   return (
@@ -81,6 +71,28 @@ export default function EditCustomGenericButton() {
         }}
         title="Ширина обводки"
       />
+      <SettingsMarginPadding
+        marginValue={editingComponent.props.margin}
+        paddingValue={editingComponent.props.padding}
+        onChangeMargin={(val) => {
+          if (!validateNumberValue(val)) {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            margin: Number(val)
+          })
+        }}
+        onChangePadding={(val) => {
+          if (!validateNumberValue(val)) {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            padding: Number(val)
+          })
+        }}
+      />
       <SettingsColorPicker
         value={editingComponent.props.backgroundColor || ''}
         title="Цвет фона"
@@ -105,28 +117,6 @@ export default function EditCustomGenericButton() {
         onChange={(val) => {
           updateComponent({
             borderColor: val
-          })
-        }}
-      />
-      <SettingsMarginPadding
-        marginValue={editingComponent.props.margin}
-        paddingValue={editingComponent.props.padding}
-        onChangeMargin={(val) => {
-          if (!validateNumberValue(val)) {
-            console.error(`Not valid`, val)
-            return
-          }
-          updateComponent({
-            margin: Number(val)
-          })
-        }}
-        onChangePadding={(val) => {
-          if (!validateNumberValue(val)) {
-            console.error(`Not valid`, val)
-            return
-          }
-          updateComponent({
-            padding: Number(val)
           })
         }}
       />

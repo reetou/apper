@@ -6,20 +6,7 @@ import SettingsMarginPadding from "../SettingsMarginPadding";
 import { validateNumberValue } from "../../utils/componentUtils";
 
 export default function EditCustomInput() {
-  const { updateComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
-  const [loading, setLoading] = useState<boolean>(true)
-  useEffect(() => {
-    if (!editingComponent) {
-      return
-    }
-    setEditComponentForm({
-      value: editingComponent.data?.value
-    })
-    setLoading(false)
-  }, [])
-  if (loading) {
-    return null
-  }
+  const { updateComponent, editingComponent } = useContext(BuilderContext)
   return (
     <React.Fragment>
       <FormTitleCollapsible title="Настройки поля ввода" />

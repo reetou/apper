@@ -34,6 +34,7 @@ export type CustomComponentType = 'custom_input'
   | 'custom_image'
   | 'custom_list_view'
   | 'custom_text_list_view'
+  | 'custom_floating_button'
 
 export interface ICustomListViewItem {
   id: string;
@@ -61,10 +62,14 @@ export interface CustomComponentProps {
   borderWidth?: number,
   margin?: number,
   padding?: number,
-  childComponents?: ICustomListViewItem[],
   noImage?: boolean,
   noSubtitle?: boolean,
   listItemPrepend?: 'circle',
+}
+
+export interface CustomComponentData {
+  value?: string,
+  childComponents?: ICustomListViewItem[],
 }
 
 export interface CustomComponent {
@@ -74,14 +79,12 @@ export interface CustomComponent {
   title: string,
   item_type: CustomComponentType;
   children: CustomComponent[],
-  data?: {
-    value?: string,
-  }
+  data?: CustomComponentData,
 }
 
 interface EditCustomComponentForm {
   value: any,
-
+  childComponents?: ICustomListViewItem[],
 }
 
 export const DEFAULT_EDIT_COMPONENT_FORM = {
@@ -102,13 +105,12 @@ interface BuilderContextProps {
   setDraggingItemId: Dispatch<SetStateAction<string | undefined>>,
   editingComponent?: CustomComponent,
   setEditingComponent: Dispatch<SetStateAction<CustomComponent | undefined>>,
-  editComponentForm: EditCustomComponentForm,
-  setEditComponentForm: Dispatch<SetStateAction<EditCustomComponentForm>>,
-  updateComponent: (newProps?: object) => void,
+  updateComponent: (newProps?: CustomComponentProps, newData?: CustomComponentData) => void,
   editingListViewId?: string,
   setEditingListViewId: Dispatch<SetStateAction<string | undefined>>,
   editingListViewItems: ICustomListViewItem[],
   setEditingListViewItems: Dispatch<SetStateAction<ICustomListViewItem[]>>,
+  toggleEditingListViewItems: () => void,
 }
 
 export default createContext<BuilderContextProps>({
@@ -123,11 +125,10 @@ export default createContext<BuilderContextProps>({
   onAddComponent: () => {},
   setDraggingItemId: () => {},
   setEditingComponent: () => {},
-  editComponentForm: { value: '' },
-  setEditComponentForm: () => {},
   updateComponent: () => {},
   editingListViewItems: [],
   setEditingListViewItems: () => {},
   editingListViewId: undefined,
   setEditingListViewId: () => {},
+  toggleEditingListViewItems: () => {},
 })

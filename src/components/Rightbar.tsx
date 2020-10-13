@@ -18,6 +18,7 @@ function componentForm(component?: CustomComponent) {
       return <EditTextBlock />
     case CUSTOM_COMPONENT_TYPES.CustomGenericButton:
     case CUSTOM_COMPONENT_TYPES.CustomGenericButtonRounded:
+    case CUSTOM_COMPONENT_TYPES.CustomFloatingButton:
       return <EditCustomGenericButton />
     case CUSTOM_COMPONENT_TYPES.CustomImage:
       return <EditCustomImage />

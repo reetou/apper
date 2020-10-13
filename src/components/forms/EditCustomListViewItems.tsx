@@ -5,6 +5,7 @@ import SettingsInput from "../SettingsInput";
 import update from 'immutability-helper'
 import { v4 as uuidv4 } from 'uuid'
 import { useDebounce } from 'react-use';
+import { COMPONENTS_WITH_LIST_ITEMS, CUSTOM_COMPONENT_TYPES } from "../mobile_components";
 
 interface ItemProps {
   data: ICustomListViewItem;
@@ -82,33 +83,33 @@ const newItem = (): ICustomListViewItem => {
 
 export default function EditCustomListViewItems() {
   const {
-    setEditComponentForm,
     editingComponent,
     setEditingListViewId,
     editingListViewItems,
     setEditingListViewItems,
     updateComponent,
   } = useContext(BuilderContext)
-  const [loading, setLoading] = useState<boolean>(true)
-  useEffect(() => {
-    if (!editingComponent) {
-      return
-    }
-    setEditComponentForm({
-      value: editingComponent.data?.value
-    })
-    setLoading(false)
-  }, [])
+  const [currentId, setCurrentId] = useState<string | undefined>(editingComponent?.id)
   const [, cancel] = useDebounce(
     () => {
-      updateComponent({
+      updateComponent({}, {
         childComponents: editingListViewItems
       })
     },
     200,
     [editingListViewItems]
   );
-  if (loading || !editingComponent) {
+  useEffect(() => {
+    if (editingComponent && !COMPONENTS_WITH_LIST_ITEMS.includes(editingComponent.item_type)) {
+      setEditingListViewId(undefined)
+      return
+    }
+    if (currentId !== editingComponent) {
+      console.log(`Changing because editing component changed editing list view items`)
+      setEditingListViewItems(editingComponent?.data?.childComponents || [])
+    }
+  }, [editingComponent])
+  if (!editingComponent || !setEditingListViewId) {
     return null
   }
   return (

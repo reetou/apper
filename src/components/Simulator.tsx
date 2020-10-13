@@ -6,6 +6,7 @@ import { useDrop } from "react-dnd";
 import { ALL_CUSTOM_COMPONENT_TYPES, getCustomComponentByItemType } from "./mobile_components";
 import MovableContainer from "./MovableContainer";
 import update from 'immutability-helper';
+import { isEmbeddable, isFloating } from "../utils/componentUtils";
 
 
 const Container = styled.div`
@@ -80,7 +81,7 @@ export default function Simulator() {
       })
     })
   }, [openedPage])
-  const children = openedPage.components.map((c: CustomComponent) => {
+  const children = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
     const { component: Component } = c
     return (
       <MovableContainer
@@ -96,6 +97,23 @@ export default function Simulator() {
       </MovableContainer>
     )
   })
+  const floatingChildren = openedPage.components.filter(isFloating).map((c: CustomComponent) => {
+    const { component: Component } = c
+    return (
+      <MovableContainer
+        key={c.id}
+        id={c.id}
+        type={c.item_type}
+        accept={ALL_CUSTOM_COMPONENT_TYPES}
+        onMove={onMove}
+      >
+        <Component {...c.props} data={c.data} componentId={c.id}>
+          {c.children}
+        </Component>
+      </MovableContainer>
+    )
+  })
+  console.log(`Floating children`, floatingChildren)
   const dropViewStyle = {
     ...state.isOver ? { backgroundColor: '#efefef' } : {},
     ...openedPage.margin ? { margin: openedPage.margin[0] } : {},
@@ -112,12 +130,29 @@ export default function Simulator() {
           opacity: state.isOver ? 0.5 : 1
         }}
       >
-        <View style={{ flex: 1, height: '100%' }}>
+        <View style={{ flex: 1, height: '100%'}}>
           {
             openedPage?.page_type === 'screen'
               ? (
-                <View style={{ flex: 1, ...dropViewStyle }}>
+                <View style={{ flex: 1, ...dropViewStyle, position: 'relative' }}>
                   {children}
+                  {
+                    floatingChildren.length
+                      ? (
+                        <View
+                          style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            width: '100%',
+                          }}
+                        >
+                          <View>
+                            {floatingChildren}
+                          </View>
+                        </View>
+                      )
+                      : null
+                  }
                 </View>
               )
               : null
@@ -125,7 +160,7 @@ export default function Simulator() {
           {
             openedPage?.page_type === 'modal'
               ? (
-                <View style={{ flex: 1, ...dropViewStyle }}>
+                <View style={{ flex: 1, position: 'relative' }}>
                   {children}
                 </View>
               )

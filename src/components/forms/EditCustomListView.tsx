@@ -10,42 +10,23 @@ import { LIST_ITEM_ONCLICK_TYPES } from "../../utils/listViewUtils";
 export default function EditCustomListView() {
   const {
     updateComponent,
-    setEditingListViewId,
-    editingListViewId,
-    setEditComponentForm,
-    setEditingListViewItems,
+    toggleEditingListViewItems,
     editingComponent,
   } = useContext(BuilderContext)
-  const [loading, setLoading] = useState<boolean>(true)
-  useEffect(() => {
-    if (!editingComponent) {
-      return
-    }
-    setEditComponentForm({
-      value: editingComponent.data?.value
-    })
-    setLoading(false)
-  }, [])
   const onClickTypeOptions = () => {
     return [
       { value: LIST_ITEM_ONCLICK_TYPES.noop, label: 'Ничего не делать' },
       { value: LIST_ITEM_ONCLICK_TYPES.navigateToItemPage, label: 'Перейти на страницу предмета' },
     ]
   }
-  if (loading || !editingComponent) {
+  if (!editingComponent) {
     return null
   }
   return (
     <React.Fragment>
       <FormTitleCollapsible title="Настройки списка" />
       <button
-        onClick={() => {
-          if (editingListViewId === editingComponent?.id) {
-            setEditingListViewId(undefined)
-          } else {
-            setEditingListViewId(editingComponent?.id)
-          }
-        }}
+        onClick={toggleEditingListViewItems}
       >
         Настроить элементы
       </button>

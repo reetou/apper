@@ -19,10 +19,24 @@ export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
   CustomImage: 'custom_image',
   CustomListView: 'custom_list_view',
   CustomTextListView: 'custom_text_list_view',
+  CustomFloatingButton: 'custom_floating_button',
 }
 
 export const CUSTOM_INPUTS = [
   CUSTOM_COMPONENT_TYPES.CustomInput,
+]
+
+export const COMPONENTS_WITH_LIST_ITEMS = [
+  CUSTOM_COMPONENT_TYPES.CustomListView,
+  CUSTOM_COMPONENT_TYPES.CustomTextListView,
+]
+
+export const FLOATING_COMPONENTS = [
+  CUSTOM_COMPONENT_TYPES.CustomFloatingButton,
+]
+
+export const NON_EMBEDDABLE_COMPONENTS = [
+  ...FLOATING_COMPONENTS,
 ]
 
 export const DEFAULT_IMAGE_URL = 'https://i.imgur.com/t0nSc4e.png'
@@ -43,6 +57,8 @@ export function getCustomComponentByItemType(type: CustomComponentType): CustomC
       return CustomListViewData()
     case CUSTOM_COMPONENT_TYPES.CustomTextListView:
       return CustomTextListViewData()
+    case CUSTOM_COMPONENT_TYPES.CustomFloatingButton:
+      return CustomFloatingButtonData()
     default:
       console.error(`Returning default component because no such custom type ${type}`)
       return CustomInputData()
@@ -162,7 +178,6 @@ export function CustomListViewData(): CustomComponent {
     id: uuidv4(),
     component: CustomListView,
     props: {
-      childComponents: [],
       margin: 0,
       padding: 0,
       backgroundColor: '#FFFFFF'
@@ -172,6 +187,7 @@ export function CustomListViewData(): CustomComponent {
     item_type: CUSTOM_COMPONENT_TYPES.CustomListView,
     data: {
       value: '',
+      childComponents: [],
     }
   }
 }
@@ -181,7 +197,6 @@ export function CustomTextListViewData(): CustomComponent {
     id: uuidv4(),
     component: CustomListView,
     props: {
-      childComponents: [],
       margin: 0,
       padding: 0,
       backgroundColor: '#FFFFFF',
@@ -192,6 +207,27 @@ export function CustomTextListViewData(): CustomComponent {
     children: [],
     title: 'Текстовый список',
     item_type: CUSTOM_COMPONENT_TYPES.CustomTextListView,
+    data: {
+      value: '',
+      childComponents: [],
+    }
+  }
+}
+
+export function CustomFloatingButtonData(): CustomComponent {
+  return {
+    id: uuidv4(),
+    component: CustomGenericButton,
+    props: {
+      ...buttonBasicProps,
+      text: 'Сохранить',
+      rounded: true,
+      margin: 0,
+      padding: 0,
+    },
+    children: [],
+    title: 'Плавающая кнопка снизу',
+    item_type: CUSTOM_COMPONENT_TYPES.CustomFloatingButton,
     data: {
       value: '',
     }

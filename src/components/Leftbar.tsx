@@ -4,7 +4,7 @@ import CustomComponentContainer from "./CustomComponentContainer";
 import CustomInput from "./mobile_components/CustomInput";
 import BuilderContext, { CustomComponentType } from "../store/BuilderContext";
 import {
-  ALL_CUSTOM_COMPONENT_TYPES,
+  ALL_CUSTOM_COMPONENT_TYPES, CustomFloatingButtonData,
   CustomGenericButtonData,
   CustomGenericRoundedButtonData, CustomImageData,
   CustomInputData, CustomListViewData, CustomTextListViewData, TextBlockData,
@@ -55,12 +55,16 @@ const INTERACTION_BLOCK = {
       data: CustomImageData()
     },
     {
-      component: <CustomListView thumbnail childComponents={[]} />,
+      component: <CustomListView thumbnail data={{ childComponents: [] }} />,
       data: CustomListViewData()
     },
     {
-      component: <CustomListView thumbnail listItemPrepend="circle" noSubtitle noImage childComponents={[]} />,
+      component: <CustomListView thumbnail listItemPrepend="circle" noSubtitle noImage  data={{ childComponents: [] }} />,
       data: CustomTextListViewData()
+    },
+    {
+      component: <CustomGenericButton thumbnail rounded />,
+      data: CustomFloatingButtonData()
     },
   ]
 }

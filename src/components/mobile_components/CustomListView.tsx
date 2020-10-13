@@ -2,18 +2,21 @@ import React from 'react'
 import { FlatList } from "react-native-web";
 import CustomListViewItem from "./CustomListViewItem";
 import { LIST_ITEM_ONCLICK_TYPES, OnListItemClickTypeType } from "../../utils/listViewUtils";
+import { ICustomListViewItem } from "../../store/BuilderContext";
 
 interface Props {
   thumbnail?: boolean;
   padding?: number;
   margin?: number;
   backgroundColor?: string;
-  childComponents: [];
   disableScroll?: boolean;
   noImage?: boolean;
   noSubtitle?: boolean;
   onClickType?: OnListItemClickTypeType;
-  listItemPrepend?: 'circle'
+  listItemPrepend?: 'circle',
+  data: {
+    childComponents: ICustomListViewItem[],
+  }
 }
 
 const placeholderChild = {
@@ -28,7 +31,6 @@ const placeholderChildren = [1].map(x => ({...placeholderChild, id: `${x}_${plac
 export default function CustomListView(props: Props) {
   const {
     thumbnail,
-    childComponents,
     backgroundColor,
     padding,
     margin,
@@ -37,6 +39,7 @@ export default function CustomListView(props: Props) {
     noImage,
     noSubtitle,
     listItemPrepend,
+    data: { childComponents },
   } = props
   const noChildren = childComponents.length === 0
   return (

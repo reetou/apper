@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 import BuilderContext, {
   BuilderMode,
-  CustomComponent, CustomComponentProps,
+  CustomComponent, CustomComponentData, CustomComponentProps,
   CustomPage,
   DEFAULT_PAGE,
   ICustomListViewItem
@@ -17,6 +17,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from 'immutability-helper'
 import 'rc-slider/assets/index.css';
+import { COMPONENTS_WITH_LIST_ITEMS } from "./components/mobile_components";
 
 function App() {
   const [mode, setMode] = useState<BuilderMode>('simulator')
@@ -25,14 +26,13 @@ function App() {
   const [openedPage, setOpenedPage] = useState<CustomPage>(DEFAULT_PAGE)
   const [draggingItemId, setDraggingItemId] = useState()
   const [editingComponent, setEditingComponent] = useState()
-  const [editComponentForm, setEditComponentForm] = useState()
   const [editingListViewId, setEditingListViewId] = useState()
   const [editingListViewItems, setEditingListViewItems] = useState<ICustomListViewItem[]>([])
   useEffect(() => {
     if (!editingListViewId) {
       setEditingListViewItems([])
     } else {
-      setEditingListViewItems(editingComponent?.props?.childComponents || [])
+      setEditingListViewItems(editingComponent?.data?.childComponents || [])
     }
   }, [editingListViewId])
   const onAddComponent = (component: CustomComponent, setAsEditing = false) => {
@@ -47,22 +47,27 @@ function App() {
       setEditingComponent(component)
     }
   }
-  const updateComponent = (newProps?: CustomComponentProps) => {
+  const updateComponent = (newProps?: CustomComponentProps, newData?: CustomComponentData) => {
     if (!editingComponent) {
       return
     }
-    if (newProps) {
-      setEditingComponent((prevComponent?: CustomComponent) => {
-        if (!prevComponent) {
-          return prevComponent
-        }
-        return update(prevComponent, {
+    setEditingComponent((prevComponent?: CustomComponent) => {
+      if (!prevComponent) {
+        return prevComponent
+      }
+      return update(prevComponent, {
+        ...newProps ? {
           props: {
             $merge: newProps
           }
-        })
+        } : {},
+        ...newData ? {
+          data: {
+            $merge: newData
+          }
+        } : {},
       })
-    }
+    })
     setOpenedPage(prevPage => {
       const index = prevPage.components.map(x => x.id).indexOf(editingComponent.id)
       return update(prevPage, {
@@ -73,13 +78,22 @@ function App() {
                 $merge: newProps
               }
             } : {},
-            data: {
-              $merge: editComponentForm
-            }
+            ...newData ? {
+              data: {
+                $merge: newData
+              }
+            } : {},
           }
         }
       })
     })
+  }
+  const toggleEditingListViewItems = () => {
+    if (editingListViewId) {
+      setEditingListViewId(undefined)
+    } else {
+      setEditingListViewId(editingComponent?.id)
+    }
   }
   return (
     <BuilderContext.Provider
@@ -98,12 +112,11 @@ function App() {
         setDraggingItemId,
         editingComponent,
         setEditingComponent,
-        editComponentForm,
-        setEditComponentForm,
         editingListViewId,
         setEditingListViewId,
         editingListViewItems,
         setEditingListViewItems,
+        toggleEditingListViewItems,
       }}
     >
       <DndProvider backend={HTML5Backend}>
