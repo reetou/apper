@@ -7,7 +7,7 @@ import {
   ALL_CUSTOM_COMPONENT_TYPES,
   CustomGenericButtonData,
   CustomGenericRoundedButtonData, CustomImageData,
-  CustomInputData, TextBlockData,
+  CustomInputData, CustomListViewData, TextBlockData,
 } from "./mobile_components";
 import CustomGenericButton from "./mobile_components/CustomGenericButton";
 import CustomComponentBlock from "./CustomComponentBlock";
@@ -16,6 +16,7 @@ import update from 'immutability-helper'
 import styled from 'styled-components'
 import TextBlock from "./mobile_components/TextBlock";
 import CustomImage from "./mobile_components/CustomImage";
+import CustomListView from "./mobile_components/CustomListView";
 
 const Overlay = styled.div`
   position: absolute;
@@ -51,6 +52,10 @@ const INTERACTION_BLOCK = {
     {
       component: <CustomImage width={60} height={60} thumbnail />,
       data: CustomImageData()
+    },
+    {
+      component: <CustomListView thumbnail childComponents={[]} />,
+      data: CustomListViewData()
     },
   ]
 }

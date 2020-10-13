@@ -10,6 +10,7 @@ import EditCustomImage from "./forms/EditCustomImage";
 import EditCustomInput from "./forms/EditCustomInput";
 import SettingsMarginPadding from "./SettingsMarginPadding";
 import { validateNumberValue } from "../utils/componentUtils";
+import EditCustomListView from "./forms/EditCustomListView";
 
 function componentForm(component?: CustomComponent) {
   switch (component?.item_type) {
@@ -22,6 +23,8 @@ function componentForm(component?: CustomComponent) {
       return <EditCustomImage />
     case CUSTOM_COMPONENT_TYPES.CustomInput:
       return <EditCustomInput />
+    case CUSTOM_COMPONENT_TYPES.CustomListView:
+      return <EditCustomListView />
     default:
       return null
   }

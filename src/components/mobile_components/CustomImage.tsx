@@ -28,7 +28,6 @@ export default function CustomImage(props: Props) {
   return (
     <View
       style={{
-        borderRadius: rounded ? 16 : 0,
         alignItems: horizontalAlign,
         ...padding ? { padding } : {},
         ...margin ? { margin } : {},
@@ -37,6 +36,7 @@ export default function CustomImage(props: Props) {
       <Image
         source={{ uri }}
         style={{
+          borderRadius: rounded ? 16 : 0,
           width,
           height,
         }}

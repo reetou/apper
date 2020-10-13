@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import TextBlock from "./TextBlock";
 import CustomImage from "./CustomImage";
 import { ONCLICK_TYPES } from "../../utils/buttonUtils";
+import CustomListView from "./CustomListView";
 
 interface ComponentTypesInterface {
   [key: string]: CustomComponentType,
@@ -16,6 +17,7 @@ export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
   CustomGenericButtonRounded: 'custom_generic_button_rounded',
   TextBlock: 'custom_text_block',
   CustomImage: 'custom_image',
+  CustomListView: 'custom_list_view'
 }
 
 export const CUSTOM_INPUTS = [
@@ -36,6 +38,8 @@ export function getCustomComponentByItemType(type: CustomComponentType): CustomC
       return TextBlockData()
     case CUSTOM_COMPONENT_TYPES.CustomImage:
       return CustomImageData()
+    case CUSTOM_COMPONENT_TYPES.CustomListView:
+      return CustomListViewData()
     default:
       console.error(`Returning default component because no such custom type ${type}`)
       return CustomInputData()
@@ -144,6 +148,25 @@ export function CustomImageData(): CustomComponent {
     children: [],
     title: 'Изображение',
     item_type: CUSTOM_COMPONENT_TYPES.CustomImage,
+    data: {
+      value: '',
+    }
+  }
+}
+
+export function CustomListViewData(): CustomComponent {
+  return {
+    id: uuidv4(),
+    component: CustomListView,
+    props: {
+      childComponents: [],
+      margin: 0,
+      padding: 0,
+      backgroundColor: '#FFFFFF'
+    },
+    children: [],
+    title: 'Список элементов',
+    item_type: CUSTOM_COMPONENT_TYPES.CustomListView,
     data: {
       value: '',
     }

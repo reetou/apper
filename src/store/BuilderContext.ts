@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction, ReactNode, default as React } from "react";
-import { RouteComponentProps } from "react-router";
 import { v4 as uuidv4 } from 'uuid'
 import { OnClickTypeType } from "../utils/buttonUtils";
+import { OnListItemClickTypeType } from "../utils/listViewUtils";
 
 export type BuilderMode = 'simulator' | 'navigation'
 
@@ -32,7 +32,16 @@ export type CustomComponentType = 'custom_input'
   | 'custom_generic_button_rounded'
   | 'custom_text_block'
   | 'custom_image'
+  | 'custom_list_view'
 
+export interface ICustomListViewItem {
+  id: string;
+  image_url?: string;
+  title: string;
+  subtitle?: string;
+  onClickType?: OnListItemClickTypeType;
+  itemTargetId?: string;
+}
 
 interface CustomComponentProps {
   disabled?: boolean;
@@ -52,6 +61,7 @@ interface CustomComponentProps {
   borderWidth?: number,
   margin?: number,
   padding?: number,
+  childComponents?: ICustomListViewItem[],
 }
 
 export interface CustomComponent {
