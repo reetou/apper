@@ -3,6 +3,8 @@ import BuilderContext from "../../store/BuilderContext";
 import SettingsSelect from "../SettingsSelect";
 import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsInput from "../SettingsInput";
+import SettingsColorPicker from "../SettingsColorPicker";
+import SettingsMarginPadding from "../SettingsMarginPadding";
 
 export default function EditCustomImage() {
   const { updateComponent, setEditingComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -70,6 +72,28 @@ export default function EditCustomImage() {
           })
         }}
         title="Высота"
+      />
+      <SettingsMarginPadding
+        marginValue={editingComponent?.props.margin}
+        paddingValue={editingComponent?.props.padding}
+        onChangeMargin={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            margin: Number(val)
+          })
+        }}
+        onChangePadding={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            padding: Number(val)
+          })
+        }}
       />
     </React.Fragment>
   )

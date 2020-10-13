@@ -8,17 +8,30 @@ interface Props {
   rounded?: boolean;
   width: number;
   height: number;
+  padding?: number;
+  margin?: number;
   horizontalAlign?: 'center' | 'flex-start' | 'flex-end';
 }
 
 export default function CustomImage(props: Props) {
-  const { imageUrl, thumbnail, rounded, horizontalAlign, width, height } = props
+  const {
+    imageUrl,
+    thumbnail,
+    rounded,
+    horizontalAlign,
+    width,
+    height,
+    padding,
+    margin,
+  } = props
   const uri = thumbnail ? DEFAULT_IMAGE_URL : imageUrl || DEFAULT_IMAGE_URL
   return (
     <View
       style={{
         borderRadius: rounded ? 16 : 0,
-        alignItems: horizontalAlign
+        alignItems: horizontalAlign,
+        ...padding ? { padding } : {},
+        ...margin ? { margin } : {},
       }}
     >
       <Image

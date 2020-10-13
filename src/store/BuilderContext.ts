@@ -50,6 +50,8 @@ interface CustomComponentProps {
   borderColor?: string,
   inputPlaceholder?: string,
   borderWidth?: number,
+  margin?: number,
+  padding?: number,
 }
 
 export interface CustomComponent {

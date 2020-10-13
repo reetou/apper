@@ -5,6 +5,7 @@ import { NAVIGATION_MOVE_ONCLICK_TYPES, ONCLICK_TYPES } from "../../utils/button
 import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsColorPicker from "../SettingsColorPicker";
 import SettingsInput from "../SettingsInput";
+import SettingsMarginPadding from "../SettingsMarginPadding";
 
 export default function EditCustomGenericButton() {
   const { updateComponent, setEditingComponent, pages, openedPage, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -101,6 +102,28 @@ export default function EditCustomGenericButton() {
         onChange={(val) => {
           updateComponent({
             borderColor: val
+          })
+        }}
+      />
+      <SettingsMarginPadding
+        marginValue={editingComponent.props.margin}
+        paddingValue={editingComponent.props.padding}
+        onChangeMargin={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            margin: Number(val)
+          })
+        }}
+        onChangePadding={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            padding: Number(val)
           })
         }}
       />

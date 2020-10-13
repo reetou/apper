@@ -3,6 +3,7 @@ import BuilderContext from "../../store/BuilderContext";
 import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsInput from "../SettingsInput";
 import SettingsSelect from "../SettingsSelect";
+import SettingsMarginPadding from "../SettingsMarginPadding";
 
 export default function EditTextBlock() {
   const { updateComponent, setEditingComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -45,6 +46,28 @@ export default function EditTextBlock() {
           { value: 'flex-start', label: "Слева" },
           { value: 'flex-end', label: "Справа" },
         ]}
+      />
+      <SettingsMarginPadding
+        marginValue={editingComponent?.props.margin}
+        paddingValue={editingComponent?.props.padding}
+        onChangeMargin={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            margin: Number(val)
+          })
+        }}
+        onChangePadding={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            padding: Number(val)
+          })
+        }}
       />
     </React.Fragment>
   )

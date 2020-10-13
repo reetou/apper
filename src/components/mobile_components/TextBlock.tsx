@@ -5,16 +5,26 @@ import { toThumbnailSize } from "../../utils/componentUtils";
 interface Props {
   thumbnail?: boolean,
   text?: string,
-  horizontalAlign?: 'flex-start' | 'center' | 'flex-end'
+  horizontalAlign?: 'flex-start' | 'center' | 'flex-end',
+  padding?: number,
+  margin?: number,
 }
 
 export default function TextBlock(props: Props) {
-  const { text, thumbnail, horizontalAlign } = props
+  const {
+    text,
+    thumbnail,
+    horizontalAlign,
+    padding,
+    margin,
+  } = props
   return (
     <View
       style={{
         flex: 1,
         alignItems: horizontalAlign || 'flex-start',
+        ...padding ? { padding } : {},
+        ...margin ? { margin } : {},
       }}
     >
       <Text

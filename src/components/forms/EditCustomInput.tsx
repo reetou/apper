@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import BuilderContext from "../../store/BuilderContext";
 import FormTitleCollapsible from "../FormTitleCollapsible";
 import SettingsInput from "../SettingsInput";
+import SettingsMarginPadding from "../SettingsMarginPadding";
 
 export default function EditCustomInput() {
   const { updateComponent, setEditComponentForm, editingComponent } = useContext(BuilderContext)
@@ -29,6 +30,28 @@ export default function EditCustomInput() {
           })
         }}
         title="Текст плейсхолдера"
+      />
+      <SettingsMarginPadding
+        marginValue={editingComponent?.props.margin}
+        paddingValue={editingComponent?.props.padding}
+        onChangeMargin={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            margin: Number(val)
+          })
+        }}
+        onChangePadding={(val) => {
+          if (!Boolean(Number(val)) && val !== '') {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            padding: Number(val)
+          })
+        }}
       />
     </React.Fragment>
   )
