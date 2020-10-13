@@ -1,7 +1,6 @@
 import { createContext, Dispatch, SetStateAction, ReactNode, default as React } from "react";
 import { v4 as uuidv4 } from 'uuid'
 import { OnClickTypeType } from "../utils/buttonUtils";
-import { OnListItemClickTypeType } from "../utils/listViewUtils";
 
 export type BuilderMode = 'simulator' | 'navigation'
 
@@ -15,6 +14,8 @@ export interface CustomPage {
   margin: number[],
   page_type: PageType,
   background_color: string,
+  nav_header_mode: 'show' | 'hide',
+  nav_header_title: string,
 }
 
 export const DEFAULT_PAGE: CustomPage = {
@@ -24,7 +25,23 @@ export const DEFAULT_PAGE: CustomPage = {
   padding: [0, 0, 0, 0],
   margin: [0, 0, 0, 0],
   page_type: 'screen',
-  background_color: '#FFFFFF'
+  background_color: '#FFFFFF',
+  nav_header_mode: 'show',
+  nav_header_title: 'Header'
+}
+
+export function createNewPage(): CustomPage {
+  return {
+    id: uuidv4(),
+    components: [],
+    name: 'Default Page',
+    padding: [0, 0, 0, 0],
+    margin: [0, 0, 0, 0],
+    page_type: 'screen',
+    background_color: '#FFFFFF',
+    nav_header_mode: 'show',
+    nav_header_title: 'Header'
+  }
 }
 
 export type CustomComponentType = 'custom_input'
@@ -92,6 +109,8 @@ export const DEFAULT_EDIT_COMPONENT_FORM = {
 }
 
 interface BuilderContextProps {
+  tabbarEnabled: boolean,
+  setTabbarEnabled: (val: boolean) => void,
   mode: BuilderMode,
   setMode: Dispatch<SetStateAction<BuilderMode>>,
   selectedElement: null | string,
@@ -131,4 +150,6 @@ export default createContext<BuilderContextProps>({
   editingListViewId: undefined,
   setEditingListViewId: () => {},
   toggleEditingListViewItems: () => {},
+  tabbarEnabled: false,
+  setTabbarEnabled: () => {},
 })

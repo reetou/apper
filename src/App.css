@@ -2,6 +2,9 @@ body {
   font-family: Roboto, sans-serif;
   outline: none !important;
 }
+* {
+  box-sizing: border-box;
+}
 *:focus {
   outline: none !important;
 }

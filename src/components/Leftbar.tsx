@@ -152,7 +152,13 @@ export default function Leftbar() {
           : null
       }
       {
-        editingListViewId ? <EditCustomListViewItems /> : <Blocks />
+        editingListViewId
+          ? <EditCustomListViewItems />
+          : (
+            <React.Fragment>
+              <Blocks />
+            </React.Fragment>
+          )
       }
     </BarContainer>
   )

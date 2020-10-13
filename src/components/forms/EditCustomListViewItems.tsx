@@ -88,8 +88,10 @@ export default function EditCustomListViewItems() {
     editingListViewItems,
     setEditingListViewItems,
     updateComponent,
+    openedPage,
   } = useContext(BuilderContext)
   const [currentId, setCurrentId] = useState<string | undefined>(editingComponent?.id)
+  const [currentPageId, setCurrentPageId] = useState<string>(openedPage.id)
   const [, cancel] = useDebounce(
     () => {
       updateComponent({}, {
@@ -100,7 +102,13 @@ export default function EditCustomListViewItems() {
     [editingListViewItems]
   );
   useEffect(() => {
-    if (editingComponent && !COMPONENTS_WITH_LIST_ITEMS.includes(editingComponent.item_type)) {
+    const componentChanged = editingComponent && !COMPONENTS_WITH_LIST_ITEMS.includes(editingComponent.item_type)
+    const pageChanged = openedPage.id !== currentPageId
+    if (pageChanged) {
+      setEditingListViewId(undefined)
+      return
+    }
+    if (componentChanged) {
       setEditingListViewId(undefined)
       return
     }
@@ -108,7 +116,7 @@ export default function EditCustomListViewItems() {
       console.log(`Changing because editing component changed editing list view items`)
       setEditingListViewItems(editingComponent?.data?.childComponents || [])
     }
-  }, [editingComponent])
+  }, [editingComponent, openedPage])
   if (!editingComponent || !setEditingListViewId) {
     return null
   }

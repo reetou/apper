@@ -7,7 +7,12 @@ import { ALL_CUSTOM_COMPONENT_TYPES, getCustomComponentByItemType } from "./mobi
 import MovableContainer from "./MovableContainer";
 import update from 'immutability-helper';
 import { isEmbeddable, isFloating } from "../utils/componentUtils";
+import { createStackNavigator } from "@react-navigation/stack";
+import MainScreen from "./simulator/MainScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
 
 const Container = styled.div`
   display: flex;
@@ -39,7 +44,11 @@ function getPageProps(page?: CustomPage): object {
 }
 
 export default function Simulator() {
-  const { openedPage, onAddComponent, setOpenedPage } = useContext(BuilderContext)
+  const {
+    openedPage,
+    onAddComponent,
+    setOpenedPage,
+  } = useContext(BuilderContext)
   const [state, drop] = useDrop({
     accept: ALL_CUSTOM_COMPONENT_TYPES,
     drop(item: {id: string, type: CustomComponentType }) {
@@ -81,7 +90,7 @@ export default function Simulator() {
       })
     })
   }, [openedPage])
-  const children = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
+  const embeddableChildren = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
     const { component: Component } = c
     return (
       <MovableContainer
@@ -113,12 +122,31 @@ export default function Simulator() {
       </MovableContainer>
     )
   })
-  console.log(`Floating children`, floatingChildren)
   const dropViewStyle = {
     ...state.isOver ? { backgroundColor: '#efefef' } : {},
     ...openedPage.margin ? { margin: openedPage.margin[0] } : {},
     ...openedPage.padding ? { padding: openedPage.padding[0] } : {},
   }
+  const MainScreenComponent = () => (
+    <MainScreen
+      openedPage={openedPage}
+      embeddableChildren={embeddableChildren}
+      floatingChildren={floatingChildren}
+      dropViewStyle={dropViewStyle}
+    />
+  )
+  const StackScreen = () => (
+    <Stack.Navigator initialRouteName="Simulator_MainScreen">
+      <Stack.Screen
+        name="Simulator_MainScreen"
+        options={{
+          headerShown: openedPage.nav_header_mode === 'show',
+          title: `Главная`,
+        }}
+        component={MainScreenComponent}
+      />
+    </Stack.Navigator>
+  )
   return (
     <Container ref={drop}>
       <div
@@ -130,42 +158,13 @@ export default function Simulator() {
           opacity: state.isOver ? 0.5 : 1
         }}
       >
-        <View style={{ flex: 1, height: '100%'}}>
-          {
-            openedPage?.page_type === 'screen'
-              ? (
-                <View style={{ flex: 1, ...dropViewStyle, position: 'relative' }}>
-                  {children}
-                  {
-                    floatingChildren.length
-                      ? (
-                        <View
-                          style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            width: '100%',
-                          }}
-                        >
-                          <View>
-                            {floatingChildren}
-                          </View>
-                        </View>
-                      )
-                      : null
-                  }
-                </View>
-              )
-              : null
-          }
-          {
-            openedPage?.page_type === 'modal'
-              ? (
-                <View style={{ flex: 1, position: 'relative' }}>
-                  {children}
-                </View>
-              )
-              : null
-          }
+        <View style={{ flex: 1, height: '100%' }}>
+          <MainScreen
+            openedPage={openedPage}
+            embeddableChildren={embeddableChildren}
+            floatingChildren={floatingChildren}
+            dropViewStyle={dropViewStyle}
+          />
         </View>
       </div>
     </Container>

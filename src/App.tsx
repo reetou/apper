@@ -17,22 +17,26 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from 'immutability-helper'
 import 'rc-slider/assets/index.css';
-import { COMPONENTS_WITH_LIST_ITEMS } from "./components/mobile_components";
+import { useDebounce } from "react-use";
 
 function App() {
-  const [mode, setMode] = useState<BuilderMode>('simulator')
+  const [tabbarEnabled, setTabbarEnabled] = useState<boolean>(false)
+  const [mode, setMode] = useState<BuilderMode>('navigation')
   const [selectedElement, setSelectedElement] = useState<any>()
   const [pages, setPages] = useState<CustomPage[]>([DEFAULT_PAGE])
-  const [openedPage, setOpenedPage] = useState<CustomPage>(DEFAULT_PAGE)
-  const [draggingItemId, setDraggingItemId] = useState()
-  const [editingComponent, setEditingComponent] = useState()
-  const [editingListViewId, setEditingListViewId] = useState()
+  const [openedPage, setOpenedPage] = useState<CustomPage>(pages[0])
+  const [draggingItemId, setDraggingItemId] = useState<string>()
+  const [editingComponent, setEditingComponent] = useState<CustomComponent>()
+  const [editingListViewId, setEditingListViewId] = useState<string>()
   const [editingListViewItems, setEditingListViewItems] = useState<ICustomListViewItem[]>([])
   useEffect(() => {
+    if (!editingComponent) {
+      return
+    }
     if (!editingListViewId) {
       setEditingListViewItems([])
     } else {
-      setEditingListViewItems(editingComponent?.data?.childComponents || [])
+      setEditingListViewItems(editingComponent.data?.childComponents || [])
     }
   }, [editingListViewId])
   const onAddComponent = (component: CustomComponent, setAsEditing = false) => {
@@ -95,6 +99,20 @@ function App() {
       setEditingListViewId(editingComponent?.id)
     }
   }
+  const [, cancel] = useDebounce(
+    () => {
+      setPages(prevPages => {
+        const index = prevPages.map(x => x.id).indexOf(openedPage.id)
+        return update(prevPages, {
+          [index]: {
+            $set: openedPage
+          }
+        })
+      })
+    },
+    200,
+    [openedPage]
+  );
   return (
     <BuilderContext.Provider
       value={{
@@ -117,6 +135,8 @@ function App() {
         editingListViewItems,
         setEditingListViewItems,
         toggleEditingListViewItems,
+        tabbarEnabled,
+        setTabbarEnabled,
       }}
     >
       <DndProvider backend={HTML5Backend}>

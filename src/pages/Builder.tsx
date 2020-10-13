@@ -9,6 +9,8 @@ import EditTextBlock from "../components/forms/EditTextBlock";
 import ReactModal from 'react-modal';
 import update from 'immutability-helper'
 import CustomGenericButton from "../components/mobile_components/CustomGenericButton";
+import BuilderModeToggle from "../components/BuilderModeToggle";
+import Navigation from "../components/Navigation";
 
 const Container = styled.div`
   display: flex;
@@ -16,11 +18,19 @@ const Container = styled.div`
 `
 
 export default function Builder() {
-  const { editingComponent, setEditingComponent } = useContext(BuilderContext)
+  const { mode } = useContext(BuilderContext)
   return (
     <Container>
       <Leftbar />
-      <Simulator />
+      <div style={{ maxHeight: '100vh', overflowY: 'auto' }}>
+        <BuilderModeToggle />
+        {
+          mode === 'simulator' ? <Simulator /> : null
+        }
+        {
+          mode === 'navigation' ? <Navigation /> : null
+        }
+      </div>
       <Rightbar/>
       {/*<ReactModal*/}
       {/*  isOpen={Boolean(editingComponent)}*/}
