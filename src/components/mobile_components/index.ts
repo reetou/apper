@@ -17,7 +17,8 @@ export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
   CustomGenericButtonRounded: 'custom_generic_button_rounded',
   TextBlock: 'custom_text_block',
   CustomImage: 'custom_image',
-  CustomListView: 'custom_list_view'
+  CustomListView: 'custom_list_view',
+  CustomTextListView: 'custom_text_list_view',
 }
 
 export const CUSTOM_INPUTS = [
@@ -40,6 +41,8 @@ export function getCustomComponentByItemType(type: CustomComponentType): CustomC
       return CustomImageData()
     case CUSTOM_COMPONENT_TYPES.CustomListView:
       return CustomListViewData()
+    case CUSTOM_COMPONENT_TYPES.CustomTextListView:
+      return CustomTextListViewData()
     default:
       console.error(`Returning default component because no such custom type ${type}`)
       return CustomInputData()
@@ -167,6 +170,28 @@ export function CustomListViewData(): CustomComponent {
     children: [],
     title: 'Список элементов',
     item_type: CUSTOM_COMPONENT_TYPES.CustomListView,
+    data: {
+      value: '',
+    }
+  }
+}
+
+export function CustomTextListViewData(): CustomComponent {
+  return {
+    id: uuidv4(),
+    component: CustomListView,
+    props: {
+      childComponents: [],
+      margin: 0,
+      padding: 0,
+      backgroundColor: '#FFFFFF',
+      noImage: true,
+      noSubtitle: true,
+      listItemPrepend: 'circle',
+    },
+    children: [],
+    title: 'Текстовый список',
+    item_type: CUSTOM_COMPONENT_TYPES.CustomTextListView,
     data: {
       value: '',
     }

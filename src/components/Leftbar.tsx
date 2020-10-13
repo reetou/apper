@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import BarContainer from "./BarContainer";
 import CustomComponentContainer from "./CustomComponentContainer";
 import CustomInput from "./mobile_components/CustomInput";
-import BuilderContext, { CustomComponent, CustomComponentType, CustomPage } from "../store/BuilderContext";
+import BuilderContext, { CustomComponentType } from "../store/BuilderContext";
 import {
   ALL_CUSTOM_COMPONENT_TYPES,
   CustomGenericButtonData,
   CustomGenericRoundedButtonData, CustomImageData,
-  CustomInputData, CustomListViewData, TextBlockData,
+  CustomInputData, CustomListViewData, CustomTextListViewData, TextBlockData,
 } from "./mobile_components";
 import CustomGenericButton from "./mobile_components/CustomGenericButton";
 import CustomComponentBlock from "./CustomComponentBlock";
@@ -17,6 +17,7 @@ import styled from 'styled-components'
 import TextBlock from "./mobile_components/TextBlock";
 import CustomImage from "./mobile_components/CustomImage";
 import CustomListView from "./mobile_components/CustomListView";
+import EditCustomListViewItems from "./forms/EditCustomListViewItems";
 
 const Overlay = styled.div`
   position: absolute;
@@ -57,6 +58,10 @@ const INTERACTION_BLOCK = {
       component: <CustomListView thumbnail childComponents={[]} />,
       data: CustomListViewData()
     },
+    {
+      component: <CustomListView thumbnail listItemPrepend="circle" noSubtitle noImage childComponents={[]} />,
+      data: CustomTextListViewData()
+    },
   ]
 }
 
@@ -64,8 +69,40 @@ const BLOCKS = [
   INTERACTION_BLOCK,
 ]
 
+function Blocks() {
+  return (
+    <React.Fragment>
+      <h3>Компоненты</h3>
+      {
+        BLOCKS.map(b => (
+          <CustomComponentBlock
+            title={b.title}
+          >
+            {
+              b.components.map(c => (
+                <CustomComponentContainer
+                  data={c.data}
+                >
+                  {c.component}
+                </CustomComponentContainer>
+              ))
+            }
+          </CustomComponentBlock>
+        ))
+      }
+    </React.Fragment>
+  )
+}
+
 export default function Leftbar() {
-  const { onAddComponent, openedPage, setOpenedPage, draggingItemId, editingComponent, setEditingComponent } = useContext(BuilderContext)
+  const {
+    openedPage,
+    setOpenedPage,
+    draggingItemId,
+    editingComponent,
+    setEditingComponent,
+    editingListViewId,
+  } = useContext(BuilderContext)
   const [componentsIds, setComponentsIds] = useState<string[]>(openedPage.components.map(c => c.id))
   useEffect(() => {
     setComponentsIds(openedPage.components.map(c => c.id))
@@ -110,23 +147,8 @@ export default function Leftbar() {
           )
           : null
       }
-      <h3>Компоненты</h3>
       {
-        BLOCKS.map(b => (
-          <CustomComponentBlock
-            title={b.title}
-          >
-            {
-              b.components.map(c => (
-                <CustomComponentContainer
-                  data={c.data}
-                >
-                  {c.component}
-                </CustomComponentContainer>
-              ))
-            }
-          </CustomComponentBlock>
-        ))
+        editingListViewId ? <EditCustomListViewItems /> : <Blocks />
       }
     </BarContainer>
   )

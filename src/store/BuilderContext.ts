@@ -33,17 +33,17 @@ export type CustomComponentType = 'custom_input'
   | 'custom_text_block'
   | 'custom_image'
   | 'custom_list_view'
+  | 'custom_text_list_view'
 
 export interface ICustomListViewItem {
   id: string;
   image_url?: string;
   title: string;
   subtitle?: string;
-  onClickType?: OnListItemClickTypeType;
   itemTargetId?: string;
 }
 
-interface CustomComponentProps {
+export interface CustomComponentProps {
   disabled?: boolean;
   rounded?: boolean;
   onClickType?: OnClickTypeType,
@@ -62,6 +62,9 @@ interface CustomComponentProps {
   margin?: number,
   padding?: number,
   childComponents?: ICustomListViewItem[],
+  noImage?: boolean,
+  noSubtitle?: boolean,
+  listItemPrepend?: 'circle',
 }
 
 export interface CustomComponent {
@@ -102,6 +105,10 @@ interface BuilderContextProps {
   editComponentForm: EditCustomComponentForm,
   setEditComponentForm: Dispatch<SetStateAction<EditCustomComponentForm>>,
   updateComponent: (newProps?: object) => void,
+  editingListViewId?: string,
+  setEditingListViewId: Dispatch<SetStateAction<string | undefined>>,
+  editingListViewItems: ICustomListViewItem[],
+  setEditingListViewItems: Dispatch<SetStateAction<ICustomListViewItem[]>>,
 }
 
 export default createContext<BuilderContextProps>({
@@ -119,4 +126,8 @@ export default createContext<BuilderContextProps>({
   editComponentForm: { value: '' },
   setEditComponentForm: () => {},
   updateComponent: () => {},
+  editingListViewItems: [],
+  setEditingListViewItems: () => {},
+  editingListViewId: undefined,
+  setEditingListViewId: () => {},
 })

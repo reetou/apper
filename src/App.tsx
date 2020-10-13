@@ -5,7 +5,13 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
-import BuilderContext, { BuilderMode, CustomComponent, CustomPage, DEFAULT_PAGE } from './store/BuilderContext';
+import BuilderContext, {
+  BuilderMode,
+  CustomComponent, CustomComponentProps,
+  CustomPage,
+  DEFAULT_PAGE,
+  ICustomListViewItem
+} from './store/BuilderContext';
 import Builder from "./pages/Builder";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -20,6 +26,15 @@ function App() {
   const [draggingItemId, setDraggingItemId] = useState()
   const [editingComponent, setEditingComponent] = useState()
   const [editComponentForm, setEditComponentForm] = useState()
+  const [editingListViewId, setEditingListViewId] = useState()
+  const [editingListViewItems, setEditingListViewItems] = useState<ICustomListViewItem[]>([])
+  useEffect(() => {
+    if (!editingListViewId) {
+      setEditingListViewItems([])
+    } else {
+      setEditingListViewItems(editingComponent?.props?.childComponents || [])
+    }
+  }, [editingListViewId])
   const onAddComponent = (component: CustomComponent, setAsEditing = false) => {
     console.log(`Pushing component`, component)
     setOpenedPage((prevPage) => {
@@ -32,7 +47,7 @@ function App() {
       setEditingComponent(component)
     }
   }
-  const updateComponent = (newProps?: object) => {
+  const updateComponent = (newProps?: CustomComponentProps) => {
     if (!editingComponent) {
       return
     }
@@ -85,6 +100,10 @@ function App() {
         setEditingComponent,
         editComponentForm,
         setEditComponentForm,
+        editingListViewId,
+        setEditingListViewId,
+        editingListViewItems,
+        setEditingListViewItems,
       }}
     >
       <DndProvider backend={HTML5Backend}>

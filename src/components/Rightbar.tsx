@@ -24,6 +24,7 @@ function componentForm(component?: CustomComponent) {
     case CUSTOM_COMPONENT_TYPES.CustomInput:
       return <EditCustomInput />
     case CUSTOM_COMPONENT_TYPES.CustomListView:
+    case CUSTOM_COMPONENT_TYPES.CustomTextListView:
       return <EditCustomListView />
     default:
       return null

@@ -11,9 +11,9 @@ export default function EditCustomListView() {
   const {
     updateComponent,
     setEditingListViewId,
+    setEditingListViewItems,
     editingListViewId,
     setEditComponentForm,
-    setEditingListViewItems,
     editingComponent,
   } = useContext(BuilderContext)
   const [loading, setLoading] = useState<boolean>(true)
@@ -49,16 +49,6 @@ export default function EditCustomListView() {
       >
         Настроить элементы
       </button>
-      <SettingsSelect
-        value={editingComponent?.props?.onClickType}
-        onChange={(val) => {
-          updateComponent({
-            onClickType: val,
-          })
-        }}
-        title="При нажатии на элемент:"
-        options={onClickTypeOptions()}
-      />
       <SettingsMarginPadding
         marginValue={editingComponent.props.margin}
         paddingValue={editingComponent.props.padding}
