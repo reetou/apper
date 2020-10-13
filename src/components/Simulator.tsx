@@ -96,8 +96,11 @@ export default function Simulator() {
       </MovableContainer>
     )
   })
+  console.log(`Opened page`, openedPage)
   const dropViewStyle = {
     ...state.isOver ? { backgroundColor: '#efefef' } : {},
+    ...openedPage.margin ? { margin: openedPage.margin[0] } : {},
+    ...openedPage.padding ? { padding: openedPage.padding[0] } : {},
   }
   return (
     <Container ref={drop}>

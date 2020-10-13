@@ -8,6 +8,7 @@ import EditTextBlock from "./forms/EditTextBlock";
 import EditCustomGenericButton from "./forms/EditCustomGenericButton";
 import EditCustomImage from "./forms/EditCustomImage";
 import EditCustomInput from "./forms/EditCustomInput";
+import SettingsMarginPadding from "./SettingsMarginPadding";
 
 function componentForm(component?: CustomComponent) {
   switch (component?.item_type) {
@@ -60,6 +61,32 @@ export default function Rightbar() {
             { value: 'modal', label: 'Модальное окно' },
             { value: 'screen', label: 'Экран' },
           ]}
+        />
+        <SettingsMarginPadding
+          marginValue={String(openedPage.margin[0])}
+          paddingValue={String(openedPage.padding[0])}
+          onChangeMargin={(val) => {
+            if (!Boolean(Number(val)) && val !== '') {
+              console.error(`Not valid`, val)
+              return
+            }
+            val = Number(val)
+            editPage({
+              ...openedPage as CustomPage,
+              margin: [val, val, val, val],
+            })
+          }}
+          onChangePadding={(val) => {
+            if (!Boolean(Number(val)) && val !== '') {
+              console.error(`Not valid`, val)
+              return
+            }
+            val = Number(val)
+            editPage({
+              ...openedPage as CustomPage,
+              padding: [val, val, val, val],
+            })
+          }}
         />
       </SettingsBlock>
       {componentForm(editingComponent)}
