@@ -24,7 +24,7 @@ export default function Navigation() {
             selected={openedPage.id === p.id}
             tabbarEnabled={tabbarEnabled}
           />
-        )).concat(pages.length < 4 ? [<AddPageItem />] : [])
+        )).concat(pages.length < 14 ? [<AddPageItem />] : [])
       }
     </Container>
   )
