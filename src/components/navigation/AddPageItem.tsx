@@ -32,7 +32,7 @@ export default function AddPageItem() {
     <Container
       onClick={() => {
         setPages(update(pages, {
-          $push: [createNewPage()]
+          $push: [createNewPage(pages.length)]
         }))
       }}
     >

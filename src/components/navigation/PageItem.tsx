@@ -2,13 +2,11 @@ import React, { useContext } from 'react'
 import BuilderContext, { CustomPage } from "../../store/BuilderContext";
 import styled from 'styled-components';
 import update from 'immutability-helper'
-import { useDebounce } from "react-use";
 
 interface Props {
   page: CustomPage;
   selected: boolean;
   tabbarEnabled: boolean;
-  showPlus?: boolean;
 }
 
 const Item = styled.div<{ navbar: boolean, tabbar: boolean }>`
@@ -18,6 +16,7 @@ const Item = styled.div<{ navbar: boolean, tabbar: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   background-color: #D6D6D6;
   border-top-right-radius: ${({ navbar }) => navbar ? '16px' : '0'};
   border-top-left-radius: ${({ navbar }) => navbar ? '16px' : '0'};
@@ -79,7 +78,6 @@ export default function PageItem(props: Props) {
     page,
     selected,
     tabbarEnabled,
-    showPlus,
   } = props
   const { openedPage, setOpenedPage } = useContext(BuilderContext)
   return (
@@ -96,19 +94,17 @@ export default function PageItem(props: Props) {
     >
       <Title>{page.name}</Title>
       <div>
-        { page.nav_header_mode === 'show' ? <NavHeaderContainer>{page.nav_header_title}</NavHeaderContainer> : null }
+        { page.nav_header_mode === 'show' && page.page_type !== 'modal' ? <NavHeaderContainer>{page.nav_header_title}</NavHeaderContainer> : null }
         <Item
-          tabbar={!tabbarEnabled}
-          navbar={page.nav_header_mode !== 'show'}
+          tabbar={page.page_type === 'modal' ? true : !tabbarEnabled}
+          navbar={page.page_type === 'modal' ? true : page.nav_header_mode !== 'show'}
         >
           {
-            showPlus
-              ? <div>Add</div>
-              : null
+            page.page_type === 'modal' ? <div>Modal</div> : null
           }
         </Item>
         {
-          tabbarEnabled
+          tabbarEnabled && page.page_type !== 'modal'
             ? (
               <TabbarContainer>
                 <TabbarItem />

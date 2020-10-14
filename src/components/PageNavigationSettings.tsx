@@ -4,6 +4,7 @@ import SettingsSelect from './SettingsSelect';
 import { useDebounce } from "react-use";
 import update from "immutability-helper";
 import SettingsInput from "./SettingsInput";
+import isPermanentPage from "../utils/pageUtils";
 
 interface Props {
   editPage: (page: CustomPage) => void;
@@ -15,6 +16,7 @@ export default function PageNavigationSettings(props: Props) {
     tabbarEnabled,
     setTabbarEnabled,
     setOpenedPage,
+    pages,
   } = useContext(BuilderContext)
   if (!openedPage) {
     return null
@@ -22,6 +24,18 @@ export default function PageNavigationSettings(props: Props) {
   return (
     <React.Fragment>
       <h3>{`${openedPage.name}: Настройки навигации`}</h3>
+      <h3>Запуск</h3>
+      <SettingsSelect
+        value={openedPage.first_page_id}
+        onChange={(val) => {
+          setOpenedPage({
+            ...openedPage,
+            first_page_id: val,
+          })
+        }}
+        title="Первая страница при запуске"
+        options={pages.filter(isPermanentPage).map(p => ({ value: p.id, label: p.name }))}
+      />
       <h3>Таббар</h3>
       <SettingsSelect
         value={tabbarEnabled ? '1' : '0'}
@@ -41,6 +55,16 @@ export default function PageNavigationSettings(props: Props) {
       >
         Настроить кнопки в таббаре
       </button>
+      <SettingsInput
+        value={openedPage.name}
+        onChange={(val) => {
+          setOpenedPage({
+            ...openedPage,
+            name: val,
+          })
+        }}
+        title="Название страницы"
+      />
       <SettingsSelect
         value={openedPage.nav_header_mode}
         onChange={(val) => {
@@ -49,14 +73,15 @@ export default function PageNavigationSettings(props: Props) {
             nav_header_mode: val,
           })
         }}
-        title="Показывать верхний блок навигации"
+        hidden={openedPage.page_type === 'modal'}
+        title="Верхний блок навигации"
         options={[
-          { value: 'show', label: 'Да' },
-          { value: 'hide', label: 'Нет' },
+          { value: 'show', label: 'Показывать' },
+          { value: 'hide', label: 'Скрыть' },
         ]}
       />
       <SettingsInput
-        hidden={openedPage.nav_header_mode === 'hide'}
+        hidden={openedPage.nav_header_mode === 'hide' || openedPage.page_type === 'modal'}
         value={openedPage.nav_header_title}
         onChange={(val) => {
           setOpenedPage({
