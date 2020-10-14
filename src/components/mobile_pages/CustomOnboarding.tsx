@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Image, View, Text } from 'react-native-web'
+import { Image, View, Text, TouchableOpacity } from 'react-native-web'
 import BuilderContext from "../../store/BuilderContext";
 import { DEFAULT_IMAGE_URL } from "../mobile_components";
 
@@ -53,20 +53,51 @@ export default function CustomOnboarding() {
       </View>
       <View
         style={{
-          alignItems: 'center',
           marginVertical: 30,
+          width: '100%',
         }}
       >
         <View
           style={{
             flexDirection: 'row',
-            width: 50,
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
+            padding: 16,
           }}
         >
-          <Circle />
-          <Circle />
-          <Circle />
+          <TouchableOpacity
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              backgroundColor: 'white',
+              borderWidth: 2,
+              borderColor: '#000000',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <View>
+              <Text>OK</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: 12,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              width: 50,
+              justifyContent: 'space-between',
+            }}
+          >
+            <Circle />
+            <Circle />
+            <Circle />
+          </View>
         </View>
       </View>
     </View>

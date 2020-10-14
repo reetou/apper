@@ -35,7 +35,7 @@ export default function PageNavigationSettings(props: Props) {
             first_page_id: val,
           })
         }}
-        title="Первая страница при запуске"
+        title="Первая страница при запуске или после онбординга"
         options={pages.filter(isPermanentPage).map(p => ({ value: p.id, label: p.name }))}
       />
       <h3>Таббар</h3>
