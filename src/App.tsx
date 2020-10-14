@@ -10,7 +10,7 @@ import BuilderContext, {
   CustomComponent, CustomComponentData, CustomComponentProps,
   CustomPage,
   DEFAULT_PAGE,
-  ICustomListViewItem
+  ICustomListViewItem, TabbarSettings
 } from './store/BuilderContext';
 import Builder from "./pages/Builder";
 import { DndProvider } from "react-dnd";
@@ -18,8 +18,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import update from 'immutability-helper'
 import 'rc-slider/assets/index.css';
 import { useDebounce } from "react-use";
+import { createTabbar } from "./utils/tabbarUtils";
+require('react-web-vector-icons/fonts');
+
 
 function App() {
+  const [tabbarSettings, setTabbarSettings] = useState<TabbarSettings>(createTabbar())
   const [tabbarEnabled, setTabbarEnabled] = useState<boolean>(false)
   const [mode, setMode] = useState<BuilderMode>('navigation')
   const [selectedElement, setSelectedElement] = useState<any>()
@@ -137,6 +141,8 @@ function App() {
         toggleEditingListViewItems,
         tabbarEnabled,
         setTabbarEnabled,
+        tabbarSettings,
+        setTabbarSettings,
       }}
     >
       <DndProvider backend={HTML5Backend}>

@@ -50,21 +50,6 @@ export default function PageGeneralSettings(props: Props) {
       <SettingsBlock
         title="Параметры страницы"
       >
-        <SettingsSelect
-          value={openedPage.page_type}
-          onChange={(value) => {
-            editPage({
-              ...openedPage as CustomPage,
-              page_type: value as PageType,
-            })
-            console.log(`New value is`, value)
-          }}
-          title="Тип страницы"
-          options={[
-            { value: 'modal', label: 'Модальное окно' },
-            { value: 'screen', label: 'Экран' },
-          ]}
-        />
         <SettingsMarginPadding
           marginValue={String(openedPage.margin[0])}
           paddingValue={String(openedPage.padding[0])}

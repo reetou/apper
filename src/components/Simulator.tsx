@@ -7,12 +7,8 @@ import { ALL_CUSTOM_COMPONENT_TYPES, getCustomComponentByItemType } from "./mobi
 import MovableContainer from "./MovableContainer";
 import update from 'immutability-helper';
 import { isEmbeddable, isFloating } from "../utils/componentUtils";
-import { createStackNavigator } from "@react-navigation/stack";
 import MainScreen from "./simulator/MainScreen";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-const Stack = createStackNavigator()
-const Tab = createBottomTabNavigator()
+import { NavigationContainer } from "@react-navigation/native";
 
 const Container = styled.div`
   display: flex;
@@ -106,22 +102,6 @@ export default function Simulator() {
       </MovableContainer>
     )
   })
-  const floatingChildren = openedPage.components.filter(isFloating).map((c: CustomComponent) => {
-    const { component: Component } = c
-    return (
-      <MovableContainer
-        key={c.id}
-        id={c.id}
-        type={c.item_type}
-        accept={ALL_CUSTOM_COMPONENT_TYPES}
-        onMove={onMove}
-      >
-        <Component {...c.props} data={c.data} componentId={c.id}>
-          {c.children}
-        </Component>
-      </MovableContainer>
-    )
-  })
   const dropViewStyle = {
     ...state.isOver ? { backgroundColor: '#efefef' } : {},
     ...openedPage.margin ? { margin: openedPage.margin[0] } : {},
@@ -129,23 +109,10 @@ export default function Simulator() {
   }
   const MainScreenComponent = () => (
     <MainScreen
+      onMove={onMove}
       openedPage={openedPage}
-      embeddableChildren={embeddableChildren}
-      floatingChildren={floatingChildren}
       dropViewStyle={dropViewStyle}
     />
-  )
-  const StackScreen = () => (
-    <Stack.Navigator initialRouteName="Simulator_MainScreen">
-      <Stack.Screen
-        name="Simulator_MainScreen"
-        options={{
-          headerShown: openedPage.nav_header_mode === 'show',
-          title: `Главная`,
-        }}
-        component={MainScreenComponent}
-      />
-    </Stack.Navigator>
   )
   return (
     <Container ref={drop}>
@@ -159,12 +126,13 @@ export default function Simulator() {
         }}
       >
         <View style={{ flex: 1, height: '100%' }}>
-          <MainScreen
-            openedPage={openedPage}
-            embeddableChildren={embeddableChildren}
-            floatingChildren={floatingChildren}
-            dropViewStyle={dropViewStyle}
-          />
+          <NavigationContainer>
+            <MainScreen
+              onMove={onMove}
+              openedPage={openedPage}
+              dropViewStyle={dropViewStyle}
+            />
+          </NavigationContainer>
         </View>
       </div>
     </Container>

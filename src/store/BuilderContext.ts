@@ -1,8 +1,9 @@
 import { createContext, Dispatch, SetStateAction, ReactNode, default as React } from "react";
 import { v4 as uuidv4 } from 'uuid'
 import { OnClickTypeType } from "../utils/buttonUtils";
+import { createTabbar } from "../utils/tabbarUtils";
 
-export type BuilderMode = 'simulator' | 'navigation'
+export type BuilderMode = 'simulator' | 'navigation' | 'edit_tabbar'
 
 export type PageType = 'modal' | 'screen'
 
@@ -111,7 +112,23 @@ export const DEFAULT_EDIT_COMPONENT_FORM = {
   value: ''
 }
 
+export interface TabbarItem {
+  icon: string;
+  label?: string;
+  id: string;
+  page_id: string;
+}
+
+export interface TabbarSettings {
+  items: TabbarItem[],
+  show_label: boolean,
+  selected_color: string,
+  color: string,
+}
+
 interface BuilderContextProps {
+  tabbarSettings: TabbarSettings,
+  setTabbarSettings: Dispatch<SetStateAction<TabbarSettings>>,
   tabbarEnabled: boolean,
   setTabbarEnabled: (val: boolean) => void,
   mode: BuilderMode,
@@ -155,4 +172,6 @@ export default createContext<BuilderContextProps>({
   toggleEditingListViewItems: () => {},
   tabbarEnabled: false,
   setTabbarEnabled: () => {},
+  tabbarSettings: createTabbar(),
+  setTabbarSettings: () => {},
 })

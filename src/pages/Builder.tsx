@@ -11,6 +11,7 @@ import update from 'immutability-helper'
 import CustomGenericButton from "../components/mobile_components/CustomGenericButton";
 import BuilderModeToggle from "../components/BuilderModeToggle";
 import Navigation from "../components/Navigation";
+import EditTabbar from "../components/forms/EditTabbar";
 
 const Container = styled.div`
   display: flex;
@@ -29,6 +30,9 @@ export default function Builder() {
         }
         {
           mode === 'navigation' ? <Navigation /> : null
+        }
+        {
+          mode === 'edit_tabbar' ? <EditTabbar /> : null
         }
       </div>
       <Rightbar/>

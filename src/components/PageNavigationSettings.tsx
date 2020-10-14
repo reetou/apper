@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import BuilderContext, { CustomPage } from "../store/BuilderContext";
+import BuilderContext, { CustomPage, PageType } from "../store/BuilderContext";
 import SettingsSelect from './SettingsSelect';
 import { useDebounce } from "react-use";
 import update from "immutability-helper";
 import SettingsInput from "./SettingsInput";
 import isPermanentPage from "../utils/pageUtils";
+import SettingsBlock from "./SettingsBlock";
 
 interface Props {
   editPage: (page: CustomPage) => void;
@@ -18,6 +19,7 @@ export default function PageNavigationSettings(props: Props) {
     setOpenedPage,
     pages,
   } = useContext(BuilderContext)
+  const { editPage } = props
   if (!openedPage) {
     return null
   }
@@ -55,6 +57,21 @@ export default function PageNavigationSettings(props: Props) {
       >
         Настроить кнопки в таббаре
       </button>
+      <SettingsSelect
+        value={openedPage.page_type}
+        onChange={(value) => {
+          editPage({
+            ...openedPage as CustomPage,
+            page_type: value as PageType,
+          })
+          console.log(`New value is`, value)
+        }}
+        title="Тип страницы"
+        options={[
+          { value: 'modal', label: 'Модальное окно' },
+          { value: 'screen', label: 'Экран' },
+        ]}
+      />
       <SettingsInput
         value={openedPage.name}
         onChange={(val) => {

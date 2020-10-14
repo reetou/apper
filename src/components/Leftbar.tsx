@@ -106,6 +106,7 @@ export default function Leftbar() {
     editingComponent,
     setEditingComponent,
     editingListViewId,
+    mode,
   } = useContext(BuilderContext)
   const [componentsIds, setComponentsIds] = useState<string[]>(openedPage.components.map(c => c.id))
   useEffect(() => {
@@ -156,7 +157,13 @@ export default function Leftbar() {
           ? <EditCustomListViewItems />
           : (
             <React.Fragment>
-              <Blocks />
+              {
+                mode === 'simulator'
+                  ? (
+                    <Blocks />
+                  )
+                  : null
+              }
             </React.Fragment>
           )
       }

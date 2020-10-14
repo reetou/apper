@@ -3,6 +3,7 @@ import BarContainer from "./BarContainer";
 import BuilderContext, { CustomComponent, CustomPage, PageType } from "../store/BuilderContext";
 import PageGeneralSettings from './PageGeneralSettings';
 import PageNavigationSettings from "./PageNavigationSettings";
+import EditTabbarSettings from "./forms/EditTabbarSettings";
 
 export default function Rightbar() {
   const {
@@ -32,6 +33,13 @@ export default function Rightbar() {
         mode === 'navigation'
           ? (
             <PageNavigationSettings editPage={editPage} />
+          )
+          : null
+      }
+      {
+        mode === 'edit_tabbar'
+          ? (
+            <EditTabbarSettings />
           )
           : null
       }

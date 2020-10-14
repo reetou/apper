@@ -1,24 +1,59 @@
-import { CustomPage } from "../../store/BuilderContext";
+import { CustomComponent, CustomPage } from "../../store/BuilderContext";
 import React, { ReactNode } from "react";
 import { View } from "react-native-web";
+import { isEmbeddable, isFloating } from "../../utils/componentUtils";
+import MovableContainer from "../MovableContainer";
+import { ALL_CUSTOM_COMPONENT_TYPES } from "../mobile_components";
+import { createStackNavigator } from "@react-navigation/stack";
 
 
 interface MainScreenProps {
   openedPage: CustomPage;
-  embeddableChildren: ReactNode[];
-  floatingChildren: ReactNode[];
   dropViewStyle: any;
-
+  onMove: (id: string, afterId: string) => void;
+  showHeader?: boolean;
 }
+const Stack = createStackNavigator()
 
 export default function MainScreen(props: MainScreenProps) {
   const {
     openedPage,
-    floatingChildren,
-    embeddableChildren,
     dropViewStyle,
+    onMove,
   } = props
-  return (
+  const embeddableChildren = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
+    const { component: Component } = c
+    return (
+      <MovableContainer
+        key={c.id}
+        id={c.id}
+        type={c.item_type}
+        accept={ALL_CUSTOM_COMPONENT_TYPES}
+        onMove={onMove}
+      >
+        <Component {...c.props} data={c.data} componentId={c.id}>
+          {c.children}
+        </Component>
+      </MovableContainer>
+    )
+  })
+  const floatingChildren = openedPage.components.filter(isFloating).map((c: CustomComponent) => {
+    const { component: Component } = c
+    return (
+      <MovableContainer
+        key={c.id}
+        id={c.id}
+        type={c.item_type}
+        accept={ALL_CUSTOM_COMPONENT_TYPES}
+        onMove={onMove}
+      >
+        <Component {...c.props} data={c.data} componentId={c.id}>
+          {c.children}
+        </Component>
+      </MovableContainer>
+    )
+  })
+  const Main = () => (
     <View style={{ flex: 1, height: '100%' }}>
       {
         openedPage?.page_type === 'screen'
@@ -56,5 +91,20 @@ export default function MainScreen(props: MainScreenProps) {
           : null
       }
     </View>
+  )
+  if (openedPage.page_type === 'modal') {
+    return <Main />
+  }
+  return (
+    <Stack.Navigator initialRouteName="Simulator_MainScreen">
+      <Stack.Screen
+        name="Simulator_MainScreen"
+        options={{
+          headerShown: openedPage.nav_header_mode === 'show',
+          title: openedPage.nav_header_title || '',
+        }}
+        component={Main}
+      />
+    </Stack.Navigator>
   )
 }
