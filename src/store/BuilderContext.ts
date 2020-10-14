@@ -86,6 +86,7 @@ export interface CustomComponentProps {
   noImage?: boolean,
   noSubtitle?: boolean,
   listItemPrepend?: 'circle',
+  webPageUrl?: string,
 }
 
 export interface CustomComponentData {

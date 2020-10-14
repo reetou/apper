@@ -8,7 +8,14 @@ import { ONCLICK_TYPES } from "../../utils/buttonUtils";
 import CustomListView from "./CustomListView";
 
 interface ComponentTypesInterface {
-  [key: string]: CustomComponentType,
+  CustomInput: CustomComponentType,
+  CustomGenericButton: CustomComponentType,
+  CustomGenericButtonRounded: CustomComponentType,
+  TextBlock: CustomComponentType,
+  CustomImage: CustomComponentType,
+  CustomListView: CustomComponentType,
+  CustomTextListView: CustomComponentType,
+  CustomFloatingButton: CustomComponentType,
 }
 
 export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
@@ -41,7 +48,8 @@ export const NON_EMBEDDABLE_COMPONENTS = [
 
 export const DEFAULT_IMAGE_URL = 'https://i.imgur.com/t0nSc4e.png'
 
-export const ALL_CUSTOM_COMPONENT_TYPES: CustomComponentType[] = Object.keys(CUSTOM_COMPONENT_TYPES).map(k => CUSTOM_COMPONENT_TYPES[k])
+// @ts-ignore
+export const ALL_CUSTOM_COMPONENT_TYPES: CustomComponentType[] = Object.keys(CUSTOM_COMPONENT_TYPES).map((k) => CUSTOM_COMPONENT_TYPES[k])
 
 export function getCustomComponentByItemType(type: CustomComponentType): CustomComponent {
   switch (type) {
@@ -92,6 +100,7 @@ const buttonBasicProps = {
   textColor: '#000000',
   borderColor: '#000000',
   borderWidth: 1,
+  webPageUrl: ''
 }
 
 export function CustomGenericButtonData(): CustomComponent {

@@ -18,6 +18,7 @@ export default function EditCustomGenericButton() {
       { value: ONCLICK_TYPES.navigateReplace, label: 'Заменить страницу на другую' },
       { value: ONCLICK_TYPES.submitForm, label: 'Сохранить данные из полей ввода' },
       { value: ONCLICK_TYPES.navigateBack, label: 'Перейти на страницу назад', disabled: isFirst },
+      { value: ONCLICK_TYPES.openWebPage, label: 'Открыть веб-сайт' },
     ]
   }
   if (!editingComponent) {
@@ -55,6 +56,16 @@ export default function EditCustomGenericButton() {
         hidden={!editingComponent?.props?.onClickType || !NAVIGATION_MOVE_ONCLICK_TYPES.includes(editingComponent?.props?.onClickType)}
         title="Новая страница:"
         options={pages.filter(p => p.id !== openedPage.id).map(p => ({ value: p.id, label: p.name }))}
+      />
+      <SettingsInput
+        value={editingComponent?.props?.webPageUrl}
+        onChange={(val) => {
+          updateComponent({
+            webPageUrl: val,
+          })
+        }}
+        hidden={!editingComponent?.props?.onClickType || editingComponent?.props?.onClickType !== 'open_web_page'}
+        title="Ссылка на веб-сайт:"
       />
       <SettingsInput
         value={editingComponent.props?.borderWidth}
