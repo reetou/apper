@@ -1,10 +1,11 @@
-import { CustomComponent, CustomPage } from "../../store/BuilderContext";
-import React, { ReactNode } from "react";
+import BuilderContext, { CustomComponent, CustomPage } from "../../store/BuilderContext";
+import React, { ReactNode, useContext } from "react";
 import { View } from "react-native-web";
 import { isEmbeddable, isFloating } from "../../utils/componentUtils";
 import MovableContainer from "../MovableContainer";
 import { ALL_CUSTOM_COMPONENT_TYPES } from "../mobile_components";
 import { createStackNavigator } from "@react-navigation/stack";
+import CustomOnboarding from "../mobile_pages/CustomOnboarding";
 
 
 interface MainScreenProps {
@@ -21,6 +22,10 @@ export default function MainScreen(props: MainScreenProps) {
     dropViewStyle,
     onMove,
   } = props
+  const { mode } = useContext(BuilderContext)
+  if (mode === 'edit_onboarding') {
+    return <CustomOnboarding />
+  }
   const embeddableChildren = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
     const { component: Component } = c
     return (

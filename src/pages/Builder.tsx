@@ -12,6 +12,7 @@ import CustomGenericButton from "../components/mobile_components/CustomGenericBu
 import BuilderModeToggle from "../components/BuilderModeToggle";
 import Navigation from "../components/Navigation";
 import EditTabbar from "../components/forms/EditTabbar";
+import CustomOnboarding from "../components/mobile_pages/CustomOnboarding";
 
 const Container = styled.div`
   display: flex;
@@ -33,6 +34,9 @@ export default function Builder() {
         }
         {
           mode === 'edit_tabbar' ? <EditTabbar /> : null
+        }
+        {
+          mode === 'edit_onboarding' ? <Simulator /> : null
         }
       </div>
       <Rightbar/>

@@ -2,10 +2,17 @@ import { createContext, Dispatch, SetStateAction, ReactNode, default as React } 
 import { v4 as uuidv4 } from 'uuid'
 import { OnClickTypeType } from "../utils/buttonUtils";
 import { createTabbar } from "../utils/tabbarUtils";
+import { DEFAULT_IMAGE_URL } from "../components/mobile_components";
 
-export type BuilderMode = 'simulator' | 'navigation' | 'edit_tabbar'
+export type BuilderMode = 'simulator' | 'navigation' | 'edit_tabbar' | 'edit_onboarding'
 
 export type PageType = 'modal' | 'screen'
+
+export interface CustomOnboardingItem {
+  id: string,
+  text: string,
+  image_url: string,
+}
 
 export interface CustomPage {
   id: string,
@@ -18,6 +25,12 @@ export interface CustomPage {
   nav_header_mode: 'show' | 'hide',
   nav_header_title: string,
   first_page_id: string,
+}
+export interface CustomOnboarding {
+  id: string,
+  items: CustomOnboardingItem[],
+  background_color: string,
+  next_page_id: string,
 }
 
 export const DEFAULT_PAGE: CustomPage = {
@@ -48,6 +61,27 @@ export function createNewPage(index?: number): CustomPage {
   }
 }
 
+function createOnboardingItem(): CustomOnboardingItem {
+  return {
+    id: uuidv4(),
+    text: 'Onboarding text...',
+    image_url: DEFAULT_IMAGE_URL
+  }
+}
+
+export function createOnboarding(): CustomOnboarding {
+  return {
+    id: uuidv4(),
+    next_page_id: '',
+    items: [
+      createOnboardingItem(),
+      createOnboardingItem(),
+      createOnboardingItem(),
+    ],
+    background_color: '#FFFFFF'
+  }
+}
+
 export type CustomComponentType = 'custom_input'
   | 'custom_generic_button'
   | 'custom_generic_button_rounded'
@@ -56,6 +90,7 @@ export type CustomComponentType = 'custom_input'
   | 'custom_list_view'
   | 'custom_text_list_view'
   | 'custom_floating_button'
+  | 'custom_onboarding_child'
 
 export interface ICustomListViewItem {
   id: string;
@@ -128,6 +163,8 @@ export interface TabbarSettings {
 }
 
 interface BuilderContextProps {
+  onboarding: CustomOnboarding,
+  setOnboarding: Dispatch<SetStateAction<CustomOnboarding>>,
   tabbarSettings: TabbarSettings,
   setTabbarSettings: Dispatch<SetStateAction<TabbarSettings>>,
   tabbarEnabled: boolean,
@@ -175,4 +212,6 @@ export default createContext<BuilderContextProps>({
   setTabbarEnabled: () => {},
   tabbarSettings: createTabbar(),
   setTabbarSettings: () => {},
+  onboarding: createOnboarding(),
+  setOnboarding: () => {},
 })

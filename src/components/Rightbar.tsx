@@ -4,6 +4,7 @@ import BuilderContext, { CustomComponent, CustomPage, PageType } from "../store/
 import PageGeneralSettings from './PageGeneralSettings';
 import PageNavigationSettings from "./PageNavigationSettings";
 import EditTabbarSettings from "./forms/EditTabbarSettings";
+import EditCustomOnboarding from "./forms/EditCustomOnboarding";
 
 export default function Rightbar() {
   const {
@@ -40,6 +41,13 @@ export default function Rightbar() {
         mode === 'edit_tabbar'
           ? (
             <EditTabbarSettings />
+          )
+          : null
+      }
+      {
+        mode === 'edit_onboarding'
+          ? (
+            <EditCustomOnboarding />
           )
           : null
       }

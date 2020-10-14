@@ -10,6 +10,7 @@ import EditCustomInput from "./forms/EditCustomInput";
 import SettingsMarginPadding from "./SettingsMarginPadding";
 import { validateNumberValue } from "../utils/componentUtils";
 import EditCustomListView from "./forms/EditCustomListView";
+import EditCustomOnboarding from "./forms/EditCustomOnboarding";
 
 function componentForm(component?: CustomComponent) {
   switch (component?.item_type) {

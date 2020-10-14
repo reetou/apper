@@ -17,6 +17,9 @@ export default function BuilderModeToggle() {
       <button disabled={mode === 'edit_tabbar'} onClick={() => setMode('edit_tabbar')}>
         Таббар
       </button>
+      <button disabled={mode === 'edit_onboarding'} onClick={() => setMode('edit_onboarding')}>
+        Онбординг
+      </button>
       <button disabled={mode === 'navigation'} onClick={() => setMode('navigation')}>
         Навигация
       </button>

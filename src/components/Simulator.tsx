@@ -16,29 +16,6 @@ const Container = styled.div`
   justify-content: center;
 `
 
-function getPageProps(page?: CustomPage): object {
-  if (!page) {
-    return {}
-  }
-  switch (page.page_type) {
-    case "screen":
-      return {
-        style: {
-          flex: 1,
-          height: '100%',
-        }
-      }
-    case "modal":
-      return {
-        style: {
-          flex: 1,
-          height: '100%',
-          backgroundColor: 'red'
-        }
-      }
-  }
-}
-
 export default function Simulator() {
   const {
     openedPage,

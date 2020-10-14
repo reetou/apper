@@ -6,8 +6,8 @@ import {
   Route,
 } from 'react-router-dom'
 import BuilderContext, {
-  BuilderMode,
-  CustomComponent, CustomComponentData, CustomComponentProps,
+  BuilderMode, createOnboarding,
+  CustomComponent, CustomComponentData, CustomComponentProps, CustomOnboarding,
   CustomPage,
   DEFAULT_PAGE,
   ICustomListViewItem, TabbarSettings
@@ -23,9 +23,10 @@ require('react-web-vector-icons/fonts');
 
 
 function App() {
+  const [onboarding, setOnboarding] = useState<CustomOnboarding>(createOnboarding())
   const [tabbarSettings, setTabbarSettings] = useState<TabbarSettings>(createTabbar())
   const [tabbarEnabled, setTabbarEnabled] = useState<boolean>(false)
-  const [mode, setMode] = useState<BuilderMode>('navigation')
+  const [mode, setMode] = useState<BuilderMode>('simulator')
   const [selectedElement, setSelectedElement] = useState<any>()
   const [pages, setPages] = useState<CustomPage[]>([DEFAULT_PAGE])
   const [openedPage, setOpenedPage] = useState<CustomPage>(pages[0])
@@ -143,6 +144,8 @@ function App() {
         setTabbarEnabled,
         tabbarSettings,
         setTabbarSettings,
+        onboarding,
+        setOnboarding,
       }}
     >
       <DndProvider backend={HTML5Backend}>

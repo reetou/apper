@@ -16,6 +16,7 @@ interface ComponentTypesInterface {
   CustomListView: CustomComponentType,
   CustomTextListView: CustomComponentType,
   CustomFloatingButton: CustomComponentType,
+  OnboardingComponent: CustomComponentType,
 }
 
 export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
@@ -27,6 +28,7 @@ export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
   CustomListView: 'custom_list_view',
   CustomTextListView: 'custom_text_list_view',
   CustomFloatingButton: 'custom_floating_button',
+  OnboardingComponent: 'custom_onboarding_child',
 }
 
 export const CUSTOM_INPUTS = [
