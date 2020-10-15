@@ -6,6 +6,7 @@ import { useDrop } from "react-dnd";
 import { ALL_CUSTOM_COMPONENT_TYPES, getCustomComponentByItemType } from "./mobile_components";
 import update from 'immutability-helper';
 import MainScreen from "./simulator/MainScreen";
+import { NavigationContainer } from '@react-navigation/native';
 
 const Container = styled.div`
   display: flex;
@@ -77,11 +78,13 @@ export default function Simulator() {
         }}
       >
         <View style={{ flex: 1, height: '100%' }}>
-          <MainScreen
-            onMove={onMove}
-            openedPage={openedPage}
-            dropViewStyle={dropViewStyle}
-          />
+          <NavigationContainer>
+            <MainScreen
+              onMove={onMove}
+              openedPage={openedPage}
+              dropViewStyle={dropViewStyle}
+            />
+          </NavigationContainer>
         </View>
       </div>
     </Container>
