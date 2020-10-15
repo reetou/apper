@@ -7,6 +7,8 @@ import { ALL_CUSTOM_COMPONENT_TYPES, getCustomComponentByItemType } from "./mobi
 import update from 'immutability-helper';
 import MainScreen from "./simulator/MainScreen";
 import { NavigationContainer } from '@react-navigation/native';
+import { isEmbeddable, isFloating } from "../utils/componentUtils";
+import MovableContainer from "./MovableContainer";
 
 const Container = styled.div`
   display: flex;
@@ -66,6 +68,38 @@ export default function Simulator() {
     ...openedPage.margin ? { margin: openedPage.margin[0] } : {},
     ...openedPage.padding ? { padding: openedPage.padding[0] } : {},
   }
+  const embeddableChildren = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
+    const { component: Component } = c
+    return (
+      <MovableContainer
+        key={c.id}
+        id={c.id}
+        type={c.item_type}
+        accept={ALL_CUSTOM_COMPONENT_TYPES}
+        onMove={onMove}
+      >
+        <Component {...c.props} data={c.data} componentId={c.id}>
+          {c.children}
+        </Component>
+      </MovableContainer>
+    )
+  })
+  const floatingChildren = openedPage.components.filter(isFloating).map((c: CustomComponent) => {
+    const { component: Component } = c
+    return (
+      <MovableContainer
+        key={c.id}
+        id={c.id}
+        type={c.item_type}
+        accept={ALL_CUSTOM_COMPONENT_TYPES}
+        onMove={onMove}
+      >
+        <Component {...c.props} data={c.data} componentId={c.id}>
+          {c.children}
+        </Component>
+      </MovableContainer>
+    )
+  })
   return (
     <Container ref={drop}>
       <div
@@ -80,7 +114,8 @@ export default function Simulator() {
         <View style={{ flex: 1, height: '100%' }}>
           <NavigationContainer>
             <MainScreen
-              onMove={onMove}
+              embeddableChildren={embeddableChildren}
+              floatingChildren={floatingChildren}
               openedPage={openedPage}
               dropViewStyle={dropViewStyle}
             />

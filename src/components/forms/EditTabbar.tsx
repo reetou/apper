@@ -1,5 +1,5 @@
-import React, { PropsWithoutRef, useContext } from 'react'
-import BuilderContext, { TabbarItem } from "../../store/BuilderContext";
+import React, { PropsWithoutRef, useCallback, useContext } from 'react'
+import BuilderContext, { CustomComponent, TabbarItem } from "../../store/BuilderContext";
 import styled from "styled-components";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text } from "react-native-web";
@@ -8,6 +8,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import Icon, { FontAwesome } from 'react-web-vector-icons';
 import MainScreen from "../simulator/MainScreen";
 import { createStackNavigator } from "@react-navigation/stack";
+import { isEmbeddable, isFloating } from "../../utils/componentUtils";
+import MovableContainer from "../MovableContainer";
+import { ALL_CUSTOM_COMPONENT_TYPES } from "../mobile_components";
 
 const Stack = createStackNavigator()
 
@@ -28,15 +31,34 @@ const Screen = (props: { route: { name: string } }) => {
   const tabbarItem = tabbarSettings.items.find(item => item.id === route.name)
   const tabbarItemPage = tabbarItem && tabbarItem.page_id ? pages.find(p => p.id === tabbarItem.page_id) : null
   const page = tabbarItemPage || pages[0]
+  const onMove = useCallback((id, afterId) => {
+
+  }, [pages])
+
+  const embeddableChildren = page.components.filter(isEmbeddable).map((c: CustomComponent) => {
+    const { component: Component } = c
+    return (
+      <Component key={c.id} {...c.props} data={c.data} componentId={c.id}>
+        {c.children}
+      </Component>
+    )
+  })
+  const floatingChildren = page.components.filter(isFloating).map((c: CustomComponent) => {
+    const { component: Component } = c
+    return (
+      <Component key={c.id} {...c.props} data={c.data} componentId={c.id}>
+        {c.children}
+      </Component>
+    )
+  })
   return (
     <MainScreen
+      floatingChildren={floatingChildren}
+      embeddableChildren={embeddableChildren}
       openedPage={page}
       dropViewStyle={{
         margin: page.margin[0],
         padding: page.padding[0],
-      }}
-      onMove={() => {
-
       }}
     />
   )

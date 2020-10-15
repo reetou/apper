@@ -30,6 +30,7 @@ export interface CustomOnboarding {
   id: string,
   items: CustomOnboardingItem[],
   background_color: string,
+  text_color: string,
   next_page_id: string,
 }
 
@@ -78,7 +79,8 @@ export function createOnboarding(): CustomOnboarding {
       createOnboardingItem(),
       createOnboardingItem(),
     ],
-    background_color: '#FFFFFF'
+    background_color: '#FFFFFF',
+    text_color: '#000000',
   }
 }
 

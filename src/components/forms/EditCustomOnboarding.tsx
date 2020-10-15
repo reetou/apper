@@ -8,6 +8,9 @@ import update from 'immutability-helper'
 import SettingsTitle from "../SettingsTitle";
 import { v4 as uuidv4 } from 'uuid'
 import { DEFAULT_IMAGE_URL } from "../mobile_components";
+import SettingsMarginPadding from "../SettingsMarginPadding";
+import SettingsColorPicker from "../SettingsColorPicker";
+import SettingsBlock from "../SettingsBlock";
 
 interface ItemFormProps {
   index: number;
@@ -81,6 +84,31 @@ export default function EditCustomOnboarding() {
   }
   return (
     <React.Fragment>
+      <FormTitleCollapsible title="Настройки страницы онбординга" />
+      <SettingsBlock title="Цвета">
+        <SettingsColorPicker
+          value={onboarding.background_color || '#FFFFFF'}
+          title="Цвет фона"
+          onChange={(val) => {
+            setOnboarding(update(onboarding, {
+              background_color: {
+                $set: val
+              }
+            }))
+          }}
+        />
+        <SettingsColorPicker
+          value={onboarding.text_color || '#FFFFFF'}
+          title="Цвет текста"
+          onChange={(val) => {
+            setOnboarding(update(onboarding, {
+              text_color: {
+                $set: val
+              }
+            }))
+          }}
+        />
+      </SettingsBlock>
       <FormTitleCollapsible title="Элементы в онбординге" />
       {
         onboarding.items.map((item, index) => (

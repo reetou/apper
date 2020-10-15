@@ -32,21 +32,21 @@ export default function Builder() {
         {
           mode === 'edit_onboarding' ? <Simulator /> : null
         }
-      </div>
-      <div
-        style={{ marginTop: 12 }}
-      >
-        <button onClick={() => {
-          navigator.clipboard.writeText(JSON.stringify({
-            project_name: 'Default',
-            tabbar_enabled: tabbarEnabled,
-            tabbar_settings: tabbarSettings,
-            onboarding,
-            pages,
-          }, null, 2))
-        }}>
-          Выгрузить
-        </button>
+        <div
+          style={{ marginTop: 12 }}
+        >
+          <button onClick={() => {
+            navigator.clipboard.writeText(JSON.stringify({
+              project_name: 'Default',
+              tabbar_enabled: tabbarEnabled,
+              tabbar_settings: tabbarSettings,
+              onboarding,
+              pages,
+            }, null, 2))
+          }}>
+            Выгрузить
+          </button>
+        </div>
       </div>
       <Rightbar/>
     </Container>

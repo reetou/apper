@@ -10,7 +10,8 @@ import EditCustomInput from "./forms/EditCustomInput";
 import SettingsMarginPadding from "./SettingsMarginPadding";
 import { validateNumberValue } from "../utils/componentUtils";
 import EditCustomListView from "./forms/EditCustomListView";
-import EditCustomOnboarding from "./forms/EditCustomOnboarding";
+import SettingsColorPicker from "./SettingsColorPicker";
+import update from 'immutability-helper'
 
 function componentForm(component?: CustomComponent) {
   switch (component?.item_type) {
@@ -39,6 +40,7 @@ interface Props {
 export default function PageGeneralSettings(props: Props) {
   const {
     openedPage,
+    setOpenedPage,
     editingComponent,
   } = useContext(BuilderContext)
   const { editPage } = props
@@ -75,6 +77,17 @@ export default function PageGeneralSettings(props: Props) {
               ...openedPage as CustomPage,
               padding: [val, val, val, val],
             })
+          }}
+        />
+        <SettingsColorPicker
+          value={openedPage.background_color || '#FFFFFF'}
+          title="Фон страницы"
+          onChange={(val) => {
+            setOpenedPage(update(openedPage, {
+              background_color: {
+                $set: val
+              }
+            }))
           }}
         />
       </SettingsBlock>
