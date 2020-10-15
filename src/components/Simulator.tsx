@@ -4,11 +4,8 @@ import styled from 'styled-components'
 import BuilderContext, { CustomComponent, CustomComponentType, CustomPage } from "../store/BuilderContext";
 import { useDrop } from "react-dnd";
 import { ALL_CUSTOM_COMPONENT_TYPES, getCustomComponentByItemType } from "./mobile_components";
-import MovableContainer from "./MovableContainer";
 import update from 'immutability-helper';
-import { isEmbeddable, isFloating } from "../utils/componentUtils";
 import MainScreen from "./simulator/MainScreen";
-import { NavigationContainer } from "@react-navigation/native";
 
 const Container = styled.div`
   display: flex;
@@ -63,34 +60,11 @@ export default function Simulator() {
       })
     })
   }, [openedPage])
-  const embeddableChildren = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
-    const { component: Component } = c
-    return (
-      <MovableContainer
-        key={c.id}
-        id={c.id}
-        type={c.item_type}
-        accept={ALL_CUSTOM_COMPONENT_TYPES}
-        onMove={onMove}
-      >
-        <Component {...c.props} data={c.data} componentId={c.id}>
-          {c.children}
-        </Component>
-      </MovableContainer>
-    )
-  })
   const dropViewStyle = {
     ...state.isOver ? { backgroundColor: '#efefef' } : {},
     ...openedPage.margin ? { margin: openedPage.margin[0] } : {},
     ...openedPage.padding ? { padding: openedPage.padding[0] } : {},
   }
-  const MainScreenComponent = () => (
-    <MainScreen
-      onMove={onMove}
-      openedPage={openedPage}
-      dropViewStyle={dropViewStyle}
-    />
-  )
   return (
     <Container ref={drop}>
       <div
@@ -103,13 +77,11 @@ export default function Simulator() {
         }}
       >
         <View style={{ flex: 1, height: '100%' }}>
-          <NavigationContainer>
-            <MainScreen
-              onMove={onMove}
-              openedPage={openedPage}
-              dropViewStyle={dropViewStyle}
-            />
-          </NavigationContainer>
+          <MainScreen
+            onMove={onMove}
+            openedPage={openedPage}
+            dropViewStyle={dropViewStyle}
+          />
         </View>
       </div>
     </Container>
