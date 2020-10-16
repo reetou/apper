@@ -24,7 +24,6 @@ export interface CustomPage {
   background_color: string,
   nav_header_mode: 'show' | 'hide',
   nav_header_title: string,
-  first_page_id: string,
 }
 export interface CustomOnboarding {
   id: string,
@@ -44,7 +43,6 @@ export const DEFAULT_PAGE: CustomPage = {
   background_color: '#FFFFFF',
   nav_header_mode: 'show',
   nav_header_title: 'Header',
-  first_page_id: ''
 }
 
 export function createNewPage(index?: number): CustomPage {
@@ -58,7 +56,6 @@ export function createNewPage(index?: number): CustomPage {
     background_color: '#FFFFFF',
     nav_header_mode: 'show',
     nav_header_title: 'Header',
-    first_page_id: '',
   }
 }
 
@@ -112,7 +109,6 @@ export interface CustomComponentProps {
   horizontalAlign?: 'flex-start' | 'flex-end' | 'center',
   width?: number,
   height?: number,
-  newPageName?: string,
   backgroundColor?: string,
   textColor?: string,
   borderColor?: string,
@@ -190,6 +186,8 @@ interface BuilderContextProps {
   editingListViewItems: ICustomListViewItem[],
   setEditingListViewItems: Dispatch<SetStateAction<ICustomListViewItem[]>>,
   toggleEditingListViewItems: () => void,
+  firstPageId: string,
+  setFirstPageId: Dispatch<SetStateAction<string>>,
 }
 
 export default createContext<BuilderContextProps>({
@@ -216,4 +214,6 @@ export default createContext<BuilderContextProps>({
   setTabbarSettings: () => {},
   onboarding: createOnboarding(),
   setOnboarding: () => {},
+  firstPageId: '',
+  setFirstPageId: () => {}
 })

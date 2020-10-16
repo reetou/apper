@@ -47,10 +47,10 @@ export default function EditCustomGenericButton() {
         options={onClickTypeOptions()}
       />
       <SettingsSelect
-        value={editingComponent?.props?.newPageName}
+        value={editingComponent?.props?.newPageId}
         onChange={(val) => {
           updateComponent({
-            newPageName: val,
+            newPageId: val,
           })
         }}
         hidden={!editingComponent?.props?.onClickType || !NAVIGATION_MOVE_ONCLICK_TYPES.includes(editingComponent?.props?.onClickType)}

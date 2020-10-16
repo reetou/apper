@@ -136,12 +136,14 @@ export default function EditTabbar() {
                     return null
                   }
                   return (
-                    <TabbarIcon
-                      showLabel={tabbarSettings.show_label}
-                      item={item}
-                      color={focused ? tabbarSettings.selected_color : tabbarSettings.color}
-                      size={20}
-                    />
+                    <View style={{ width: 50 }}>
+                      <TabbarIcon
+                        showLabel={tabbarSettings.show_label}
+                        item={item}
+                        color={focused ? tabbarSettings.selected_color : tabbarSettings.color}
+                        size={20}
+                      />
+                    </View>
                   )
                 },
               })}

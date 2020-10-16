@@ -18,6 +18,8 @@ export default function PageNavigationSettings(props: Props) {
     setTabbarEnabled,
     setOpenedPage,
     pages,
+    firstPageId,
+    setFirstPageId,
   } = useContext(BuilderContext)
   const { editPage } = props
   if (!openedPage) {
@@ -28,12 +30,9 @@ export default function PageNavigationSettings(props: Props) {
       <h3>{`${openedPage.name}: Настройки навигации`}</h3>
       <h3>Запуск</h3>
       <SettingsSelect
-        value={openedPage.first_page_id}
+        value={firstPageId}
         onChange={(val) => {
-          setOpenedPage({
-            ...openedPage,
-            first_page_id: val,
-          })
+          setFirstPageId(val)
         }}
         title="Первая страница при запуске или после онбординга"
         options={pages.filter(isPermanentPage).map(p => ({ value: p.id, label: p.name }))}

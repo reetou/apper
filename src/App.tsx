@@ -24,6 +24,7 @@ require('react-web-vector-icons/fonts');
 
 function App() {
   const [onboarding, setOnboarding] = useState<CustomOnboarding>(createOnboarding())
+  const [firstPageId, setFirstPageId] = useState<string>('')
   const [tabbarSettings, setTabbarSettings] = useState<TabbarSettings>(createTabbar())
   const [tabbarEnabled, setTabbarEnabled] = useState<boolean>(false)
   const [mode, setMode] = useState<BuilderMode>('simulator')
@@ -146,6 +147,8 @@ function App() {
         setTabbarSettings,
         onboarding,
         setOnboarding,
+        firstPageId,
+        setFirstPageId,
       }}
     >
       <DndProvider backend={HTML5Backend}>
