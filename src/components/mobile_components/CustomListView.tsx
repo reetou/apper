@@ -47,10 +47,10 @@ export default function CustomListView(props: Props) {
       scrollEnabled={!disableScroll}
       style={{
         ...backgroundColor ? { backgroundColor } : {},
-        ...noChildren && !thumbnail ? { minHeight: 100 } : {},
         ...padding ? { padding } : {},
         ...margin ? { margin } : {},
       }}
+      keyExtractor={(item) => item.id}
       data={noChildren ? placeholderChildren : childComponents}
       renderItem={({ item }) => {
         return (

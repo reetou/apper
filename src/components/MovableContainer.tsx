@@ -1,12 +1,13 @@
 import React, { ReactNode, useContext, useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from "react-dnd";
-import BuilderContext, { DEFAULT_EDIT_COMPONENT_FORM } from "../store/BuilderContext";
+import BuilderContext, { CustomComponentType } from "../store/BuilderContext";
 import { useHover } from "react-use";
 import styled from 'styled-components';
+import { COMPONENTS_WITH_LIST_ITEMS } from "./mobile_components";
 
 interface Props {
   id: string,
-  type: string,
+  type: CustomComponentType,
   accept: string[],
   children: ReactNode,
   onMove: (id1: string, id2: string) => void;
@@ -109,7 +110,18 @@ export default function MovableContainer(props: Props) {
     setShowOverlay(hovered)
   }, [hovered])
   return (
-    <Container editing={editingComponent?.id === id} isDragging={isDragging}>
+    <Container
+      editing={editingComponent?.id === id}
+      isDragging={isDragging}
+      style={{
+        ...COMPONENTS_WITH_LIST_ITEMS.includes(type)
+          ? {
+            flexGrow: 1,
+            flexShrink: 1,
+            flexBasis: 'auto',
+          } : {},
+      }}
+    >
       {hoverable}
     </Container>
   )
