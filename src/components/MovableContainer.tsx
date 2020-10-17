@@ -4,6 +4,7 @@ import BuilderContext, { CustomComponentType } from "../store/BuilderContext";
 import { useHover } from "react-use";
 import styled from 'styled-components';
 import { COMPONENTS_WITH_LIST_ITEMS } from "./mobile_components";
+import update from 'immutability-helper'
 
 interface Props {
   id: string,
@@ -24,6 +25,7 @@ const Overlay = styled.div`
   top: 3px;
   z-index: 10;
   cursor: pointer;
+  display: flex;
 `
 
 const Icon = styled.div`
@@ -33,6 +35,7 @@ const Icon = styled.div`
   background-color: white;
   padding: 2px;
   border-radius: 4px;
+  margin-right: 4px;
   :hover {
     opacity: 1;
   }
@@ -40,7 +43,13 @@ const Icon = styled.div`
 
 export default function MovableContainer(props: Props) {
   const { id, type, accept, children, onMove } = props
-  const { setDraggingItemId, openedPage, editingComponent, setEditingComponent } = useContext(BuilderContext)
+  const {
+    setDraggingItemId,
+    openedPage,
+    setOpenedPage,
+    editingComponent,
+    setEditingComponent,
+  } = useContext(BuilderContext)
   const [showOverlay, setShowOverlay] = useState<boolean>(false)
   const ref = useRef(null)
   const [{ isDragging }, connectDrag] = useDrag({
@@ -78,6 +87,19 @@ export default function MovableContainer(props: Props) {
     }
     setEditingComponent(component)
   }
+  const onRemove = () => {
+    const index = openedPage.components.map(c => c.id).indexOf(id)
+    if (index === -1) {
+      return
+    }
+    setOpenedPage(update(openedPage, {
+      components: {
+        $splice: [
+          [index, 1]
+        ]
+      }
+    }))
+  }
   const element = (
     <div ref={ref} style={{ margin: isDragging ? 20 : 0, position: 'relative' }}>
       <div
@@ -96,6 +118,11 @@ export default function MovableContainer(props: Props) {
                   onClick={onEdit}
                 >
                   <img src={`${process.env.PUBLIC_URL}/icons/edit.svg`} style={{ width: 20, height: 20 }} />
+                </Icon>
+                <Icon
+                  onClick={onRemove}
+                >
+                  <img src={`${process.env.PUBLIC_URL}/icons/delete.svg`} style={{ width: 20, height: 20 }} />
                 </Icon>
               </Overlay>
             )
