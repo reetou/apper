@@ -90,6 +90,7 @@ export type CustomComponentType = 'custom_input'
   | 'custom_text_list_view'
   | 'custom_floating_button'
   | 'custom_onboarding_child'
+  | 'custom_text_title'
 
 export interface ICustomListViewItem {
   id: string;
@@ -120,6 +121,8 @@ export interface CustomComponentProps {
   noSubtitle?: boolean,
   listItemPrepend?: 'circle',
   webPageUrl?: string,
+  fontSize?: number,
+  fontWeight?: string,
 }
 
 export interface CustomComponentData {

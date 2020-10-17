@@ -15,6 +15,7 @@ interface Props {
   max?: number;
   min?: number;
   dots?: boolean;
+  step?: number;
 }
 
 const StyledInput = styled.input`
@@ -44,6 +45,7 @@ export default function SettingsInput(props: Props) {
     max,
     min,
     dots,
+    step,
   } = props
   if (hidden) {
     return null
@@ -89,6 +91,7 @@ export default function SettingsInput(props: Props) {
                       onChange={(val) => {
                         onChange(val)
                       }}
+                      step={step || 1}
                       dots={dots}
                       max={max}
                       min={min === undefined ? 0 : min}

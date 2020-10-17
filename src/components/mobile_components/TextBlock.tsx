@@ -8,6 +8,8 @@ interface Props {
   horizontalAlign?: 'flex-start' | 'center' | 'flex-end',
   padding?: number,
   margin?: number,
+  fontSize?: number,
+  fontWeight?: any,
 }
 
 export default function TextBlock(props: Props) {
@@ -17,7 +19,10 @@ export default function TextBlock(props: Props) {
     horizontalAlign,
     padding,
     margin,
+    fontSize,
+    fontWeight,
   } = props
+  // @ts-ignore
   return (
     <View
       style={{
@@ -29,8 +34,9 @@ export default function TextBlock(props: Props) {
     >
       <Text
         style={{
-          fontSize: toThumbnailSize(14, 6, thumbnail),
-        }}
+          fontSize: toThumbnailSize(fontSize || 14, 6, thumbnail),
+          fontWeight: fontWeight ? String(fontWeight) : 'normal',
+        } as any}
       >
         {thumbnail ? 'Lorem ipsum!' : (text || 'Lorem ipsum...')}
       </Text>

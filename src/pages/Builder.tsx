@@ -21,8 +21,6 @@ export default function Builder() {
       <Leftbar />
       <div
         style={{
-          maxHeight: '100vh',
-          overflowY: 'auto',
           minWidth: '40%',
         }}
       >

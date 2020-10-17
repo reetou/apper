@@ -16,6 +16,7 @@ import update from 'immutability-helper'
 function componentForm(component?: CustomComponent) {
   switch (component?.item_type) {
     case CUSTOM_COMPONENT_TYPES.TextBlock:
+    case CUSTOM_COMPONENT_TYPES.CustomTextTitle:
       return <EditTextBlock />
     case CUSTOM_COMPONENT_TYPES.CustomGenericButton:
     case CUSTOM_COMPONENT_TYPES.CustomGenericButtonRounded:

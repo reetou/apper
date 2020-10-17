@@ -36,23 +36,6 @@ export default function MainScreen(props: MainScreenProps) {
           ? (
             <View style={{ flex: 1, ...dropViewStyle, position: 'relative', ...pageStyle }}>
               {embeddableChildren}
-              {
-                floatingChildren.length
-                  ? (
-                    <View
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        width: '100%',
-                      }}
-                    >
-                      <View>
-                        {floatingChildren}
-                      </View>
-                    </View>
-                  )
-                  : null
-              }
             </View>
           )
           : null
@@ -62,6 +45,23 @@ export default function MainScreen(props: MainScreenProps) {
           ? (
             <View style={{ flex: 1, position: 'relative', ...pageStyle }}>
               {embeddableChildren}
+            </View>
+          )
+          : null
+      }
+      {
+        floatingChildren.length
+          ? (
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+              }}
+            >
+              <View>
+                {floatingChildren}
+              </View>
             </View>
           )
           : null

@@ -17,6 +17,7 @@ interface ComponentTypesInterface {
   CustomTextListView: CustomComponentType,
   CustomFloatingButton: CustomComponentType,
   OnboardingComponent: CustomComponentType,
+  CustomTextTitle: CustomComponentType,
 }
 
 export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
@@ -29,6 +30,7 @@ export const CUSTOM_COMPONENT_TYPES: ComponentTypesInterface = {
   CustomTextListView: 'custom_text_list_view',
   CustomFloatingButton: 'custom_floating_button',
   OnboardingComponent: 'custom_onboarding_child',
+  CustomTextTitle: 'custom_text_title'
 }
 
 export const CUSTOM_INPUTS = [
@@ -61,6 +63,8 @@ export function getCustomComponentByItemType(type: CustomComponentType): CustomC
       return CustomGenericRoundedButtonData()
     case CUSTOM_COMPONENT_TYPES.TextBlock:
       return TextBlockData()
+    case CUSTOM_COMPONENT_TYPES.CustomTextTitle:
+      return CustomTextTitleData()
     case CUSTOM_COMPONENT_TYPES.CustomImage:
       return CustomImageData()
     case CUSTOM_COMPONENT_TYPES.CustomListView:
@@ -102,6 +106,7 @@ const buttonBasicProps = {
   textColor: '#000000',
   borderColor: '#000000',
   borderWidth: 1,
+  fontSize: 14,
   webPageUrl: ''
 }
 
@@ -157,6 +162,26 @@ export function TextBlockData(): CustomComponent {
     children: [],
     title: 'Блок текста',
     item_type: CUSTOM_COMPONENT_TYPES.TextBlock,
+    data: {
+      value: 'Lorem ipsum dolorum'
+    }
+  }
+}
+
+export function CustomTextTitleData(): CustomComponent {
+  return {
+    id: uuidv4(),
+    component: TextBlock,
+    props: {
+      text: 'My title',
+      horizontalAlign: 'center',
+      margin: 0,
+      padding: 12,
+      fontSize: 18,
+    },
+    children: [],
+    title: 'Заголовок',
+    item_type: CUSTOM_COMPONENT_TYPES.CustomTextTitle,
     data: {
       value: 'Lorem ipsum dolorum'
     }

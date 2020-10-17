@@ -112,7 +112,11 @@ export default function Simulator() {
         }}
       >
         <View style={{ flex: 1, height: '100%' }}>
-          <NavigationContainer>
+          <NavigationContainer
+            documentTitle={{
+              enabled: false,
+            }}
+          >
             <MainScreen
               embeddableChildren={embeddableChildren}
               floatingChildren={floatingChildren}

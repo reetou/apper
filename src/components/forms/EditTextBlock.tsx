@@ -35,6 +35,29 @@ export default function EditTextBlock() {
           { value: 'flex-end', label: "Справа" },
         ]}
       />
+      <SettingsInput
+        value={editingComponent?.props?.fontSize || 14}
+        onChange={(val) => {
+          updateComponent({
+            fontSize: Number(val)
+          })
+        }}
+        slider
+        title="Размер шрифта"
+      />
+      <SettingsInput
+        value={Number(editingComponent?.props?.fontWeight) || 400}
+        onChange={(val) => {
+          updateComponent({
+            fontWeight: String(val)
+          })
+        }}
+        slider
+        min={300}
+        max={900}
+        step={100}
+        title="Толщина текста"
+      />
       <SettingsMarginPadding
         marginValue={editingComponent?.props.margin}
         paddingValue={editingComponent?.props.padding}

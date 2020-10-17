@@ -13,6 +13,7 @@ interface Props {
   borderWidth?: number;
   padding?: number;
   margin?: number;
+  fontSize?: number;
 }
 
 const getBorderWidth = (val: any) => {
@@ -36,6 +37,7 @@ export default function CustomGenericButton(props: Props) {
     borderWidth,
     margin,
     padding,
+    fontSize,
   } = props
   return (
     <TouchableOpacity
@@ -59,7 +61,7 @@ export default function CustomGenericButton(props: Props) {
       >
         <Text
           style={{
-            fontSize: toThumbnailSize(14, 8, thumbnail),
+            fontSize: toThumbnailSize(fontSize || 14, 8, thumbnail),
             color: textColor || 'black',
           }}
         >

@@ -82,6 +82,22 @@ export default function EditCustomGenericButton() {
         }}
         title="Ширина обводки"
       />
+      <SettingsInput
+        value={editingComponent.props?.fontSize}
+        slider
+        max={72}
+        min={10}
+        onChange={(val) => {
+          if (!validateNumberValue(val)) {
+            console.error(`Not valid`, val)
+            return
+          }
+          updateComponent({
+            fontSize: Number(val)
+          })
+        }}
+        title="Размер шрифта"
+      />
       <SettingsMarginPadding
         marginValue={editingComponent.props.margin}
         paddingValue={editingComponent.props.padding}

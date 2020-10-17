@@ -7,7 +7,7 @@ import {
   ALL_CUSTOM_COMPONENT_TYPES, CustomFloatingButtonData,
   CustomGenericButtonData,
   CustomGenericRoundedButtonData, CustomImageData,
-  CustomInputData, CustomListViewData, CustomTextListViewData, TextBlockData,
+  CustomInputData, CustomListViewData, CustomTextListViewData, CustomTextTitleData, TextBlockData,
 } from "./mobile_components";
 import CustomGenericButton from "./mobile_components/CustomGenericButton";
 import CustomComponentBlock from "./CustomComponentBlock";
@@ -66,6 +66,10 @@ const INTERACTION_BLOCK = {
     {
       component: <CustomGenericButton thumbnail rounded />,
       data: CustomFloatingButtonData()
+    },
+    {
+      component: <TextBlock thumbnail />,
+      data: CustomTextTitleData()
     },
   ]
 }

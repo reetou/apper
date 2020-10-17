@@ -101,7 +101,13 @@ export default function MovableContainer(props: Props) {
     }))
   }
   const element = (
-    <div ref={ref} style={{ margin: isDragging ? 20 : 0, position: 'relative' }}>
+    <div
+      ref={ref}
+      style={{
+        margin: isDragging ? 20 : 0,
+        position: 'relative',
+      }}
+    >
       <div
         style={{
           opacity,

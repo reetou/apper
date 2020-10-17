@@ -125,7 +125,11 @@ export default function EditTabbar() {
         }}
       >
         <View style={{ flex: 1, height: '100%' }}>
-          <NavigationContainer>
+          <NavigationContainer
+            documentTitle={{
+              enabled: false,
+            }}
+          >
             <Tab.Navigator
               backBehavior="initialRoute"
               screenOptions={({ route }) => ({
