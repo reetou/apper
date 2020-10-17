@@ -32,7 +32,6 @@ function App() {
   const [selectedElement, setSelectedElement] = useState<any>()
   const [pages, setPages] = useState<CustomPage[]>([DEFAULT_PAGE])
   const [openedPage, setOpenedPage] = useState<CustomPage>(pages[0])
-  const [draggingItemId, setDraggingItemId] = useState<string>()
   const [editingComponent, setEditingComponent] = useState<CustomComponent>()
   const [editingListViewId, setEditingListViewId] = useState<string>()
   const [editingListViewItems, setEditingListViewItems] = useState<ICustomListViewItem[]>([])
@@ -133,8 +132,6 @@ function App() {
         setOpenedPage,
         onAddComponent,
         updateComponent,
-        draggingItemId,
-        setDraggingItemId,
         editingComponent,
         setEditingComponent,
         editingListViewId,

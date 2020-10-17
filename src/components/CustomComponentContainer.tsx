@@ -52,7 +52,6 @@ interface Props {
 
 export default function CustomComponentContainer(props: Props) {
   const { children, data } = props
-  const { setDraggingItemId } = useContext(BuilderContext)
   const [state, drag] = useDrag({
     item: { id: data.id, type: data.item_type },
     canDrag: true,
@@ -60,13 +59,6 @@ export default function CustomComponentContainer(props: Props) {
       isDragging: monitor.isDragging(),
     }),
   })
-  useEffect(() => {
-    if (state.isDragging) {
-      setDraggingItemId(data.id)
-    } else {
-      setDraggingItemId(undefined)
-    }
-  }, [state.isDragging])
   return (
     <Container
       isDragging={state.isDragging}

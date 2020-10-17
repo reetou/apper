@@ -44,7 +44,6 @@ const Icon = styled.div`
 export default function MovableContainer(props: Props) {
   const { id, type, accept, children, onMove } = props
   const {
-    setDraggingItemId,
     openedPage,
     setOpenedPage,
     editingComponent,
@@ -73,13 +72,6 @@ export default function MovableContainer(props: Props) {
   connectDrag(ref)
   connectDrop(ref)
   const opacity = isDragging ? 0 : 1
-  useEffect(() => {
-    if (isDragging) {
-      setDraggingItemId(id)
-    } else {
-      setDraggingItemId(undefined)
-    }
-  }, [isDragging])
   const onEdit = () => {
     const component = openedPage.components.find(c => c.id === id)
     if (!component || editingComponent?.id === id) {
