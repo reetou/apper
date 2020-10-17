@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import BuilderContext, { CustomComponent, CustomPage, PageType } from "../store/BuilderContext";
+import React, { useContext, useEffect } from 'react'
+import BuilderContext, { CustomComponent, CustomPage } from "../store/BuilderContext";
 import SettingsBlock from "./SettingsBlock";
-import SettingsSelect from "./SettingsSelect";
 import { CUSTOM_COMPONENT_TYPES } from "./mobile_components";
 import EditTextBlock from "./forms/EditTextBlock";
 import EditCustomGenericButton from "./forms/EditCustomGenericButton";
@@ -43,8 +42,15 @@ export default function PageGeneralSettings(props: Props) {
     openedPage,
     setOpenedPage,
     editingComponent,
+    setEditingComponent,
   } = useContext(BuilderContext)
   const { editPage } = props
+  useEffect(() => {
+    const component = openedPage.components.find(c => c.id === editingComponent?.id)
+    if (editingComponent && !component) {
+      setEditingComponent(undefined)
+    }
+  }, [openedPage, editingComponent])
   if (!openedPage) {
     return null
   }

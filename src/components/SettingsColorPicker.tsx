@@ -22,7 +22,6 @@ export default function SettingsColorPicker(props: Props) {
   const [showPicker, setShowPicker] = useState<boolean>(false)
   const ref = useRef(null)
   useClickAway(ref, () => {
-    console.log('OUTSIDE CLICKED');
     setShowPicker(false)
   });
   if (hidden) {
