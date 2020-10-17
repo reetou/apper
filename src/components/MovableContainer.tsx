@@ -114,11 +114,17 @@ export default function MovableContainer(props: Props) {
           showOverlay
             ? (
               <Overlay>
-                <Icon
-                  onClick={onEdit}
-                >
-                  <img src={`${process.env.PUBLIC_URL}/icons/edit.svg`} style={{ width: 20, height: 20 }} />
-                </Icon>
+                {
+                  editingComponent?.id !== id
+                    ? (
+                      <Icon
+                        onClick={onEdit}
+                      >
+                        <img src={`${process.env.PUBLIC_URL}/icons/edit.svg`} style={{ width: 20, height: 20 }} />
+                      </Icon>
+                    )
+                    : null
+                }
                 <Icon
                   onClick={onRemove}
                 >

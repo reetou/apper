@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   margin: 4px 0;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 1rem;
   letter-spacing: 0.5px;
+  font-weight: 600;
 `
 
 interface Props {

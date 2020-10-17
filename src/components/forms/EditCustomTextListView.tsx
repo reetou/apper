@@ -6,6 +6,7 @@ import SettingsColorPicker from "../SettingsColorPicker";
 import SettingsMarginPadding from "../SettingsMarginPadding";
 import { validateNumberValue } from "../../utils/componentUtils";
 import { LIST_ITEM_ONCLICK_TYPES } from "../../utils/listViewUtils";
+import Button from '../Button';
 
 export default function EditCustomListView() {
   const {
@@ -19,11 +20,11 @@ export default function EditCustomListView() {
   return (
     <React.Fragment>
       <FormTitleCollapsible title="Настройки списка" />
-      <button
+      <Button
         onClick={toggleEditingListViewItems}
       >
         Настроить элементы
-      </button>
+      </Button>
       <SettingsMarginPadding
         marginValue={editingComponent.props.margin}
         paddingValue={editingComponent.props.padding}

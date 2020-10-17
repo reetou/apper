@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { SketchPicker } from 'react-color';
 import { rgbToString } from "../utils/componentUtils";
 import SettingsTitle from "./SettingsTitle";
+import SettingsInput from "./SettingsInput";
+import { useClickAway } from "react-use";
 
 interface Props {
   value: string;
@@ -17,6 +19,12 @@ export default function SettingsColorPicker(props: Props) {
     value,
     onChange,
   } = props
+  const [showPicker, setShowPicker] = useState<boolean>(false)
+  const ref = useRef(null)
+  useClickAway(ref, () => {
+    console.log('OUTSIDE CLICKED');
+    setShowPicker(false)
+  });
   if (hidden) {
     return null
   }
@@ -24,11 +32,32 @@ export default function SettingsColorPicker(props: Props) {
     <div style={{ marginTop: 12 }}>
       <SettingsTitle text={title} />
       <div style={{ marginTop: 8 }} />
-      <SketchPicker
-        presetColors={[]}
-        color={value}
-        onChange={({ rgb }) => onChange(rgbToString(rgb))}
-      />
+      <div ref={ref} style={{ width: 'fit-content' }}>
+        {
+          showPicker
+            ? (
+              <SketchPicker
+                presetColors={[]}
+                color={value}
+                onChange={({ rgb }) => onChange(rgbToString(rgb))}
+              />
+            )
+            : (
+              <div
+                onClick={() => {
+                  setShowPicker(true)
+                }}
+                data-label="Container"
+              >
+                <SettingsInput
+                  value={value}
+                  onChange={() => {}}
+                  title=""
+                />
+              </div>
+            )
+        }
+      </div>
     </div>
   )
 }

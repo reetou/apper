@@ -7,6 +7,7 @@ import update from 'immutability-helper'
 import { v4 as uuidv4 } from 'uuid'
 import SettingsSelect from "../SettingsSelect";
 import isPermanentPage from "../../utils/pageUtils";
+import Button from "../Button";
 
 interface ItemFormProps {
   index: number;
@@ -70,7 +71,7 @@ function ItemForm(props: ItemFormProps) {
         title="Название иконки FontAwesome"
       />
       <div style={{ marginTop: 8 }}>
-        <button onClick={deleteItem}>Удалить</button>
+        <Button onClick={deleteItem}>Удалить</Button>
       </div>
     </div>
   )
@@ -90,7 +91,7 @@ export default function EditTabbarSettings() {
         tabbarSettings.items.length <= 3
           ? (
             <div style={{ marginTop: 12 }}>
-              <button
+              <Button
                 onClick={() => {
                   setTabbarSettings(update(tabbarSettings, {
                     items: {
@@ -100,7 +101,7 @@ export default function EditTabbarSettings() {
                 }}
               >
                 Добавить
-              </button>
+              </Button>
             </div>
           )
           : null

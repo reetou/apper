@@ -6,6 +6,7 @@ import update from 'immutability-helper'
 import { v4 as uuidv4 } from 'uuid'
 import { useDebounce } from 'react-use';
 import { COMPONENTS_WITH_LIST_ITEMS, CUSTOM_COMPONENT_TYPES } from "../mobile_components";
+import Button from "../Button";
 
 interface ItemProps {
   data: ICustomListViewItem;
@@ -122,7 +123,7 @@ export default function EditCustomListViewItems() {
   }
   return (
     <React.Fragment>
-      <button onClick={() => setEditingListViewId(undefined)}>Закрыть</button>
+      <Button onClick={() => setEditingListViewId(undefined)}>Закрыть</Button>
       <FormTitleCollapsible title="Настройки элементов в списке" />
       <div>
         {
@@ -153,13 +154,13 @@ export default function EditCustomListViewItems() {
         }}
       >
         <div style={{ marginTop: 12 }}>
-          <button
+          <Button
             onClick={() => {
               setEditingListViewItems(update(editingListViewItems, { $push: [newItem()] }))
             }}
           >
             Добавить элемент
-          </button>
+          </Button>
         </div>
       </div>
     </React.Fragment>

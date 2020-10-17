@@ -7,6 +7,7 @@ import BuilderContext from "../store/BuilderContext";
 import BuilderModeToggle from "../components/BuilderModeToggle";
 import Navigation from "../components/Navigation";
 import EditTabbar from "../components/forms/EditTabbar";
+import Button from '../components/Button';
 
 const Container = styled.div`
   display: flex;
@@ -18,24 +19,34 @@ export default function Builder() {
   return (
     <Container>
       <Leftbar />
-      <div style={{ maxHeight: '100vh', overflowY: 'auto' }}>
-        <BuilderModeToggle />
-        {
-          mode === 'simulator' ? <Simulator /> : null
-        }
-        {
-          mode === 'navigation' ? <Navigation /> : null
-        }
-        {
-          mode === 'edit_tabbar' ? <EditTabbar /> : null
-        }
-        {
-          mode === 'edit_onboarding' ? <Simulator /> : null
-        }
+      <div
+        style={{
+          maxHeight: '100vh',
+          overflowY: 'auto',
+          minWidth: '40%',
+        }}
+      >
+        <div>
+          <BuilderModeToggle />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {
+            mode === 'simulator' ? <Simulator /> : null
+          }
+          {
+            mode === 'navigation' ? <Navigation /> : null
+          }
+          {
+            mode === 'edit_tabbar' ? <EditTabbar /> : null
+          }
+          {
+            mode === 'edit_onboarding' ? <Simulator /> : null
+          }
+        </div>
         <div
           style={{ marginTop: 12 }}
         >
-          <button onClick={() => {
+          <Button onClick={() => {
             navigator.clipboard.writeText(JSON.stringify({
               project_name: 'Default',
               tabbar_enabled: tabbarEnabled,
@@ -45,7 +56,7 @@ export default function Builder() {
             }, null, 2))
           }}>
             Выгрузить
-          </button>
+          </Button>
         </div>
       </div>
       <Rightbar/>

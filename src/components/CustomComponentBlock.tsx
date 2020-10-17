@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
+import Styleguide from "../Styleguide";
 
 interface Props {
   children: ReactNode,
@@ -15,7 +16,7 @@ export default function CustomComponentBlock(props: Props) {
   const { children, title } = props
   return (
     <div>
-      <h4>{title}</h4>
+      <h4 style={{ color: Styleguide.primaryColor }}>{title}</h4>
       <Container>
         {children}
       </Container>

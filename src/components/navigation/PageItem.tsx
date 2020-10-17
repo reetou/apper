@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import BuilderContext, { CustomPage } from "../../store/BuilderContext";
 import styled from 'styled-components';
 import update from 'immutability-helper'
+import Styleguide from "../../Styleguide";
 
 interface Props {
   page: CustomPage;
@@ -17,7 +18,7 @@ const Item = styled.div<{ navbar: boolean, tabbar: boolean }>`
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: #D6D6D6;
+  background-color: ${Styleguide.primaryColor};
   border-top-right-radius: ${({ navbar }) => navbar ? '16px' : '0'};
   border-top-left-radius: ${({ navbar }) => navbar ? '16px' : '0'};
   border-bottom-left-radius: ${({ tabbar }) => tabbar ? '16px' : '0'};
@@ -30,14 +31,14 @@ const Container = styled.div<{ selected: boolean }>`
   width: 120px;
   padding: 4px;
   border-radius: 24px;
-  border: ${({ selected }) => selected ? `4px solid #007AFF` : '4px solid transparent'};
+  border: ${({ selected }) => selected ? `4px solid ${Styleguide.secondaryColor}` : '4px solid transparent'};
   transition: 0.2s;
 `
 
 const TabbarContainer = styled.div`
   height: 30px;
   width: 100%;
-  background-color: #D0B2B2;
+  background-color: ${Styleguide.pageItemTabbarBgColor};
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   display: flex;
@@ -49,7 +50,7 @@ const TabbarContainer = styled.div`
 const TabbarItem = styled.div`
   height: 16px;
   width: 16px;
-  background-color: #fafafa;
+  background-color: ${Styleguide.pageItemTabbarCircleColor};
   border-radius: 16px;
 `
 
@@ -60,15 +61,15 @@ const NavHeaderContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0 8px;
-  background-color: #F8CCCC;
+  background-color: ${Styleguide.pageItemHeaderBgColor};
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
 `
 
 const Title = styled.div`
-  color: black;
+  color: ${Styleguide.primaryColor};
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 8px;
   text-align: center;
 `

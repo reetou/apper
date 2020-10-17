@@ -18,6 +18,7 @@ import TextBlock from "./mobile_components/TextBlock";
 import CustomImage from "./mobile_components/CustomImage";
 import CustomListView from "./mobile_components/CustomListView";
 import EditCustomListViewItems from "./forms/EditCustomListViewItems";
+import Styleguide from "../Styleguide";
 
 const Overlay = styled.div`
   position: absolute;
@@ -76,7 +77,7 @@ const BLOCKS = [
 function Blocks() {
   return (
     <React.Fragment>
-      <h3>Компоненты</h3>
+      <h3 style={{ color: Styleguide.primaryColor }}>Компоненты</h3>
       {
         BLOCKS.map(b => (
           <CustomComponentBlock

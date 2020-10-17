@@ -11,6 +11,7 @@ import { DEFAULT_IMAGE_URL } from "../mobile_components";
 import SettingsMarginPadding from "../SettingsMarginPadding";
 import SettingsColorPicker from "../SettingsColorPicker";
 import SettingsBlock from "../SettingsBlock";
+import Button from "../Button";
 
 interface ItemFormProps {
   index: number;
@@ -67,7 +68,7 @@ function ItemForm(props: ItemFormProps) {
         title="Текст"
       />
       <div style={{ marginTop: 8 }}>
-        <button onClick={deleteItem}>Удалить</button>
+        <Button onClick={deleteItem}>Удалить</Button>
       </div>
     </div>
   )
@@ -119,9 +120,9 @@ export default function EditCustomOnboarding() {
         onboarding.items.length <= 2
           ? (
             <div style={{ marginTop: 12 }}>
-              <button onClick={onAdd}>
+              <Button onClick={onAdd}>
                 Добавить
-              </button>
+              </Button>
             </div>
           )
           : null

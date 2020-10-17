@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import BuilderContext from "../store/BuilderContext";
+import Button from "./Button";
 
 export default function BuilderModeToggle() {
   const { mode, setMode } = useContext(BuilderContext)
@@ -11,18 +12,18 @@ export default function BuilderModeToggle() {
         justifyContent: 'space-between',
       }}
     >
-      <button disabled={mode === 'simulator'} onClick={() => setMode('simulator')}>
+      <Button disabled={mode === 'simulator'} onClick={() => setMode('simulator')}>
         Симулятор
-      </button>
-      <button disabled={mode === 'edit_tabbar'} onClick={() => setMode('edit_tabbar')}>
+      </Button>
+      <Button disabled={mode === 'edit_tabbar'} onClick={() => setMode('edit_tabbar')}>
         Таббар
-      </button>
-      <button disabled={mode === 'edit_onboarding'} onClick={() => setMode('edit_onboarding')}>
+      </Button>
+      <Button disabled={mode === 'edit_onboarding'} onClick={() => setMode('edit_onboarding')}>
         Онбординг
-      </button>
-      <button disabled={mode === 'navigation'} onClick={() => setMode('navigation')}>
+      </Button>
+      <Button disabled={mode === 'navigation'} onClick={() => setMode('navigation')}>
         Навигация
-      </button>
+      </Button>
     </div>
   )
 }

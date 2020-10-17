@@ -1,6 +1,9 @@
 import React from 'react'
 import SettingsTitle from "./SettingsTitle";
 import Slider from 'rc-slider'
+import Styleguide from '../Styleguide';
+import styled from "styled-components";
+import { darken } from "polished";
 
 interface Props {
   hidden?: boolean;
@@ -13,6 +16,22 @@ interface Props {
   min?: number;
   dots?: boolean;
 }
+
+const StyledInput = styled.input`
+  min-width: 200px;
+  color: ${Styleguide.primaryColor};
+  background-color: ${Styleguide.inputBgColor};
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  transition: 0.2s;
+  :focus {
+    background-color: ${darken(0.1, Styleguide.inputBgColor)};
+  }
+  :hover {
+    background-color: ${darken(0.05, Styleguide.inputBgColor)};
+  }
+`
 
 export default function SettingsInput(props: Props) {
   const {
@@ -44,7 +63,12 @@ export default function SettingsInput(props: Props) {
         textarea
           ? (
             <textarea
-              style={{ width: '100%', minHeight: 90 }}
+              style={{
+                width: '100%',
+                minHeight: 90,
+                color: Styleguide.primaryColor,
+                backgroundColor: Styleguide.bgColor,
+              }}
               value={String(value)}
               onChange={(e) => onChange(e.target.value)}
             />
@@ -54,6 +78,13 @@ export default function SettingsInput(props: Props) {
                 slider
                   ? (
                     <Slider
+                      handleStyle={{
+                        backgroundColor: Styleguide.infoColor,
+                        borderColor: Styleguide.secondaryColor,
+                      }}
+                      trackStyle={{
+                        backgroundColor: Styleguide.secondaryColor,
+                      }}
                       value={value}
                       onChange={(val) => {
                         onChange(val)
@@ -64,8 +95,7 @@ export default function SettingsInput(props: Props) {
                     />
                   )
                   : (
-                    <input
-                      style={{ minWidth: 200 }}
+                    <StyledInput
                       value={String(value)}
                       onChange={(e) => onChange(e.target.value)}
                     />

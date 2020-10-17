@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import SettingsTitle from "./SettingsTitle";
+import styled from 'styled-components';
+import Styleguide from "../Styleguide";
 
 interface SettingsOption {
   value: any;
@@ -14,6 +16,15 @@ interface Props {
   title: string;
   options: SettingsOption[];
 }
+
+const StyledSelect = styled.select`
+  min-width: 120px;
+  padding: 6px;
+  border-radius: 4px;
+  background-color: ${Styleguide.inputBgColor};
+  border: none;
+  color: ${Styleguide.primaryColor};
+`
 
 export default function SettingsSelect(props: Props) {
   const {
@@ -38,13 +49,16 @@ export default function SettingsSelect(props: Props) {
   return (
     <div style={{ marginTop: 12 }}>
       <SettingsTitle text={title} />
-      <select value={value} onChange={e => onChange(e.target.value)} style={{ minWidth: 90 }}>
+      <StyledSelect
+        value={value}
+        onChange={e => onChange(e.target.value)}
+      >
         {
           options.map(o => (
             <option disabled={o.disabled} key={`${o.value}_${o.label}_${title}`} value={o.value}>{o.label}</option>
           ))
         }
-      </select>
+      </StyledSelect>
     </div>
   )
 }

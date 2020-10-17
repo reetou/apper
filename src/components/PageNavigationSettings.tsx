@@ -6,6 +6,7 @@ import update from "immutability-helper";
 import SettingsInput from "./SettingsInput";
 import isPermanentPage from "../utils/pageUtils";
 import SettingsBlock from "./SettingsBlock";
+import Button from './Button';
 
 interface Props {
   editPage: (page: CustomPage) => void;
@@ -49,13 +50,13 @@ export default function PageNavigationSettings(props: Props) {
           { value: '0', label: 'Нет' },
         ]}
       />
-      <button
+      <Button
         style={{
           marginTop: 12
         }}
       >
         Настроить кнопки в таббаре
-      </button>
+      </Button>
       <SettingsSelect
         value={openedPage.page_type}
         onChange={(value) => {

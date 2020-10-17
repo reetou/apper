@@ -6,10 +6,10 @@ import AddPageItem from "./navigation/AddPageItem";
 
 const Container = styled.div`
   padding: 6px;
-  max-width: 620px;
-  min-width: 375px;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 450px;
 `
 
 export default function Navigation() {

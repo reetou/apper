@@ -2,23 +2,24 @@ import React, { ReactNode, useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import BuilderContext, { CustomComponent } from "../store/BuilderContext";
 import { DragSourceMonitor, useDrag } from "react-dnd";
+import Styleguide from "../Styleguide";
 
 const Container = styled.div<{isDragging: boolean}>`
   width: 95px;
-  cursor: pointer;
+  cursor: move;
   margin-right: 6px;
 `
 
 const Background = styled.div`
-  background-color: #C6C5C5;
-  width: 75px;
-  height: 75px;
-  padding: 10px;
+  background-color: ${Styleguide.componentItemContainerBgColor};
+  height: 85px;
+  width: 85px;
+  padding: 5px;
   border-radius: 16px;
 `
 
 const ItemContainer = styled.div`
-  background-color: #E1E1E1;
+  background-color: ${Styleguide.componentItemBgColor};
   border-radius: 16px;
   height: 100%;
   display: flex;
