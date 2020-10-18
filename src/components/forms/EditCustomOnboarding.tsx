@@ -8,7 +8,6 @@ import update from 'immutability-helper'
 import SettingsTitle from "../SettingsTitle";
 import { v4 as uuidv4 } from 'uuid'
 import { DEFAULT_IMAGE_URL } from "../mobile_components";
-import SettingsMarginPadding from "../SettingsMarginPadding";
 import SettingsColorPicker from "../SettingsColorPicker";
 import SettingsBlock from "../SettingsBlock";
 import Button from "../Button";
@@ -28,21 +27,25 @@ function newItem(): CustomOnboardingItem {
 
 function ItemForm(props: ItemFormProps) {
   const { index, item } = props
-  const { onboarding, setOnboarding } = useContext(BuilderContext)
+  const { project, setProject } = useContext(BuilderContext)
   const updateItem = (data: Partial<CustomOnboardingItem>) => {
-    setOnboarding(update(onboarding, {
-      items: {
-        [index]: {
-          $merge: data
+    setProject(update(project, {
+      onboarding: {
+        items: {
+          [index]: {
+            $merge: data
+          }
         }
       }
     }))
-    console.log(`Onboarding`, onboarding, data)
+    console.log(`Onboarding`, project.onboarding, data)
   }
   const deleteItem = () => {
-    setOnboarding(update(onboarding, {
-      items: {
-        $splice: [[index, 1]]
+    setProject(update(project, {
+      onboarding: {
+        items: {
+          $splice: [[index, 1]]
+        }
       }
     }))
   }
@@ -75,11 +78,13 @@ function ItemForm(props: ItemFormProps) {
 }
 
 export default function EditCustomOnboarding() {
-  const { onboarding, setOnboarding } = useContext(BuilderContext)
+  const { project, setProject } = useContext(BuilderContext)
   const onAdd = () => {
-    setOnboarding(update(onboarding, {
-      items: {
-        $push: [newItem()]
+    setProject(update(project, {
+      onboarding: {
+        items: {
+          $push: [newItem()]
+        }
       }
     }))
   }
@@ -88,23 +93,27 @@ export default function EditCustomOnboarding() {
       <FormTitleCollapsible title="Настройки страницы онбординга" />
       <SettingsBlock title="Цвета">
         <SettingsColorPicker
-          value={onboarding.background_color || '#FFFFFF'}
+          value={project.onboarding.background_color || '#FFFFFF'}
           title="Цвет фона"
           onChange={(val) => {
-            setOnboarding(update(onboarding, {
-              background_color: {
-                $set: val
+            setProject(update(project, {
+              onboarding: {
+                background_color: {
+                  $set: val
+                }
               }
             }))
           }}
         />
         <SettingsColorPicker
-          value={onboarding.text_color || '#FFFFFF'}
+          value={project.onboarding.text_color || '#FFFFFF'}
           title="Цвет текста"
           onChange={(val) => {
-            setOnboarding(update(onboarding, {
-              text_color: {
-                $set: val
+            setProject(update(project, {
+              onboarding: {
+                text_color: {
+                  $set: val
+                }
               }
             }))
           }}
@@ -112,12 +121,12 @@ export default function EditCustomOnboarding() {
       </SettingsBlock>
       <FormTitleCollapsible title="Элементы в онбординге" />
       {
-        onboarding.items.map((item, index) => (
+        project.onboarding.items.map((item, index) => (
           <ItemForm item={item} index={index} />
         ))
       }
       {
-        onboarding.items.length <= 2
+        project.onboarding.items.length <= 2
           ? (
             <div style={{ marginTop: 12 }}>
               <Button onClick={onAdd}>

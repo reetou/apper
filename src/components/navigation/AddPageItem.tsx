@@ -30,12 +30,14 @@ const Container = styled.div`
 `
 
 export default function AddPageItem() {
-  const { setPages, pages } = useContext(BuilderContext)
+  const { setProject, project } = useContext(BuilderContext)
   return (
     <Container
       onClick={() => {
-        setPages(update(pages, {
-          $push: [createNewPage(pages.length)]
+        setProject(update(project, {
+          pages: {
+            $push: [createNewPage(project.pages.length)]
+          }
         }))
       }}
     >

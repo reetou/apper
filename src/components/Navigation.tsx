@@ -13,7 +13,8 @@ const Container = styled.div`
 `
 
 export default function Navigation() {
-  const { pages, tabbarEnabled, openedPage } = useContext(BuilderContext)
+  const { project, openedPage } = useContext(BuilderContext)
+  const { pages, tabbar_enabled } = project
   return (
     <Container>
       {
@@ -22,7 +23,7 @@ export default function Navigation() {
             key={p.id}
             page={p}
             selected={openedPage.id === p.id}
-            tabbarEnabled={tabbarEnabled}
+            tabbarEnabled={tabbar_enabled}
           />
         )).concat(pages.length < 14 ? [<AddPageItem />] : [])
       }

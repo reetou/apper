@@ -24,16 +24,13 @@ const Tab = createBottomTabNavigator()
 
 const Screen = (props: { route: { name: string } }) => {
   const {
-    tabbarSettings,
-    pages,
+    project,
   } = useContext(BuilderContext)
+  const { tabbar_settings, pages } = project
   const { route } = props
-  const tabbarItem = tabbarSettings.items.find(item => item.id === route.name)
+  const tabbarItem = tabbar_settings.items.find(item => item.id === route.name)
   const tabbarItemPage = tabbarItem && tabbarItem.page_id ? pages.find(p => p.id === tabbarItem.page_id) : null
   const page = tabbarItemPage || pages[0]
-  const onMove = useCallback((id, afterId) => {
-
-  }, [pages])
 
   const embeddableChildren = page.components.filter(isEmbeddable).map((c: CustomComponent) => {
     const { component: Component } = c
@@ -112,8 +109,9 @@ function TabbarIcon(props: TabbarIconProps) {
 
 export default function EditTabbar() {
   const {
-    tabbarSettings,
+    project,
   } = useContext(BuilderContext)
+  const { tabbar_settings } = project 
   return (
     <Container>
       <div
@@ -135,16 +133,16 @@ export default function EditTabbar() {
               screenOptions={({ route }) => ({
                 tabBarIcon: (tabbarProps) => {
                   const { focused, color, size } = tabbarProps
-                  const item = tabbarSettings.items.find(item => item.id === route.name)
+                  const item = tabbar_settings.items.find(item => item.id === route.name)
                   if (!item) {
                     return null
                   }
                   return (
                     <View style={{ width: 50 }}>
                       <TabbarIcon
-                        showLabel={tabbarSettings.show_label}
+                        showLabel={tabbar_settings.show_label}
                         item={item}
-                        color={focused ? tabbarSettings.selected_color : tabbarSettings.color}
+                        color={focused ? tabbar_settings.selected_color : tabbar_settings.color}
                         size={20}
                       />
                     </View>
@@ -152,8 +150,8 @@ export default function EditTabbar() {
                 },
               })}
               tabBarOptions={{
-                activeTintColor: tabbarSettings.selected_color,
-                inactiveTintColor: tabbarSettings.color,
+                activeTintColor: tabbar_settings.selected_color,
+                inactiveTintColor: tabbar_settings.color,
                 labelStyle: {
                   fontSize: 8,
                   fontWeight: 'bold',
@@ -163,7 +161,7 @@ export default function EditTabbar() {
               }}
             >
               {
-                tabbarSettings.items.map(item => (
+                tabbar_settings.items.map(item => (
                   <Tab.Screen
                     component={Screen}
                     name={item.id}

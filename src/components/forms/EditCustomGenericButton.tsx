@@ -9,7 +9,8 @@ import SettingsMarginPadding from "../SettingsMarginPadding";
 import { validateNumberValue } from "../../utils/componentUtils";
 
 export default function EditCustomGenericButton() {
-  const { updateComponent, pages, openedPage, editingComponent } = useContext(BuilderContext)
+  const { updateComponent, project, openedPage, editingComponent } = useContext(BuilderContext)
+  const { pages } = project
   const onClickTypeOptions = () => {
     const isFirst = pages[0].id === openedPage.id
     return [

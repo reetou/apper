@@ -23,20 +23,24 @@ const newItem = (): TabbarItem => ({
 
 function ItemForm(props: ItemFormProps) {
   const { index, item } = props
-  const { setTabbarSettings, tabbarSettings, pages } = useContext(BuilderContext)
+  const { project, setProject } = useContext(BuilderContext)
   const updateItem = (data: Partial<TabbarItem>) => {
-    setTabbarSettings(update(tabbarSettings, {
-      items: {
-        [index]: {
-          $merge: data
+    setProject(update(project, {
+      tabbar_settings: {
+        items: {
+          [index]: {
+            $merge: data
+          }
         }
       }
     }))
   }
   const deleteItem = () => {
-    setTabbarSettings(update(tabbarSettings, {
-      items: {
-        $splice: [[index, 1]]
+    setProject(update(project, {
+      tabbar_settings: {
+        items: {
+          $splice: [[index, 1]]
+        }
       }
     }))
   }
@@ -50,7 +54,7 @@ function ItemForm(props: ItemFormProps) {
           })
         }}
         title="Страница"
-        options={pages.filter(isPermanentPage).map(p => ({ value: p.id, label: p.name }))}
+        options={project.pages.filter(isPermanentPage).map(p => ({ value: p.id, label: p.name }))}
       />
       <SettingsInput
         value={item.label}
@@ -78,24 +82,26 @@ function ItemForm(props: ItemFormProps) {
 }
 
 export default function EditTabbarSettings() {
-  const { tabbarSettings, setTabbarSettings } = useContext(BuilderContext)
+  const { project, setProject } = useContext(BuilderContext)
   return (
     <React.Fragment>
       <FormTitleCollapsible title="Элементы таббара" />
       {
-        tabbarSettings.items.map((item, index) => (
+        project.tabbar_settings.items.map((item, index) => (
           <ItemForm index={index} item={item} />
         ))
       }
       {
-        tabbarSettings.items.length <= 3
+        project.tabbar_settings.items.length <= 3
           ? (
             <div style={{ marginTop: 12 }}>
               <Button
                 onClick={() => {
-                  setTabbarSettings(update(tabbarSettings, {
-                    items: {
-                      $push: [newItem()]
+                  setProject(update(project, {
+                    tabbar_settings: {
+                      items: {
+                        $push: [newItem()]
+                      }
                     }
                   }))
                 }}
@@ -108,23 +114,29 @@ export default function EditTabbarSettings() {
       }
       <FormTitleCollapsible title="Настройки таббара" />
       <SettingsColorPicker
-        value={tabbarSettings.color}
+        value={project.tabbar_settings.color}
         title="Цвет иконки и текста"
         onChange={(val) => {
-          setTabbarSettings({
-            ...tabbarSettings,
-            color: val,
-          })
+          setProject(update(project, {
+            tabbar_settings: {
+              color: {
+                $set: val
+              }
+            }
+          }))
         }}
       />
       <SettingsColorPicker
-        value={tabbarSettings.selected_color}
+        value={project.tabbar_settings.selected_color}
         title="Цвет при выборе"
         onChange={(val) => {
-          setTabbarSettings({
-            ...tabbarSettings,
-            selected_color: val,
-          })
+          setProject(update(project, {
+            tabbar_settings: {
+              selected_color: {
+                $set: val
+              }
+            }
+          }))
         }}
       />
     </React.Fragment>

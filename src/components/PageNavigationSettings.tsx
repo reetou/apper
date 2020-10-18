@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import BuilderContext, { CustomPage, PageType } from "../store/BuilderContext";
 import SettingsSelect from './SettingsSelect';
-import { useDebounce } from "react-use";
 import update from "immutability-helper";
 import SettingsInput from "./SettingsInput";
 import isPermanentPage from "../utils/pageUtils";
-import SettingsBlock from "./SettingsBlock";
 import Button from './Button';
 
 interface Props {
@@ -15,12 +13,9 @@ interface Props {
 export default function PageNavigationSettings(props: Props) {
   const {
     openedPage,
-    tabbarEnabled,
-    setTabbarEnabled,
     setOpenedPage,
-    pages,
-    firstPageId,
-    setFirstPageId,
+    project,
+    setProject,
   } = useContext(BuilderContext)
   const { editPage } = props
   if (!openedPage) {
@@ -31,18 +26,26 @@ export default function PageNavigationSettings(props: Props) {
       <h3>{`${openedPage.name}: Настройки навигации`}</h3>
       <h3>Запуск</h3>
       <SettingsSelect
-        value={firstPageId}
+        value={project.first_page_id}
         onChange={(val) => {
-          setFirstPageId(val)
+          setProject(update(project, {
+            first_page_id: {
+              $set: val
+            }
+          }))
         }}
         title="Первая страница при запуске или после онбординга"
-        options={pages.filter(isPermanentPage).map(p => ({ value: p.id, label: p.name }))}
+        options={project.pages.filter(isPermanentPage).map(p => ({ value: p.id, label: p.name }))}
       />
       <h3>Таббар</h3>
       <SettingsSelect
-        value={tabbarEnabled ? '1' : '0'}
+        value={project.tabbar_enabled ? '1' : '0'}
         onChange={(val) => {
-          setTabbarEnabled(Boolean(Number(val)))
+          setProject(update(project, {
+            tabbar_enabled: {
+              $set: Boolean(Number(val))
+            }
+          }))
         }}
         title="Наличие таббара в приложении"
         options={[

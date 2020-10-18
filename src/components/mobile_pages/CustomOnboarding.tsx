@@ -16,7 +16,7 @@ const Circle = () => (
 
 export default function CustomOnboarding() {
   const {
-    onboarding,
+    project,
   } = useContext(BuilderContext)
   return (
     <View
@@ -24,7 +24,7 @@ export default function CustomOnboarding() {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: onboarding.background_color,
+        backgroundColor: project.onboarding.background_color,
       }}
     >
       <View />
@@ -48,7 +48,7 @@ export default function CustomOnboarding() {
             marginTop: 30,
           }}
         >
-          <Text style={{ color: onboarding.text_color }}>Текст</Text>
+          <Text style={{ color: project.onboarding.text_color }}>Текст</Text>
         </View>
       </View>
       <View

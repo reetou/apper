@@ -81,6 +81,17 @@ export function createOnboarding(): CustomOnboarding {
   }
 }
 
+export function createProject(): Project {
+  return {
+    id: uuidv4(),
+    first_page_id: '',
+    pages: [{...DEFAULT_PAGE}],
+    tabbar_enabled: true,
+    tabbar_settings: createTabbar(),
+    onboarding: createOnboarding(),
+  }
+}
+
 export type CustomComponentType = 'custom_input'
   | 'custom_generic_button'
   | 'custom_generic_button_rounded'
@@ -163,19 +174,22 @@ export interface TabbarSettings {
   color: string,
 }
 
-interface BuilderContextProps {
+export interface Project {
+  id: string,
+  tabbar_settings: TabbarSettings,
   onboarding: CustomOnboarding,
-  setOnboarding: Dispatch<SetStateAction<CustomOnboarding>>,
-  tabbarSettings: TabbarSettings,
-  setTabbarSettings: Dispatch<SetStateAction<TabbarSettings>>,
-  tabbarEnabled: boolean,
-  setTabbarEnabled: (val: boolean) => void,
+  tabbar_enabled: boolean,
+  pages: CustomPage[],
+  first_page_id: string,
+}
+
+interface BuilderContextProps {
+  project: Project,
+  setProject: Dispatch<SetStateAction<Project>>,
   mode: BuilderMode,
   setMode: Dispatch<SetStateAction<BuilderMode>>,
   selectedElement: null | string,
   setSelectedElement: Dispatch<SetStateAction<any>>,
-  pages: CustomPage[],
-  setPages: Dispatch<SetStateAction<CustomPage[]>>,
   openedPage: CustomPage,
   setOpenedPage: Dispatch<SetStateAction<CustomPage>>,
   onAddComponent: (component: CustomComponent, setAsEditing: boolean) => void,
@@ -187,8 +201,6 @@ interface BuilderContextProps {
   editingListViewItems: ICustomListViewItem[],
   setEditingListViewItems: Dispatch<SetStateAction<ICustomListViewItem[]>>,
   toggleEditingListViewItems: () => void,
-  firstPageId: string,
-  setFirstPageId: Dispatch<SetStateAction<string>>,
 }
 
 export default createContext<BuilderContextProps>({
@@ -196,8 +208,6 @@ export default createContext<BuilderContextProps>({
   setMode: () => {},
   selectedElement: null,
   setSelectedElement: () => {},
-  pages: [],
-  setPages: () => {},
   openedPage: DEFAULT_PAGE,
   setOpenedPage: () => {},
   onAddComponent: () => {},
@@ -208,12 +218,6 @@ export default createContext<BuilderContextProps>({
   editingListViewId: undefined,
   setEditingListViewId: () => {},
   toggleEditingListViewItems: () => {},
-  tabbarEnabled: false,
-  setTabbarEnabled: () => {},
-  tabbarSettings: createTabbar(),
-  setTabbarSettings: () => {},
-  onboarding: createOnboarding(),
-  setOnboarding: () => {},
-  firstPageId: '',
-  setFirstPageId: () => {}
+  project: createProject(),
+  setProject: () => {},
 })
