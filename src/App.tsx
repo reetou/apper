@@ -10,7 +10,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import 'rc-slider/assets/index.css';
 import Projects from "./pages/Projects";
-import ProjectOverview from "./pages/ProjectOverview";
+import ProjectBuild from "./pages/ProjectBuild";
 require('react-web-vector-icons/fonts');
 
 
@@ -19,10 +19,10 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <BrowserRouter>
         <Switch>
-          <Route path="/builder" component={Builder} />
+          <Route path="/demo" component={Builder} />
           <Route path="/projects" exact component={Projects} />
-          <Route path="/projects/:id/builder" component={Builder} />
-          <Route path="/projects/:id/overview" component={ProjectOverview} />
+          <Route path="/projects/:id/preview" component={Builder} />
+          <Route path="/projects/:id/build" component={ProjectBuild} />
         </Switch>
       </BrowserRouter>
     </DndProvider>

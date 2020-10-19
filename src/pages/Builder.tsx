@@ -30,6 +30,7 @@ export default function Builder() {
   const [editingComponent, setEditingComponent] = useState<CustomComponent>()
   const [editingListViewId, setEditingListViewId] = useState<string>()
   const [editingListViewItems, setEditingListViewItems] = useState<ICustomListViewItem[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
     if (!editingComponent) {
       return
@@ -117,8 +118,15 @@ export default function Builder() {
     [openedPage]
   );
   useEffect(() => {
-    console.log(`Route params changed`)
+    if (!routeParams.id) {
+      setLoading(false)
+      return
+    }
+    console.log(`Gonna get project and show builder for it`)
   }, [routeParams])
+  if (loading) {
+    return null
+  }
   return (
     <BuilderContext.Provider
       value={{
