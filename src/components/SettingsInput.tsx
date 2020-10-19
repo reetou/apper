@@ -17,6 +17,7 @@ interface Props {
   dots?: boolean;
   step?: number;
   type?: string;
+  disabled?: boolean;
 }
 
 const StyledInput = styled.input`
@@ -48,6 +49,7 @@ export default function SettingsInput(props: Props) {
     dots,
     step,
     type,
+    disabled,
   } = props
   if (hidden) {
     return null
@@ -67,6 +69,7 @@ export default function SettingsInput(props: Props) {
         textarea
           ? (
             <textarea
+              disabled={disabled}
               style={{
                 width: '100%',
                 minHeight: 90,
@@ -82,6 +85,7 @@ export default function SettingsInput(props: Props) {
                 slider
                   ? (
                     <Slider
+                      disabled={disabled}
                       handleStyle={{
                         backgroundColor: Styleguide.infoColor,
                         borderColor: Styleguide.secondaryColor,
@@ -101,6 +105,7 @@ export default function SettingsInput(props: Props) {
                   )
                   : (
                     <StyledInput
+                      disabled={disabled}
                       type={type}
                       value={String(value)}
                       onChange={(e) => onChange(e.target.value)}

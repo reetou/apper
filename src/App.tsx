@@ -4,6 +4,7 @@ import {
   BrowserRouter,
   Switch,
   Route,
+  Redirect,
 } from 'react-router-dom'
 import Builder from "./pages/Builder";
 import { DndProvider } from "react-dnd";
@@ -14,6 +15,8 @@ import ProjectBuild from "./pages/ProjectBuild";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Main from "./pages/Main";
+import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
 require('react-web-vector-icons/fonts');
 
 
@@ -25,10 +28,13 @@ function App() {
           <Route exact path="/" component={Main} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path="/password/reset" component={ResetPassword} />
           <Route path="/demo" component={Builder} />
           <Route path="/projects" exact component={Projects} />
           <Route path="/projects/:id/preview" component={Builder} />
           <Route path="/projects/:id/build" component={ProjectBuild} />
+          <Route path="/404" component={NotFound} />
+          <Redirect from="*" to="/404" />
         </Switch>
       </BrowserRouter>
     </DndProvider>

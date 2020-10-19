@@ -14,7 +14,8 @@ import EditTabbar from "../components/forms/EditTabbar";
 import Button from '../components/Button';
 import update from "immutability-helper";
 import { useDebounce } from "react-use";
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
+import { getProject } from "../api/Project";
 
 const Container = styled.div`
   display: flex;
@@ -22,6 +23,7 @@ const Container = styled.div`
 `
 
 export default function Builder() {
+  const history = useHistory()
   const routeParams = useParams<{ id: string }>()
   const [project, setProject] = useState<Project>(createProject())
   const [mode, setMode] = useState<BuilderMode>('simulator')
@@ -122,7 +124,18 @@ export default function Builder() {
       setLoading(false)
       return
     }
+    const loadProject = async () => {
+      try {
+        const res = await getProject(routeParams.id)
+        console.log(`Loaded project`, res)
+        setLoading(false)
+      } catch (e) {
+        console.error('Cannot load project', routeParams)
+        history.replace('/404')
+      }
+    }
     console.log(`Gonna get project and show builder for it`)
+    loadProject()
   }, [routeParams])
   if (loading) {
     return null

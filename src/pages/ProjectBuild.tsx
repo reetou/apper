@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import Styleguide from "../Styleguide";
 import Button from "../components/Button";
@@ -6,6 +6,8 @@ import PageContainer from "../components/PageContainer";
 import BuildSettingsIos from "../components/BuildSettingsIos";
 import { AndroidBuildSettings, IosBuildSettings } from "../types/buildSettings";
 import BuildSettingsAndroid from '../components/BuildSettingsAndroid';
+import { getProject } from "../api/Project";
+import { useHistory, useParams } from "react-router-dom";
 
 
 const Container = styled.div`
@@ -21,6 +23,9 @@ const Title = styled.div`
 `
 
 export default function ProjectBuild() {
+  const history = useHistory()
+  const routeParams = useParams<{ id: string }>()
+  const [loading, setLoading] = useState<boolean>(true)
   const [iosSettings, setIosSettings] = useState<IosBuildSettings>({
     bundle_id: '',
     apple_team_id: '',
@@ -38,6 +43,23 @@ export default function ProjectBuild() {
   }
   const buildAndroid = () => {
     console.log(`Building android`, androidSettings)
+  }
+  useEffect(() => {
+    const loadProject = async () => {
+      try {
+        const res = await getProject(routeParams.id)
+        console.log(`Loaded project`, res)
+        setLoading(false)
+      } catch (e) {
+        console.error('Cannot load project', routeParams)
+        history.replace('/404')
+      }
+    }
+    console.log(`Gonna get project and show builder for it`)
+    loadProject()
+  }, [routeParams])
+  if (loading) {
+    return null
   }
   return (
     <Container>
