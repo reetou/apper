@@ -5,6 +5,7 @@ import SettingsInput from "../components/SettingsInput";
 import Title from "../components/Title";
 import Button from '../components/Button';
 import { sendLogin } from "../api/Auth";
+import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
 
 const Container = styled.div`
@@ -23,6 +24,7 @@ export default function Login() {
   }
   return (
     <Container>
+      <GoogleAnalyticsTracker />
       <PageContainer style={{ minWidth: 600 }}>
         <Title>Log in</Title>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

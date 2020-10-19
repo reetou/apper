@@ -17,7 +17,13 @@ import Register from "./pages/Register";
 import Main from "./pages/Main";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
+import ReactGA from 'react-ga';
+
 require('react-web-vector-icons/fonts');
+
+if (process.env.NODE_ENV === 'production') {
+  ReactGA.initialize('UA-164205978-3');
+}
 
 
 function App() {

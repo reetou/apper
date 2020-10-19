@@ -5,6 +5,7 @@ import SettingsInput from "../components/SettingsInput";
 import Title from "../components/Title";
 import Button from '../components/Button';
 import { sendRegister } from "../api/Auth";
+import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
 
 const Container = styled.div`
@@ -24,6 +25,7 @@ export default function Register() {
   }
   return (
     <Container>
+      <GoogleAnalyticsTracker />
       <PageContainer style={{ minWidth: 600 }}>
         <Title>Registration</Title>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

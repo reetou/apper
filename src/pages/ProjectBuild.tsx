@@ -8,6 +8,7 @@ import { AndroidBuildSettings, IosBuildSettings } from "../types/buildSettings";
 import BuildSettingsAndroid from '../components/BuildSettingsAndroid';
 import { getProject } from "../api/Project";
 import { useHistory, useParams } from "react-router-dom";
+import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
 
 const Container = styled.div`
@@ -63,6 +64,7 @@ export default function ProjectBuild() {
   }
   return (
     <Container>
+      <GoogleAnalyticsTracker />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <PageContainer>
           <Title>Публикация изменений</Title>

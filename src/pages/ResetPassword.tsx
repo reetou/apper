@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import styled from "styled-components";
 import { sendResetPassword } from "../api/Auth";
 import { useHistory } from 'react-router-dom';
+import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
 
 const Container = styled.div`
@@ -24,6 +25,7 @@ export default function ResetPassword() {
   }
   return (
     <Container>
+      <GoogleAnalyticsTracker />
       <PageContainer style={{ minWidth: 600 }}>
         <Title>Password reset</Title>
         {

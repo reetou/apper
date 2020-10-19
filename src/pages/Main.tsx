@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from "styled-components";
 import Button from "../components/Button";
 import { useHistory } from 'react-router-dom';
+import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
 
 const Container = styled.div`
@@ -171,6 +172,7 @@ export default function Main() {
   }
   return (
     <Container>
+      <GoogleAnalyticsTracker />
       <Hero>
         <div>
           <ContentTitle>Bootstrap your mobile app.</ContentTitle>

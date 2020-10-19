@@ -16,6 +16,7 @@ import update from "immutability-helper";
 import { useDebounce } from "react-use";
 import { useParams, useHistory } from 'react-router-dom'
 import { getProject } from "../api/Project";
+import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
 const Container = styled.div`
   display: flex;
@@ -162,6 +163,7 @@ export default function Builder() {
         toggleEditingListViewItems,
       }}
     >
+      <GoogleAnalyticsTracker />
       <Container>
         <Leftbar />
         <div

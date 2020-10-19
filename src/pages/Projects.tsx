@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import Styleguide from "../Styleguide";
+import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
 
 const Container = styled.div`
@@ -19,6 +20,7 @@ const Title = styled.div`
 export default function Projects() {
   return (
     <Container>
+      <GoogleAnalyticsTracker />
       <Title>Мои приложения</Title>
     </Container>
   )
