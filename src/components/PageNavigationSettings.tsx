@@ -94,7 +94,7 @@ export default function PageNavigationSettings(props: Props) {
         onClick={() => {
           trackAnalyticsEvent({
             category: 'Builder',
-            action: 'ModeEditTabbar',
+            action: 'ModeEditTabbarFromNavigation',
           })
           setMode('edit_tabbar')
         }}
