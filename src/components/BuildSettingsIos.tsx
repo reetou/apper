@@ -2,6 +2,8 @@ import React, { Dispatch, SetStateAction } from 'react'
 import SettingsInput from "./SettingsInput";
 import { IosBuildSettings } from "../types/buildSettings";
 import update from 'immutability-helper'
+import AppleP12CertUpload from "./AppleP12CertUpload";
+import AppleProvisioningProfileUpload from "./AppleProvisioningProfileUpload";
 
 interface Props {
   settings: IosBuildSettings,
@@ -48,6 +50,8 @@ export default function BuildSettingsIos(props: Props) {
         }}
         title="Пароль от .p12 сертификата"
       />
+      <AppleP12CertUpload onUpload={() => {}} />
+      <AppleProvisioningProfileUpload onUpload={() => {}} />
     </React.Fragment>
   )
 }
