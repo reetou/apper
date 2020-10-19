@@ -16,6 +16,7 @@ interface Props {
   min?: number;
   dots?: boolean;
   step?: number;
+  type?: string;
 }
 
 const StyledInput = styled.input`
@@ -46,6 +47,7 @@ export default function SettingsInput(props: Props) {
     min,
     dots,
     step,
+    type,
   } = props
   if (hidden) {
     return null
@@ -99,6 +101,7 @@ export default function SettingsInput(props: Props) {
                   )
                   : (
                     <StyledInput
+                      type={type}
                       value={String(value)}
                       onChange={(e) => onChange(e.target.value)}
                     />
