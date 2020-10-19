@@ -5,6 +5,7 @@ import update from "immutability-helper";
 import SettingsInput from "./SettingsInput";
 import isPermanentPage from "../utils/pageUtils";
 import Button from './Button';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
   editPage: (page: CustomPage) => void;
@@ -18,9 +19,13 @@ export default function PageNavigationSettings(props: Props) {
     setProject,
     setMode,
   } = useContext(BuilderContext)
+  const history = useHistory()
   const { editPage } = props
   const publishProject = () => {
     console.log(`Gonna publish`)
+  }
+  const onBuildApp = () => {
+    history.push(`/projects/${project.id}/build`)
   }
   if (!openedPage) {
     return null
@@ -34,6 +39,14 @@ export default function PageNavigationSettings(props: Props) {
           onClick={publishProject}
         >
           Опубликовать изменения
+        </Button>
+        <Button
+          style={{
+            marginTop: 12
+          }}
+          onClick={onBuildApp}
+        >
+          Сборка приложения
         </Button>
       </div>
       <h3>Запуск</h3>
