@@ -16,14 +16,26 @@ export default function PageNavigationSettings(props: Props) {
     setOpenedPage,
     project,
     setProject,
+    setMode,
   } = useContext(BuilderContext)
   const { editPage } = props
+  const publishProject = () => {
+    console.log(`Gonna publish`)
+  }
   if (!openedPage) {
     return null
   }
   return (
     <React.Fragment>
       <h3>{`${openedPage.name}: Настройки навигации`}</h3>
+      <h3>Приложение</h3>
+      <div style={{ margin: '1rem 0' }}>
+        <Button
+          onClick={publishProject}
+        >
+          Опубликовать изменения
+        </Button>
+      </div>
       <h3>Запуск</h3>
       <SettingsSelect
         value={project.first_page_id}
@@ -56,6 +68,9 @@ export default function PageNavigationSettings(props: Props) {
       <Button
         style={{
           marginTop: 12
+        }}
+        onClick={() => {
+          setMode('edit_tabbar')
         }}
       >
         Настроить кнопки в таббаре
