@@ -5,23 +5,37 @@ import { useHistory } from 'react-router-dom';
 
 
 const Container = styled.div`
-  margin: 0 10rem;
-  padding-bottom: 10%;
+  padding: 10% 2rem;
+  @media(min-width: 1024px) {
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+    margin: 0 10rem;
+  }
 `
 
 const Hero = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(100vh - 100px);
+  height: 70vh;
+  @media(min-width: 768px) {
+    height: calc(100vh - 100px);
+  }
 `
 
 const ContentTitle = styled.div`
   font-family: Nunito, sans-serif;
   font-style: normal;
   font-weight: 800;
-  font-size: 48px;
-  line-height: 65px;
+  text-align: center;
+  font-size: 1.8rem;
+  line-height: 2.1rem;
+  @media(min-width: 1024px) {
+    font-size: 48px;
+    line-height: 65px;
+    text-align: left;
+  }
 `
 
 const SecondaryTitle = styled.div`
@@ -38,13 +52,31 @@ const ContentDescription = styled.div`
   font-weight: normal;
   font-size: 24px;
   line-height: 33px;
-  max-width: 500px;
   margin-top: 20px;
+  text-align: center;
+  @media(min-width: 1024px) {
+    font-size: 24px;
+    line-height: 33px;
+    max-width: 500px;
+    text-align: left;
+  }
 `
 
 const Row = styled.div`
   display: flex;
   align-items: center;
+`
+
+const TryButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  padding: 0 2rem;
+  @media(min-width: 1024px) {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+  }
 `
 
 const InfoContent = styled.div`
@@ -58,12 +90,33 @@ const InfoContent = styled.div`
 
 const FeaturesRow = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+  @media(min-width: 1024px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 `
 
 const FeatureTitle = styled(SecondaryTitle)`
   font-size: 1.3rem;
+  text-align: center;
+  @media(min-width: 1024px) {
+    text-align: left;
+  }
+`
+
+const FeatureContainer = styled.div`
+  padding: 1rem;
+  @media(min-width: 1024px) {
+    padding: 0;
+    width: 30%;
+  }
+`
+
+const BottomButton = styled(Button)`
+  width: 250px;
+  font-size: 1.25rem;
 `
 
 interface FeatureProps {
@@ -73,10 +126,10 @@ interface FeatureProps {
 
 function Feature({title, text}: FeatureProps) {
   return (
-    <div style={{ width: '30%' }}>
+    <FeatureContainer>
       <FeatureTitle>{title}</FeatureTitle>
       <div>{text}</div>
-    </div>
+    </FeatureContainer>
   )
 }
 
@@ -124,7 +177,7 @@ export default function Main() {
             <b>Mekanix</b> is a mobile app builder platform that lets you prototype and build
             a <b>cross-platform mobile app</b> through intuitive interface right in your browser.
           </ContentDescription>
-          <Row style={{ marginTop: 12 }}>
+          <TryButtonContainer>
             <Button
               style={{ paddingLeft: '3rem', paddingRight: '3rem' }}
               onClick={tryDemo}
@@ -133,7 +186,7 @@ export default function Main() {
             </Button>
             <div style={{ marginRight: 12 }} />
             <InfoContent>No credit card required</InfoContent>
-          </Row>
+          </TryButtonContainer>
         </div>
         <SecondaryTitle style={{ textAlign: 'center' }}>Features</SecondaryTitle>
       </Hero>
@@ -144,25 +197,15 @@ export default function Main() {
           ))
         }
       </FeaturesRow>
-      <div
-        style={{
-          marginTop: '5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
+      <TryButtonContainer
       >
-        <Button
-          style={{
-            width: 400,
-            fontSize: '1.25rem',
-          }}
+        <BottomButton
           onClick={tryDemo}
         >
           TRY DEMO FOR FREE
-        </Button>
+        </BottomButton>
         <InfoContent style={{ marginTop: 12 }}>No credit card or registration required</InfoContent>
-      </div>
+      </TryButtonContainer>
     </Container>
   )
 }
