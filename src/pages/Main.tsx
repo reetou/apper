@@ -114,9 +114,11 @@ const FeatureContainer = styled.div`
   }
 `
 
-const BottomButton = styled(Button)`
-  width: 250px;
-  font-size: 1.25rem;
+const BottomSpacer = styled.div`
+  margin-right: 0;
+  @media(min-width: 768px) {
+    margin-right: 12px;
+  }
 `
 
 interface FeatureProps {
@@ -199,12 +201,13 @@ export default function Main() {
       </FeaturesRow>
       <TryButtonContainer
       >
-        <BottomButton
+        <Button
           onClick={tryDemo}
         >
           TRY DEMO FOR FREE
-        </BottomButton>
-        <InfoContent style={{ marginTop: 12 }}>No credit card or registration required</InfoContent>
+        </Button>
+        <BottomSpacer />
+        <InfoContent>No credit card or registration required</InfoContent>
       </TryButtonContainer>
     </Container>
   )
