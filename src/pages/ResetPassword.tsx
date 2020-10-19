@@ -5,8 +5,8 @@ import SettingsInput from "../components/SettingsInput";
 import Button from "../components/Button";
 import styled from "styled-components";
 import { sendResetPassword } from "../api/Auth";
-import { useHistory } from 'react-router-dom';
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
+import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
 
 
 const Container = styled.div`
@@ -19,6 +19,10 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState<boolean>(false)
   const [showMessage, setShowMessage] = useState<boolean>(false)
   const submit = async () => {
+    trackAnalyticsEvent({
+      category: 'Auth',
+      action: 'SubmitResetPassword',
+    })
     setLoading(true)
     const res = await sendResetPassword(login)
     setShowMessage(true)

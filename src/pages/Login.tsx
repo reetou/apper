@@ -6,6 +6,7 @@ import Title from "../components/Title";
 import Button from '../components/Button';
 import { sendLogin } from "../api/Auth";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
+import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
 
 
 const Container = styled.div`
@@ -18,6 +19,10 @@ export default function Login() {
   const [password, setPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const submit = async () => {
+    trackAnalyticsEvent({
+      category: 'Auth',
+      action: 'SubmitLogin',
+    })
     setLoading(true)
     const res = await sendLogin(login, password)
     setLoading(false)

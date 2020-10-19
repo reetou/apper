@@ -6,6 +6,7 @@ import SettingsInput from "./SettingsInput";
 import isPermanentPage from "../utils/pageUtils";
 import Button from './Button';
 import { useHistory } from 'react-router-dom';
+import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
 
 interface Props {
   editPage: (page: CustomPage) => void;
@@ -22,9 +23,17 @@ export default function PageNavigationSettings(props: Props) {
   const history = useHistory()
   const { editPage } = props
   const publishProject = () => {
+    trackAnalyticsEvent({
+      category: 'Builder',
+      action: 'PublishProject',
+    })
     console.log(`Gonna publish`)
   }
   const onBuildApp = () => {
+    trackAnalyticsEvent({
+      category: 'Builder',
+      action: 'GoToBuild',
+    })
     history.push(`/projects/${project.id}/build`)
   }
   if (!openedPage) {
@@ -83,6 +92,10 @@ export default function PageNavigationSettings(props: Props) {
           marginTop: 12
         }}
         onClick={() => {
+          trackAnalyticsEvent({
+            category: 'Builder',
+            action: 'ModeEditTabbar',
+          })
           setMode('edit_tabbar')
         }}
       >

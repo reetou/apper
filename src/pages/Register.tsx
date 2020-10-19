@@ -6,6 +6,8 @@ import Title from "../components/Title";
 import Button from '../components/Button';
 import { sendRegister } from "../api/Auth";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
+import ReactGA from 'react-ga'
+import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
 
 
 const Container = styled.div`
@@ -19,6 +21,10 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const submit = async () => {
+    trackAnalyticsEvent({
+      category: 'Auth',
+      action: 'SubmitRegister',
+    })
     setLoading(true)
     const res = await sendRegister(login, password)
     setLoading(false)

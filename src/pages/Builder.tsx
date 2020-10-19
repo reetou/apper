@@ -17,6 +17,7 @@ import { useDebounce } from "react-use";
 import { useParams, useHistory } from 'react-router-dom'
 import { getProject } from "../api/Project";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
+import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
 
 const Container = styled.div`
   display: flex;
@@ -46,6 +47,10 @@ export default function Builder() {
   }, [editingListViewId])
   const onAddComponent = (component: CustomComponent, setAsEditing = false) => {
     console.log(`Pushing component`, component)
+    trackAnalyticsEvent({
+      category: 'BuilderPushComponent',
+      action: component.item_type,
+    })
     setOpenedPage((prevPage) => {
       const newState = update(prevPage, {
         components: { $push: [component] },
@@ -188,15 +193,21 @@ export default function Builder() {
               mode === 'edit_onboarding' ? <Simulator /> : null
             }
           </div>
-          <div
-            style={{ marginTop: 12 }}
-          >
-            <Button onClick={() => {
-              navigator.clipboard.writeText(JSON.stringify({}, null, 2))
-            }}>
-              Выгрузить
-            </Button>
-          </div>
+          {
+            process.env.NODE_ENV !== 'production'
+              ? (
+                <div
+                  style={{ marginTop: 12 }}
+                >
+                  <Button onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify({}, null, 2))
+                  }}>
+                    Выгрузить
+                  </Button>
+                </div>
+              )
+              : null
+          }
         </div>
         <Rightbar/>
       </Container>

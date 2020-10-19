@@ -3,6 +3,7 @@ import BuilderContext, { createNewPage, CustomPage } from "../../store/BuilderCo
 import styled from 'styled-components';
 import update from "immutability-helper";
 import Styleguide from "../../Styleguide";
+import { trackAnalyticsEvent } from "../../utils/googleAnalyticsUtils";
 
 const Item = styled.div<{ navbar: boolean, tabbar: boolean }>`
   height: ${({ tabbar, navbar }) => 180 - (tabbar ? 0 : 30) - (navbar ? 0 : 30)}px;
@@ -34,6 +35,10 @@ export default function AddPageItem() {
   return (
     <Container
       onClick={() => {
+        trackAnalyticsEvent({
+          category: 'Builder',
+          action: 'AddPage',
+        })
         const page = createNewPage(project.pages.length)
         setProject(update(project, {
           pages: {
