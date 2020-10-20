@@ -6,6 +6,7 @@ const Container = styled.div`
   font-size: 1rem;
   letter-spacing: 0.5px;
   font-weight: 600;
+  max-width: 250px;
 `
 
 interface Props {

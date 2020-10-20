@@ -15,7 +15,7 @@ import Button from '../components/Button';
 import update from "immutability-helper";
 import { useDebounce } from "react-use";
 import { useParams, useHistory } from 'react-router-dom'
-import { getProject } from "../api/Project";
+import { getProject, updateProject } from "../api/Project";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
 
@@ -134,9 +134,13 @@ export default function Builder() {
       try {
         const res = await getProject(routeParams.id)
         console.log(`Loaded project`, res)
+        setProject(res.project)
+        console.log(`Settings opened page`, res.project.pages[0])
+        setOpenedPage(res.project.pages[0])
+        console.log(`Changing loading`)
         setLoading(false)
       } catch (e) {
-        console.error('Cannot load project', routeParams)
+        console.error('Cannot load project', e)
         history.replace('/404')
       }
     }

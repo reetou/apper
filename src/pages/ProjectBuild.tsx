@@ -9,6 +9,7 @@ import BuildSettingsAndroid from '../components/BuildSettingsAndroid';
 import { getProject } from "../api/Project";
 import { useHistory, useParams } from "react-router-dom";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
+import BuildInProgress from "../components/project_build/BuildInProgress";
 
 
 const Container = styled.div`
@@ -21,6 +22,11 @@ const Title = styled.div`
   font-weight: 600;
   margin-bottom: 1rem;
   text-align: center;
+`
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
 `
 
 export default function ProjectBuild() {
@@ -39,6 +45,7 @@ export default function ProjectBuild() {
     key_password: '',
   })
   const [selectedPlatform, setSelectedPlatform] = useState<'ios' | 'android'>('android')
+  const [buildInProgress, setBuildInProgress] = useState<boolean>(false)
   const buildIos = () => {
     console.log(`Building ios`, iosSettings)
   }
@@ -57,15 +64,15 @@ export default function ProjectBuild() {
       }
     }
     console.log(`Gonna get project and show builder for it`)
-    loadProject()
+    // loadProject()
   }, [routeParams])
-  if (loading) {
-    return null
-  }
+  // if (loading) {
+  //   return null
+  // }
   return (
     <Container>
       <GoogleAnalyticsTracker />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Column>
         <PageContainer>
           <Title>Публикация изменений</Title>
           <div
@@ -96,68 +103,84 @@ export default function ProjectBuild() {
             </Button>
           </div>
         </PageContainer>
+        {
+          buildInProgress
+            ? (
+              <BuildInProgress />
+            )
+            : (
+              <PageContainer>
+                <Title>Сборка приложения</Title>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div style={{ width: '70%', fontWeight: 'bold' }}>
+                    По причинам безопасности мы не храним Ваши сертификаты и пароли от них на наших серверах — после сборки они будут удалены.
+                  </div>
+                </div>
+                <div
+                  style={{
+                    marginTop: 12,
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Button
+                    onClick={() => {
+                      setSelectedPlatform('ios')
+                    }}
+                    disabled={selectedPlatform === 'ios'}
+                  >
+                    iOS
+                  </Button>
+                  <div style={{ marginRight: 12 }} />
+                  <Button
+                    onClick={() => {
+                      setSelectedPlatform('android')
+                    }}
+                    disabled={selectedPlatform === 'android'}
+                  >
+                    Android
+                  </Button>
+                </div>
+                { selectedPlatform === 'ios' ? <BuildSettingsIos settings={iosSettings} setSettings={setIosSettings} /> : null }
+                { selectedPlatform === 'android' ? <BuildSettingsAndroid settings={androidSettings} setSettings={setAndroidSettings} /> : null }
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <Button
+                    style={{
+                      marginTop: 12,
+                    }}
+                    onClick={() => {
+                      if (selectedPlatform === 'ios') {
+                        buildIos()
+                        return
+                      }
+                      buildAndroid()
+                    }}
+                  >
+                    Запустить сборку {selectedPlatform === 'ios' ? 'iOS' : 'Android'}
+                  </Button>
+                </div>
+              </PageContainer>
+            )
+        }
+      </Column>
+      <Column style={{ width: '60%' }}>
         <PageContainer>
-          <Title>Сборка приложения</Title>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '70%', fontWeight: 'bold' }}>
-              По причинам безопасности, мы не храним Ваши сертификаты и пароли на своих серверах - после сборки они будут удалены
-            </div>
+          <Title>Что выбрать?</Title>
+          <div>
+            Сборка приложения требуется при первой загрузке приложения в App Store/Google Play, изменении иконки, сплэш-экрана, названия или при обновлении ядра Mekanix.
+            Если Ваше приложение уже загружено в App Store/Google Play, Вам стоит взглянуть на публикацию изменений.
           </div>
-          <div
-            style={{
-              marginTop: 12,
-              display: 'flex',
-              justifyContent: 'center'
-            }}
-          >
-            <Button
-              onClick={() => {
-                setSelectedPlatform('ios')
-              }}
-              disabled={selectedPlatform === 'ios'}
-            >
-              iOS
-            </Button>
-            <div style={{ marginRight: 12 }} />
-            <Button
-              onClick={() => {
-                setSelectedPlatform('android')
-              }}
-              disabled={selectedPlatform === 'android'}
-            >
-              Android
-            </Button>
-          </div>
-          { selectedPlatform === 'ios' ? <BuildSettingsIos settings={iosSettings} setSettings={setIosSettings} /> : null }
-          { selectedPlatform === 'android' ? <BuildSettingsAndroid settings={androidSettings} setSettings={setAndroidSettings} /> : null }
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-              style={{
-                marginTop: 12,
-              }}
-              onClick={() => {
-                if (selectedPlatform === 'ios') {
-                  buildIos()
-                  return
-                }
-                buildAndroid()
-              }}
-            >
-              Запустить сборку {selectedPlatform === 'ios' ? 'iOS' : 'Android'}
-            </Button>
+          <div style={{ marginTop: 8, fontWeight: 'bold' }}>
+            Сборка приложения занимает до 6 часов, тогда как публикация изменений - всего несколько минут.
           </div>
         </PageContainer>
-      </div>
-      <PageContainer style={{ width: '60%' }}>
-        <Title>Что выбрать?</Title>
-        <div>
-          Сборка приложения требуется при первой загрузке приложения в App Store/Google Play, изменении иконки, сплэш-экрана, названия или при обновлении ядра Mekanix.
-          Если Ваше приложение уже загружено в App Store/Google Play, Вам стоит взглянуть на публикацию изменений.
-        </div>
-        <div style={{ marginTop: 8, fontWeight: 'bold' }}>
-          Сборка приложения занимает до 6 часов, тогда как публикация изменений - всего несколько минут.
-        </div>
-      </PageContainer>
+        <PageContainer>
+          <Title>Завершенные сборки</Title>
+          <div>
+            Здесь пока ничего нет.
+          </div>
+        </PageContainer>
+      </Column>
     </Container>
   )
 }

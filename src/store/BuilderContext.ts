@@ -84,6 +84,7 @@ export function createOnboarding(): CustomOnboarding {
 export function createProject(): Project {
   return {
     id: uuidv4(),
+    project_name: 'Default project',
     first_page_id: '',
     pages: [{...DEFAULT_PAGE}],
     tabbar_enabled: true,
@@ -176,6 +177,7 @@ export interface TabbarSettings {
 
 export interface Project {
   id: string,
+  project_name: string,
   tabbar_settings: TabbarSettings,
   onboarding: CustomOnboarding,
   tabbar_enabled: boolean,

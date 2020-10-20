@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import UploadContainer from "./UploadContainer";
 
 interface Props {
   onUpload: (file: File) => void,
@@ -17,16 +18,14 @@ export default function AppleProvisioningProfileUpload(props: Props) {
     onDrop,
     accept: ['.mobileprovision'],
     maxFiles: 1,
-    noKeyboard: true,
   })
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} />
-      {
-        isDragActive ?
-          <p>Drop the files here ...</p> :
-          <p>Drag 'n' drop some files here, or click to select files</p>
-      }
+      <UploadContainer
+        title="Apple Provisioning Certificate (.mobileprovision extension)"
+        isDragActive={isDragActive}
+      />
     </div>
   )
 }

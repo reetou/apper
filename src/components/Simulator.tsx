@@ -9,6 +9,7 @@ import MainScreen from "./simulator/MainScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { isEmbeddable, isFloating } from "../utils/componentUtils";
 import MovableContainer from "./MovableContainer";
+import { getPageReactComponent } from "../utils/builderUtils";
 
 const Container = styled.div`
   display: flex;
@@ -69,7 +70,7 @@ export default function Simulator() {
     ...openedPage.padding ? { padding: openedPage.padding[0] } : {},
   }
   const embeddableChildren = openedPage.components.filter(isEmbeddable).map((c: CustomComponent) => {
-    const { component: Component } = c
+    const Component = getPageReactComponent(c)
     return (
       <MovableContainer
         key={c.id}

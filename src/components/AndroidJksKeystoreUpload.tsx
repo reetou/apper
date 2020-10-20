@@ -6,7 +6,7 @@ interface Props {
   onUpload: (file: File) => void,
 }
 
-export default function AppleP12CertUpload(props: Props) {
+export default function AndroidJksKeystoreUpload(props: Props) {
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
     if (!acceptedFiles.length) {
@@ -16,14 +16,14 @@ export default function AppleP12CertUpload(props: Props) {
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
     onDrop,
-    accept: ['.p12'],
+    accept: ['.keystore'],
     maxFiles: 1,
   })
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} />
       <UploadContainer
-        title="Apple Distribution Certificate (.p12 extension)"
+        title="Android Keystore (JKS)"
         isDragActive={isDragActive}
       />
     </div>

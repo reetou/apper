@@ -6,7 +6,6 @@ import Title from "../components/Title";
 import Button from '../components/Button';
 import { sendRegister } from "../api/Auth";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
-import ReactGA from 'react-ga'
 import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
 
 

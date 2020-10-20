@@ -7,6 +7,7 @@ const PageContainer = styled.div`
   background-color: ${Styleguide.infoColor};
   margin: 1rem;
   border-radius: 16px;
+  min-height: 310px;
 `
 
 export default PageContainer
