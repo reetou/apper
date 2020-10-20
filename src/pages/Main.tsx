@@ -75,7 +75,6 @@ const TryButtonContainer = styled.div`
   margin-top: 12px;
   padding: 0 2rem;
   @media(min-width: 1024px) {
-    flex-direction: row;
     align-items: center;
     padding: 0;
   }
@@ -202,8 +201,7 @@ export default function Main() {
           ))
         }
       </FeaturesRow>
-      <TryButtonContainer
-      >
+      <TryButtonContainer>
         <Button
           onClick={tryDemo}
         >
