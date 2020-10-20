@@ -181,7 +181,7 @@ export default function Main() {
             <b>Mekanix</b> is a mobile app builder platform that lets you prototype and build
             a <b>cross-platform mobile app</b> through intuitive interface right in your browser.
           </ContentDescription>
-          <TryButtonContainer>
+          <TryButtonContainer style={{ alignItems: 'flex-start' }}>
             <Button
               style={{ paddingLeft: '3rem', paddingRight: '3rem' }}
               onClick={tryDemo}
