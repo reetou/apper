@@ -16,6 +16,7 @@ const Container = styled.div`
 `
 
 const Hero = styled.div`
+  padding-top: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
