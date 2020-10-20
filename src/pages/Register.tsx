@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from "styled-components";
 import PageContainer from "../components/PageContainer";
 import SettingsInput from "../components/SettingsInput";
@@ -7,6 +7,8 @@ import Button from '../components/Button';
 import { sendRegister } from "../api/Auth";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
+import AuthContext from "../store/AuthContext";
+import { useHistory } from 'react-router-dom';
 
 
 const Container = styled.div`
@@ -19,6 +21,8 @@ export default function Register() {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const history = useHistory()
+  const { authenticated } = useContext(AuthContext)
   const submit = async () => {
     trackAnalyticsEvent({
       category: 'Auth',
@@ -28,6 +32,11 @@ export default function Register() {
     const res = await sendRegister(login, password)
     setLoading(false)
   }
+  useEffect(() => {
+    if (authenticated) {
+      history.replace('/projects')
+    }
+  }, [authenticated])
   return (
     <Container>
       <GoogleAnalyticsTracker />

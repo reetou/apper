@@ -4,7 +4,7 @@ import Rightbar from "../components/Rightbar";
 import styled from 'styled-components'
 import Simulator from "../components/Simulator";
 import BuilderContext, {
-  BuilderMode,
+  BuilderMode, createOnboarding,
   createProject, CustomComponent, CustomComponentData, CustomComponentProps,
   CustomPage, DEFAULT_PAGE, ICustomListViewItem, Project,
 } from "../store/BuilderContext";
@@ -18,6 +18,8 @@ import { useParams, useHistory } from 'react-router-dom'
 import { getProject, updateProject } from "../api/Project";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
+import AuthContext from "../store/AuthContext";
+import { createTabbar } from "../utils/tabbarUtils";
 
 const Container = styled.div`
   display: flex;
@@ -35,6 +37,7 @@ export default function Builder() {
   const [editingListViewId, setEditingListViewId] = useState<string>()
   const [editingListViewItems, setEditingListViewItems] = useState<ICustomListViewItem[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const { authenticated } = useContext(AuthContext)
   useEffect(() => {
     if (!editingComponent) {
       return
@@ -125,8 +128,40 @@ export default function Builder() {
     200,
     [openedPage]
   );
+  const [, cancelSave] = useDebounce(
+    () => {
+      if (authenticated) {
+        return
+      }
+      console.log(`Authenticated`, authenticated)
+      localStorage.setItem('demo_project', JSON.stringify(project))
+      console.log(`Saved in browser`)
+    },
+    200,
+    [project]
+  );
   useEffect(() => {
+    const loadDemoProject = () => {
+      try {
+        const data = localStorage.getItem('demo_project')
+        if (!data) {
+          return
+        }
+        const demoProject = JSON.parse(data)
+        if (!demoProject) {
+          return
+        }
+        const demoOpenedPage = demoProject.pages[0]
+        setProject(demoProject)
+        setOpenedPage(update(openedPage, {
+          $set: demoOpenedPage
+        }))
+      } catch (e) {
+        console.error(`Cannot load demo project`, e)
+      }
+    }
     if (!routeParams.id) {
+      loadDemoProject()
       setLoading(false)
       return
     }
@@ -147,6 +182,21 @@ export default function Builder() {
     console.log(`Gonna get project and show builder for it`)
     loadProject()
   }, [routeParams])
+  useEffect(() => {
+    if (project.tabbar_settings && project.onboarding) {
+      return
+    }
+    // Fill default values for onboarding and tabbar
+    console.log(`Updating tabbar and project onboarding`)
+    setProject(update(project, {
+      onboarding: {
+        $set: createOnboarding()
+      },
+      tabbar_settings: {
+        $set: createTabbar()
+      }
+    }))
+  }, [project])
   if (loading) {
     return null
   }
@@ -191,10 +241,10 @@ export default function Builder() {
               mode === 'navigation' ? <Navigation /> : null
             }
             {
-              mode === 'edit_tabbar' ? <EditTabbar /> : null
+              mode === 'edit_tabbar' && project.tabbar_settings ? <EditTabbar /> : null
             }
             {
-              mode === 'edit_onboarding' ? <Simulator /> : null
+              mode === 'edit_onboarding' && project.onboarding ? <Simulator /> : null
             }
           </div>
           {
@@ -204,7 +254,7 @@ export default function Builder() {
                   style={{ marginTop: 12 }}
                 >
                   <Button onClick={() => {
-                    navigator.clipboard.writeText(JSON.stringify({}, null, 2))
+                    navigator.clipboard.writeText(JSON.stringify(project, null, 2))
                   }}>
                     Выгрузить
                   </Button>

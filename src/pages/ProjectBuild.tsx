@@ -64,11 +64,11 @@ export default function ProjectBuild() {
       }
     }
     console.log(`Gonna get project and show builder for it`)
-    // loadProject()
+    loadProject()
   }, [routeParams])
-  // if (loading) {
-  //   return null
-  // }
+  if (loading) {
+    return null
+  }
   return (
     <Container>
       <GoogleAnalyticsTracker />

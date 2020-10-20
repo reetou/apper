@@ -22,6 +22,8 @@ import PrivateRoute from "./components/router/PrivateRoute";
 import AuthContext from './store/AuthContext';
 import { checkAuth } from "./api/Auth";
 import NewProject from "./pages/NewProject";
+import Navbar from "./components/Navbar";
+import Logout from "./pages/Logout";
 
 require('react-web-vector-icons/fonts');
 
@@ -59,27 +61,31 @@ function App() {
     >
       <DndProvider backend={HTML5Backend}>
         <BrowserRouter>
-          {
-            loading
-              ? (
-                <div style={{ textAlign: 'center' }}>Loading...</div>
-              )
-              : (
-                <Switch>
-                  <Route exact path="/" component={Main} />
-                  <Route path="/register" component={Register} />
-                  <Route path="/login" component={Login} />
-                  <Route path="/password/reset" component={ResetPassword} />
-                  <Route path="/demo" component={Builder} />
-                  <PrivateRoute path="/projects/new" exact component={NewProject} />
-                  <PrivateRoute path="/projects" exact component={Projects} />
-                  <PrivateRoute path="/projects/:id/preview" component={Builder} />
-                  <PrivateRoute path="/projects/:id/build" component={ProjectBuild} />
-                  <Route path="/404" component={NotFound} />
-                  <Redirect from="*" to="/404" />
-                </Switch>
-              )
-          }
+          <React.Fragment>
+            <Navbar />
+            {
+              loading
+                ? (
+                  <div style={{ textAlign: 'center' }}>Loading...</div>
+                )
+                : (
+                  <Switch>
+                    <Route exact path="/" component={Main} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/password/reset" component={ResetPassword} />
+                    <Route path="/demo" component={Builder} />
+                    <PrivateRoute path="/projects/new" exact component={NewProject} />
+                    <PrivateRoute path="/projects" exact component={Projects} />
+                    <PrivateRoute path="/projects/:id/preview" component={Builder} />
+                    <PrivateRoute path="/projects/:id/build" component={ProjectBuild} />
+                    <PrivateRoute path="/logout" component={Logout} />
+                    <Route path="/404" component={NotFound} />
+                    <Redirect from="*" to="/404" />
+                  </Switch>
+                )
+            }
+          </React.Fragment>
         </BrowserRouter>
       </DndProvider>
     </AuthContext.Provider>

@@ -86,7 +86,7 @@ export default function Simulator() {
     )
   })
   const floatingChildren = openedPage.components.filter(isFloating).map((c: CustomComponent) => {
-    const { component: Component } = c
+    const Component = getPageReactComponent(c)
     return (
       <MovableContainer
         key={c.id}

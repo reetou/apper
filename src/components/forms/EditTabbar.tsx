@@ -11,6 +11,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { isEmbeddable, isFloating } from "../../utils/componentUtils";
 import MovableContainer from "../MovableContainer";
 import { ALL_CUSTOM_COMPONENT_TYPES } from "../mobile_components";
+import { getPageReactComponent } from "../../utils/builderUtils";
 
 const Stack = createStackNavigator()
 
@@ -33,7 +34,7 @@ const Screen = (props: { route: { name: string } }) => {
   const page = tabbarItemPage || pages[0]
 
   const embeddableChildren = page.components.filter(isEmbeddable).map((c: CustomComponent) => {
-    const { component: Component } = c
+    const Component = getPageReactComponent(c)
     return (
       <Component key={c.id} {...c.props} data={c.data} componentId={c.id}>
         {c.children}
@@ -41,7 +42,7 @@ const Screen = (props: { route: { name: string } }) => {
     )
   })
   const floatingChildren = page.components.filter(isFloating).map((c: CustomComponent) => {
-    const { component: Component } = c
+    const Component = getPageReactComponent(c)
     return (
       <Component key={c.id} {...c.props} data={c.data} componentId={c.id}>
         {c.children}

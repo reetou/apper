@@ -7,6 +7,7 @@ import isPermanentPage from "../utils/pageUtils";
 import Button from './Button';
 import { useHistory } from 'react-router-dom';
 import { trackAnalyticsEvent } from "../utils/googleAnalyticsUtils";
+import AuthContext from "../store/AuthContext";
 
 interface Props {
   editPage: (page: CustomPage) => void;
@@ -20,21 +21,39 @@ export default function PageNavigationSettings(props: Props) {
     setProject,
     setMode,
   } = useContext(BuilderContext)
+  const {
+    authenticated,
+  } = useContext(AuthContext)
   const history = useHistory()
   const { editPage } = props
   const publishProject = () => {
-    trackAnalyticsEvent({
-      category: 'Builder',
-      action: 'PublishProject',
-    })
+    if (authenticated) {
+      trackAnalyticsEvent({
+        category: 'Builder',
+        action: 'PublishProject',
+      })
+    } else {
+      trackAnalyticsEvent({
+        category: 'Builder',
+        action: 'PublishProjectNoAuth',
+      })
+    }
     console.log(`Gonna publish`)
   }
   const onBuildApp = () => {
-    trackAnalyticsEvent({
-      category: 'Builder',
-      action: 'GoToBuild',
-    })
-    history.push(`/projects/${project.id}/build`)
+    if (authenticated) {
+      trackAnalyticsEvent({
+        category: 'Builder',
+        action: 'GoToBuild',
+      })
+      history.push(`/projects/${project.id}/build`)
+    } else {
+      trackAnalyticsEvent({
+        category: 'Builder',
+        action: 'GoToBuildNoAuth',
+      })
+      history.push(`/register`)
+    }
   }
   if (!openedPage) {
     return null
