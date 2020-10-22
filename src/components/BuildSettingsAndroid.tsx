@@ -79,6 +79,7 @@ export default function BuildSettingsAndroid(props: Props) {
               }
             }))
           }}
+          file={settings.keystore_jks}
         />
       </Column>
     </Row>

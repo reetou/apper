@@ -72,6 +72,7 @@ export default function BuildSettingsIos(props: Props) {
               },
             }))
           }}
+          file={settings.p12_cert}
         />
         <AppleProvisioningProfileUpload
           onUpload={(file) => {
@@ -81,6 +82,7 @@ export default function BuildSettingsIos(props: Props) {
               },
             }))
           }}
+          file={settings.provisioning_profile}
         />
       </Column>
     </Row>

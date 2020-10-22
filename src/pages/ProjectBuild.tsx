@@ -10,6 +10,7 @@ import { getProject } from "../api/Project";
 import { useHistory, useParams } from "react-router-dom";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 import BuildInProgress from "../components/project_build/BuildInProgress";
+import { buildProjectIos } from "../api/BuildProject";
 
 
 const Container = styled.div`
@@ -34,9 +35,11 @@ export default function ProjectBuild() {
   const routeParams = useParams<{ id: string }>()
   const [loading, setLoading] = useState<boolean>(true)
   const [iosSettings, setIosSettings] = useState<IosBuildSettings>({
-    bundle_id: '',
-    apple_team_id: '',
-    p12_password: '',
+    bundle_id: 'com.app.client',
+    apple_team_id: '1231231231',
+    p12_password: '123123123',
+    provisioning_profile: undefined,
+    p12_cert: undefined,
   })
   const [androidSettings, setAndroidSettings] = useState<AndroidBuildSettings>({
     bundle_id: '',
@@ -44,10 +47,11 @@ export default function ProjectBuild() {
     keystore_password: '',
     key_password: '',
   })
-  const [selectedPlatform, setSelectedPlatform] = useState<'ios' | 'android'>('android')
+  const [selectedPlatform, setSelectedPlatform] = useState<'ios' | 'android'>('ios')
   const [buildInProgress, setBuildInProgress] = useState<boolean>(false)
   const buildIos = () => {
     console.log(`Building ios`, iosSettings)
+    buildProjectIos(routeParams.id, iosSettings)
   }
   const buildAndroid = () => {
     console.log(`Building android`, androidSettings)

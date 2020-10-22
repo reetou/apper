@@ -6,6 +6,7 @@ import { darken } from "polished";
 interface Props {
   isDragActive: boolean,
   title: string,
+  file?: File,
 }
 
 const Container = styled.div`
@@ -42,17 +43,27 @@ const UploadDescription = styled.div`
 `
 
 export default function UploadContainer(props: Props) {
-  const { isDragActive, title } = props
+  const { isDragActive, title, file } = props
   return (
     <Container>
       <UploadTitle>{title}</UploadTitle>
-      <UploadDescription>
-        {
-          isDragActive
-            ? 'Drop it here'
-            : 'Drag and drop file here or click to select file'
-        }
-      </UploadDescription>
+      {
+        file
+          ? (
+            <UploadDescription>
+              File: {file?.name}
+            </UploadDescription>
+          )
+          : (
+            <UploadDescription>
+              {
+                isDragActive
+                  ? 'Drop it here'
+                  : 'Drag and drop file here or click to select file'
+              }
+            </UploadDescription>
+          )
+      }
     </Container>
   )
 }
