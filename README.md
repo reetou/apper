@@ -2,6 +2,8 @@
 
 Frontend for Apper project. Watch it working here - https://apper.vercel.app (viewing from Desktop recommended)
 
+Interface is on Russian - unfortunately, I forgot to use English everywhere :joy:
+
 Backend is not working. 
 
 Backend repo available here: https://github.com/reetou/apperback
