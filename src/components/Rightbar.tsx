@@ -38,6 +38,7 @@ export default function Rightbar() {
           action: 'ToRegister',
         })
         history.push('/register')
+        return
       }
 
       localStorage.removeItem('demo_project')
